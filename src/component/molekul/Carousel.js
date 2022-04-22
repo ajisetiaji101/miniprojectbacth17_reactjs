@@ -66,7 +66,7 @@ class Carousel extends Component {
             );
           })}
           <AiOutlineLeft onClick={this.prevSlide} className="absolute left-4 text-3xl inset-y-1/2 text-white cursor-pointer" />
-          <AiOutlineRight onClick={this.nextSlide} className="absolute right-4 text-3xl inset-y-1/2 text-white cursor-pointer" />
+          <AiOutlineRight onClick={this.nextSlide} className="absolute right-9 text-3xl inset-y-1/2 text-white cursor-pointer" />
         </div>
       </div>
     );
