@@ -50,7 +50,7 @@ class Carousel extends Component {
 
   render() {
     return (
-      <div className="">
+      <div className="overflow-hidden">
         <div className="w-screen h-screen flex overflow-hidden relative">
           <AiOutlineLeft onClick={this.prevSlide} className="absolute left-4 text-3xl inset-y-1/2 text-white cursor-pointer" />
           {CarouselData.map((slide, index) => {
