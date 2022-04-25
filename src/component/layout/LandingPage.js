@@ -68,7 +68,7 @@ export default function LandingPage() {
   return (
     <div className="bg-white">
       <header>
-        <Popover className="relative bg-white shadow-md">
+        <Popover className="relative bg-white shadow-md z-10">
           {({ open }) => (
             <>
               <div className="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
