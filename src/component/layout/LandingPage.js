@@ -25,6 +25,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
 import Carousel from "../../views/components/Carousel";
+import Brands from "../../views/components/Brands";
 
 const solutions = [
   {
@@ -278,8 +279,9 @@ export default function LandingPage() {
         </Popover>
       </header>
       <body>
-        <div className="flex justify-center">
+        <div>
           <Carousel />
+          <Brands />
         </div>
       </body>
       <main>
