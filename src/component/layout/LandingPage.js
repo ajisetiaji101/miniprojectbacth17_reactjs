@@ -24,7 +24,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
-import Carousel from "../molekul/Carousel";
+import Carousel from "../../views/components/Carousel";
 
 const solutions = [
   {
