@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Swipe from "react-easy-swipe";
+import { Link } from "react-router-dom";
 
 export const CarouselData = [
   {
     image: "./assets/images/bootcamp.jpg",
-    data: ["Join", "Bootcamp", "#"],
+    data: ["Join", "Bootcamp", "signin"],
   },
   {
     image: "./assets/images/talent.jpg",
@@ -73,15 +74,17 @@ class Carousel extends Component {
                 <p key={index} className={index === this.state.currentSlide ? "absolute text-white left-1/4 top-1/3 text-6xl font-bold" : "hidden"}>
                   {slide.data[1]}
                 </p>
-                <button
-                  className={
-                    index === this.state.currentSlide
-                      ? "absolute left-1/4 top-1/2  font-bold whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-md text-base font-medium text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
-                      : "hidden"
-                  }
-                >
-                  Get Started
-                </button>
+                <Link to={slide.data[2]}>
+                  <button
+                    className={
+                      index === this.state.currentSlide
+                        ? "absolute left-1/4 top-1/2  font-bold whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-md text-base font-medium text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
+                        : "hidden"
+                    }
+                  >
+                    Get Started
+                  </button>
+                </Link>
               </>
             );
           })}
