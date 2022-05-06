@@ -26,6 +26,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
 import Carousel from "../../views/components/Carousel";
 import Brands from "../../views/components/Brands";
+import Partner from "../../views/components/Partner";
+import Abouts from "../../views/components/Abouts";
+import Footer from "../../views/components/Footer";
 
 const solutions = [
   {
@@ -282,8 +285,13 @@ export default function LandingPage() {
         <div>
           <Carousel />
           <Brands />
+          <Partner />
+          <Abouts />
         </div>
       </body>
+      <footer>
+        <Footer />
+      </footer>
       <main>
         {/* display contain page like bootcamp, hiring, talent in <Outlet/>*/}
         <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
