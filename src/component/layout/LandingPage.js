@@ -29,6 +29,7 @@ import Brands from "../../views/components/Brands";
 import Partner from "../../views/components/Partner";
 import Abouts from "../../views/components/Abouts";
 import Footer from "../../views/components/Footer";
+import Testimonials from "../../views/components/Testimonials";
 
 const solutions = [
   {
@@ -285,6 +286,7 @@ export default function LandingPage() {
         <div>
           <Carousel />
           <Brands />
+          <Testimonials />
           <Partner />
           <Abouts />
         </div>
