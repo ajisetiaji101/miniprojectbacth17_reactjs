@@ -2,8 +2,8 @@ import React from "react";
 
 export const dataTestimonial = [
   { name: "Aji Setiaji", text: "Sangat baik pelatihannya dari yang lain" },
-  { name: "Iqsan", text: "Sangat buruk pelatihannya dari yang lain" },
-  { name: "Afif", text: "Sangat burik pelatihannya dari yang lain" },
+  { name: "Iqsan", text: "Sangat super pelatihannya dari yang lain" },
+  { name: "Afif", text: "Sangat good pelatihannya dari yang lain" },
   { name: "fadlur", text: "mantul mantul" },
   { name: "ibnu", text: "mantap mantap" },
 ];
