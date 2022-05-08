@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux';
-import userReducer from './UserReducer';
+import { combineReducers } from "redux";
+import userReducer from "./UserReducer";
+import PlacementReducer from "./PlacementReducer";
 
 const rootReducer = combineReducers({
-  userState : userReducer
+  userState: userReducer,
+  PlacemenState: PlacementReducer,
 });
 
 export default rootReducer;

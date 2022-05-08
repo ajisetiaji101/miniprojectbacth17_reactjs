@@ -1,4 +1,6 @@
-import React from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { DotsVerticalIcon } from "@heroicons/react/outline";
+import React, { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import Page from "../../../component/commons/Page";
 
@@ -6,48 +8,107 @@ export default function Placement() {
   let navigate = useNavigate();
   return (
     <Page title="Placement" titleButton="Create" onClick={() => navigate("/app/batch/new")}>
-      {/* Punya fadhlur */}
-      {/* <form>
-        <label for="defaultsearch" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">
-          Search
-        </label>
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-            </svg>
-          </div>
-          <input
-            type="search"
-            id="default-search"
-            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search Mockups, Logos..."
-            required
-          />
-          <button
-            type="submit"
-            className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Search
-          </button>
-        </div>
-      </form> */}
-      <form>
-        <div className="flex">
-          <label for="search" className="mb-2 text-md font-medium text-gray-900">
-            Search by category
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </div>
-            <input id="search" className="w-1/4 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50" />
-            <button>Search</button>
+      <div className="mt-6 mx-24 flex justify-center">
+        <div className="w-full">
+          <div className="input-group relative flex justify-center items-stretch w-full mb-2">
+            <p className="text-sm mx-2 py-1">Search by Category</p>
+            <input
+              type="search"
+              className="form-control relative w-56 block px-4 py-0.5 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:border-transparent focus:text-gray-700 focus:ring-1 focus:ring-offset-1 focus:ring-purple-500 focus:outline-none"
+              placeholder="client, recruiter, po number"
+              aria-label="Search"
+              aria-describedby="button-addon2"
+            />
+            <select
+              name="batch_status"
+              id="batch_status"
+              className="capitalize form-select form-select-sm appearance-none block mx-1 px-2 py-0.5 w-24 text-sm font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-transparent focus:text-gray-700 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-purple-500"
+              aria-label=".form-select-sm example"
+            >
+              <option>Status</option>
+            </select>
+            <button
+              type="submit"
+              className="btn px-3 py-1 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-purple-500 transition duration-150 ease-in-out flex items-center"
+              id="button-addon2"
+            >
+              Search
+            </button>
           </div>
         </div>
-      </form>
+      </div>
+      <div className="sm:block">
+        <div className="align-middle inline-block min-w-full border-b border-gray-200 ">
+          <table className="min-w-full">
+            <thead className="border-y border-gray-200">
+              <tr key="col_names">
+                <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                  <span className="">CONTRACT NO.</span>
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                  <span className="">CLIENT</span>
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                  <span className="">TALENTS</span>
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                  <span className="">PERIODE</span>
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                  <span className="">CREATED BY</span>
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                  <span className="">STATUS</span>
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-900 uppercase tracking-wider" />
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-100">
+              <tr>
+                <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">PO#202202-01</td>
+                <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">Artaka</td>
+                <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">Fadlur, Afif</td>
+                <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                  <div>March 18,2020</div>
+                  <div>June 18, 2020</div>
+                </td>
+                <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">Novelina Ayang</td>
+                <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">
+                  <div>Placement</div>
+                  <div>Feb 18, 2021</div>
+                </td>
+                <td className="pr-6">
+                  <Menu as="div" className="relative flex justify-end items-center">
+                    {({ open }) => (
+                      <>
+                        <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-600 rounded-full hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ">
+                          <span className="sr-only">Open options</span>
+                          <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
+                        </Menu.Button>
+                        <Transition
+                          show={open}
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items
+                            static
+                            className="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg z-10 bg-gray-100 ring-1 ring-gray-900 ring-opacity-5 divide-y divide-gray-300 focus:outline-none"
+                          ></Menu.Items>
+                        </Transition>
+                      </>
+                    )}
+                  </Menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </Page>
   );
 }
