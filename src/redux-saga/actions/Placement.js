@@ -1,13 +1,13 @@
 import * as ActionType from "../constants/Placement";
 
-export const doGetPlaceRequest = () => ({
+export const doGetPlacementRequest = () => ({
   type: ActionType.GET_PLACEMENT_REQUEST,
 });
-export const doGetPlaceSucced = (payload) => ({
+export const doGetPlacementSucceed = (payload) => ({
   type: ActionType.GET_PLACEMENT_SUCCEED,
   payload,
 });
-export const doGetPlaceFailed = (payload) => ({
+export const doGetPlacementFailed = (payload) => ({
   type: ActionType.GET_PLACEMENT_FAILED,
   payload,
 });

@@ -4,7 +4,7 @@ import PlacementReducer from "./PlacementReducer";
 
 const rootReducer = combineReducers({
   userState: userReducer,
-  PlacemenState: PlacementReducer,
+  placemenState: PlacementReducer,
 });
 
 export default rootReducer;
