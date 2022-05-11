@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { doGetTestimoniRequest } from "../../redux-saga/actions/Testimoni";
 import { Carousel } from 'react-responsive-carousel'
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import config from '../../config/config';
 
 
 function Testimoni2(){
@@ -34,12 +35,7 @@ function Testimoni2(){
                     return (
                         <div>
                             {index === current && (
-                            <div>
-                                <div>
-                                    <p>{riviw.cure_review}</p>
-                                    <p>{riviw.curr_user.user_name}</p>   
-                                </div> 
-                            </div>    
+                                <img className="h-10 w-10 rounded-full" src={`${config.urlImage}/${riviw.cure_photo}`} alt={riviw.cure_photo} />
                          )}
                         </div>
                     )

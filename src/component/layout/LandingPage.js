@@ -26,7 +26,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
 import Carousel from "../../views/components/Carousel";
 import Brands from "../../views/components/Brands";
-import Testimoni2 from "../../views/components/Testimoni2";
+import Testimoni from "../../views/components/Testimoni"
+import Partner from "../../views/components/Partner";
+import Abouts from "../../views/components/Abouts";
+import Footer from "../../views/components/Footer";
 
 const solutions = [
   {
@@ -282,16 +285,22 @@ export default function LandingPage() {
       <body>
         <div>
           <Carousel />
-          <Brands/>
-          <Testimoni2/>
+          <Brands />
+          <Testimoni/>
+          <Partner />
+          <Abouts />
         </div>
       </body>
+
       <main>
         {/* display contain page like bootcamp, hiring, talent in <Outlet/>*/}
         <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
           <Outlet />
         </div>
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

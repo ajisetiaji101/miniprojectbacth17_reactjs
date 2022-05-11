@@ -16,7 +16,7 @@ export default function Brands() {
   return (
     <div className="bg-red-500">
       <div className="container mx-auto flex">
-        <div className="mx-auto py-3 flex-none px-2">
+        <div className="mx-auto py-3 flex-none">
           <h2 className="text-white text-xl subpixel-antialiased font-medium tracking-wide">Trusted By Leading</h2>
           <h2 className="text-white text-xl subpixel-antialiased font-medium tracking-wide">Brands & Startup</h2>
         </div>
@@ -25,7 +25,7 @@ export default function Brands() {
             {Dataimage.map((data, index) => {
               return (
                 <div className="flex-none py-2">
-                  <img className="px-2" src={data.image} key={index} width={120} height={120} alt="Large Pizza" />
+                  <img className="px-2 rounded-full border-white border-2" src={data.image} key={index} width={120} alt="Large Pizza" />
                 </div>
               );
             })}

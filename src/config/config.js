@@ -1,6 +1,6 @@
 const config = {
-    domain : 'http://localhost:3001/codeid',
-    urlImage : 'http://localhost:3001/codeid/api/images',
+    domain : 'http://localhost:3001/codeid/api',
+    urlImage : 'http://localhost:3001/codeid/api/curriculum_reviews/images',
     domainAuth : 'http://localhost:3001/codeid/auth/',
     env: process.env.NODE_ENV || 'development',
     port: process.env.PORT || 3000,
