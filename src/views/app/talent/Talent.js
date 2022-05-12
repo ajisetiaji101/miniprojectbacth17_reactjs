@@ -22,6 +22,7 @@ export default function Talent() {
   const dispatch = useDispatch();
 
   const [listTalents, setListTalents] = useState([]);
+  const [listPlacements, setListPlacements] = useState([]);
   const [filter, setFilter] = useState({
     input: "",
     select: "",
@@ -33,6 +34,7 @@ export default function Talent() {
   const [pageRange, setPageRange] = useState(0);
 
   const { talent } = useSelector((state) => state.talentState);
+  const { placement } = useSelector((state) => state.placemenState);
   const { userProfile } = useSelector((state) => state.userState);
 
   useEffect(() => {
@@ -43,20 +45,34 @@ export default function Talent() {
     }
   }, []);
 
+  useEffect(() => {
+    dispatch(doGetPlacementRequest());
 
+    if (location.state && location.state.updated) {
+      toast.success("Batch has been updated.");
+    }
+  }, []);
+
+//   useEffect(() => {
+//     setListTalents(
+//         Array.isArray(talent) && talent.filter(data=>(
+//             (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || 
+//             data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) 
+//             // (filter.select === 'Status' || data.tale_status.includes(filter.select))
+//             ))
+//         )
+// }, [talent]);
 
   useEffect(() => {
-    setListTalents(
-      Array.isArray(talent) &&
-        talent.filter(
+    setListPlacements(
+      Array.isArray(placement) &&
+        placement.filter(
           (data) =>
-            (
-              data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) ||
-                data.talent_batches.taba_batch.batch_technology.toLowerCase().includes(filter.input.toLowerCase())
-              )
+            (data.place_contract_no.toLowerCase().includes(filter.input.toLowerCase()) || data.place_client.client_name.toLowerCase().includes(filter.input.toLowerCase())) &&
+            (filter.select === "Status" || data.place_status.includes(filter.select))
         )
     );
-  }, [talent]);
+  }, [placement]);
 
   useEffect(() => {
     setPageNumbers(Array.from({ length: Math.ceil(listTalents.length / 10) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
@@ -68,19 +84,18 @@ export default function Talent() {
     setFilter({ ...filter, [name]: event.target.value });
   };
 
-  const onSearch = (event) => {
-    event.preventDefault();
-    setListTalents(
-      Array.isArray(talent) &&
-        talent.filter(
-          (data) =>
-            (
-              data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) ||
-              data.talent_batches.taba_batch.batch_technology.toLowerCase().includes(filter.input.toLowerCase())
-            ) 
-        )
-    );
-  };
+  // const onSearch = (event) => {
+  //   event.preventDefault();
+  //   setListTalents(
+  //     Array.isArray(talent) &&
+  //       talent.filter(
+  //         data =>(
+  //         (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || 
+  //         data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) 
+  //         // (filter.select === 'Status' || data.tale_status.includes(filter.select))
+  //         ))
+  //   )
+  // };
 
   return (
     <>
@@ -113,7 +128,7 @@ export default function Talent() {
               </select>
               <button
                 type="submit"
-                onClick={onSearch}
+                // onClick={onSearch}
                 className="btn px-3 py-1 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-purple-500 transition duration-150 ease-in-out flex items-center"
                 id="button-addon2"
               >
@@ -140,10 +155,8 @@ export default function Talent() {
                   listTalents.slice((currentPage - 1) * 10, currentPage * 10).map((data) => (
                     <tr key={data.tale_id}>
                       <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.tale_fullname}</td>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">
-                      {data.talent_batches.map((data) => (
-                          <p>{data.taba_batch.batch_technology}</p>
-                        ))}
+                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.tale_bootcamp}
+
                     </td>
 
                       <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
