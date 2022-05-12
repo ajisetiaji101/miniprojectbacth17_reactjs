@@ -9,6 +9,7 @@ const rootReducer = combineReducers({
   PlacemenState: PlacementReducer,
   curriculumState: CurriculumReducer,
   curriculumAppState : AppCurriculumReducer
+
 });
 
 export default rootReducer;

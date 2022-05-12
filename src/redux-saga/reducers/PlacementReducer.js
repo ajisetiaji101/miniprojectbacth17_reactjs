@@ -1,8 +1,7 @@
 import * as ActionType from "../constants/Placement";
 
 const INIT_STATE = {
-  place: [],
-  isLoading: false,
+  placement: [],
 };
 
 const PlacementReducer = (state = INIT_STATE, action) => {
@@ -12,17 +11,16 @@ const PlacementReducer = (state = INIT_STATE, action) => {
         ...state,
       };
     case ActionType.GET_PLACEMENT_SUCCEED:
-      return applyGetPlacementSucced(state, action);
+      return applyGetPlacementSucceed(state, action);
     default:
       return state;
   }
 };
 
-const applyGetPlacementSucced = (state, action) => {
+const applyGetPlacementSucceed = (state, action) => {
   return {
     ...state,
-    place: action.payload,
-    isLoading: false,
+    placement: action.payload,
   };
 };
 
