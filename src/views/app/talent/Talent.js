@@ -10,7 +10,7 @@ import Page from "../../../component/commons/Page";
 import { data } from "autoprefixer";
 
 const columns = [{ name: "FULL NAME" }, { name: "TECHNOLOGY" }, { name: "BATCH" }, { name: "PERIODE" }, { name: "TRAINER" }, { name: "STATUS" }];
-
+const tal_status =['ON BOOTCAMP','IDLE','TRIAL',]
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -53,15 +53,16 @@ export default function Talent() {
     }
   }, []);
 
-//   useEffect(() => {
-//     setListTalents(
-//         Array.isArray(talent) && talent.filter(data=>(
-//             (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || 
-//             data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) 
-//             // (filter.select === 'Status' || data.tale_status.includes(filter.select))
-//             ))
-//         )
-// }, [talent]);
+  useEffect(() => {
+    setListTalents(
+        Array.isArray(talent) && talent.filter(data=>(
+            (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase())
+             || 
+            data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) 
+            // (filter.select === 'Status' || data.tale_status.includes(filter.select))
+            ))
+        )
+}, [talent]);
 
   useEffect(() => {
     setListPlacements(
@@ -84,18 +85,20 @@ export default function Talent() {
     setFilter({ ...filter, [name]: event.target.value });
   };
 
-  // const onSearch = (event) => {
-  //   event.preventDefault();
-  //   setListTalents(
-  //     Array.isArray(talent) &&
-  //       talent.filter(
-  //         data =>(
-  //         (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || 
-  //         data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) 
-  //         // (filter.select === 'Status' || data.tale_status.includes(filter.select))
-  //         ))
-  //   )
-  // };
+  const onSearch = (event) => {
+    event.preventDefault();
+    setListTalents(
+      Array.isArray(talent) &&
+        talent.filter(
+          data =>(
+          (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) 
+          || 
+          data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase()
+          )) 
+          // (filter.select === 'Status' || data.tale_status.includes(filter.select))
+          ))
+    )
+  };
 
   return (
     <>
@@ -128,7 +131,7 @@ export default function Talent() {
               </select>
               <button
                 type="submit"
-                // onClick={onSearch}
+                onClick={onSearch}
                 className="btn px-3 py-1 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-purple-500 transition duration-150 ease-in-out flex items-center"
                 id="button-addon2"
               >
