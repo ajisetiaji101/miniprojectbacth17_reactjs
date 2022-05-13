@@ -16,6 +16,9 @@ import Talent from './views/app/talent/Talent'
 import BlankLayout from './component/layout/BlankLayout';
 import Signup from './component/layout/Signup';
 import Placement from './views/app/placement/Placement';
+import Job from './views/app/job/Job'
+import AddJob from './views/app/job/AddJob'
+
 
 export default function Routes(isLoggedIn) {
   return useRoutes([
@@ -48,6 +51,11 @@ export default function Routes(isLoggedIn) {
         { path: 'talent', element: isLoggedIn ? <Talent />: <Navigate to="/auth/signin"/> },
         { path: 'curriculum', element: isLoggedIn ? <Curriculum />: <Navigate to="/auth/signin"/> },
         { path: 'hiring', element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin"/> },
+        { path: 'job', element: isLoggedIn ? <Job /> : <Navigate to="/auth/signin"/> },
+        {
+          path:"job/new",
+          element: isLoggedIn ? <AddJob /> : <Navigate to="/auth/signin" />
+        },
         { path: 'setting', element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin"/> },
       ]
     },
