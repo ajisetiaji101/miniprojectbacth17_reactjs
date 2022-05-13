@@ -3,14 +3,13 @@ import { ChevronLeftIcon, ChevronRightIcon, DotsVerticalIcon, LockClosedIcon, Pe
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { doGetTalentRequest } from "../../../redux-saga/actions/Talent";
-import { doGetPlacementRequest } from "../../../redux-saga/actions/Placement";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
-import { data } from "autoprefixer";
+
 
 const columns = [{ name: "FULL NAME" }, { name: "TECHNOLOGY" }, { name: "BATCH" }, { name: "PERIODE" }, { name: "TRAINER" }, { name: "STATUS" }];
-const tal_status =['On bootcamp','Idle','Trial','Placement']
+const tal_status =['On Bootcamp','Idle','Trial','Placement']
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -22,7 +21,6 @@ export default function Talent() {
   const dispatch = useDispatch();
 
   const [listTalents, setListTalents] = useState([]);
-  const [listPlacements, setListPlacements] = useState([]);
   const [filter, setFilter] = useState({
     input: "",
     select: "",
@@ -34,7 +32,6 @@ export default function Talent() {
   const [pageRange, setPageRange] = useState(0);
 
   const { talent } = useSelector((state) => state.talentState);
-  const { placement } = useSelector((state) => state.placemenState);
   const { userProfile } = useSelector((state) => state.userState);
 
   useEffect(() => {
@@ -45,21 +42,14 @@ export default function Talent() {
     }
   }, []);
 
-  useEffect(() => {
-    dispatch(doGetPlacementRequest());
-
-    if (location.state && location.state.updated) {
-      toast.success("Batch has been updated.");
-    }
-  }, []);
 
   useEffect(() => {
     setListTalents(
         Array.isArray(talent) && talent.filter(data=>(
             (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase())
              || 
-            data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) 
-            // (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
+            data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) &&
+            (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
             ))
         )
 }, [talent]);
@@ -83,7 +73,7 @@ export default function Talent() {
           (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) 
           || 
           data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase()
-          )) 
+          )) &&
           (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
           ))
     )
