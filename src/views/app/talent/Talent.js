@@ -10,7 +10,7 @@ import Page from "../../../component/commons/Page";
 import { data } from "autoprefixer";
 
 const columns = [{ name: "FULL NAME" }, { name: "TECHNOLOGY" }, { name: "BATCH" }, { name: "PERIODE" }, { name: "TRAINER" }, { name: "STATUS" }];
-const tal_status =['ON BOOTCAMP','IDLE','TRIAL',]
+const tal_status =['On bootcamp','Idle','Trial','Placement']
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -59,21 +59,10 @@ export default function Talent() {
             (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase())
              || 
             data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) 
-            // (filter.select === 'Status' || data.tale_status.includes(filter.select))
+            // (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
             ))
         )
 }, [talent]);
-
-  useEffect(() => {
-    setListPlacements(
-      Array.isArray(placement) &&
-        placement.filter(
-          (data) =>
-            (data.place_contract_no.toLowerCase().includes(filter.input.toLowerCase()) || data.place_client.client_name.toLowerCase().includes(filter.input.toLowerCase())) &&
-            (filter.select === "Status" || data.place_status.includes(filter.select))
-        )
-    );
-  }, [placement]);
 
   useEffect(() => {
     setPageNumbers(Array.from({ length: Math.ceil(listTalents.length / 10) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
@@ -95,7 +84,7 @@ export default function Talent() {
           || 
           data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase()
           )) 
-          // (filter.select === 'Status' || data.tale_status.includes(filter.select))
+          (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
           ))
     )
   };
@@ -116,18 +105,20 @@ export default function Talent() {
                 aria-describedby="button-addon2"
               />
               <select
-                name="placement_status"
-                id="placement_status"
+                name="tale_status_timeline"
+                id="tale_status_timeline"
                 onChange={handleOnChange("select")}
                 className="capitalize form-select form-select-sm appearance-none block mx-1 px-2 py-0.5 w-24 text-sm font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-transparent focus:text-gray-700 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-purple-500"
                 aria-label=".form-select-sm example"
               >
                 <option>Status</option>
-                {(listTalents || []).map((value, index) => (
-                  <option className="capitalize" value={value.place_status} key={index}>
-                    {value.place_status}
+                {(tal_status || []).map((value, index) => 
+                (
+                  <option className="capitalize" value={value} key={index}>
+                    {value}
                   </option>
-                ))}
+                )
+                )}
               </select>
               <button
                 type="submit"
@@ -183,7 +174,7 @@ export default function Talent() {
                         ))}
                       </td>
                       <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">
-                        <div>{data.place_status}</div>
+                        <div>{data.tale_status_timeline}</div>
                         {data.talent_placements.map((talent, i) => {
                           if (i === 0) {
                             return <p>{talent.tapl_drop_date}</p>;
