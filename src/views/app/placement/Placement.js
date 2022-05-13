@@ -6,9 +6,9 @@ import { doGetPlacementRequest } from "../../../redux-saga/actions/Placement";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
-import { data } from "autoprefixer";
 
 const columns = [{ name: "CONTRACT NO." }, { name: "CLIENT" }, { name: "TALENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
+const placementStatus = ["trial", "placement", "closed"];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -97,9 +97,9 @@ export default function Placement() {
                 aria-label=".form-select-sm example"
               >
                 <option>Status</option>
-                {(listPlacements || []).map((value, index) => (
-                  <option className="capitalize" value={value.place_status} key={index}>
-                    {value.place_status}
+                {(placementStatus || []).map((value, index) => (
+                  <option className="capitalize" value={value} key={index}>
+                    {value}
                   </option>
                 ))}
               </select>
