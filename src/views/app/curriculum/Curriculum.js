@@ -11,6 +11,7 @@ import { Menu, Transition } from '@headlessui/react'
 //theming toast
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 
 import {
     DotsVerticalIcon,
@@ -37,6 +38,10 @@ const columns = [
 
 const curr_status =['Online','Offline']
 
+// const Rating = () =>{
+//     const [rating, setRating] = useState(0);
+//     const [rating2, setRating2] = useState(0);
+// }
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -160,8 +165,8 @@ export default function Curiculum() {
                                             <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_title}</td>
                                             <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_duration}</td>
                                             <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
-                                            <div>{data.curr_total_talents}</div>
-                                            <div>{data.curr_total_batch}</div>
+                                            <div>{data.curr_total_talents} members</div>
+                                            <div>{data.curr_total_batch} batchs</div>
                                             </td>
                                             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">{data.curr_learning_type}</td>
                                             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">{data.curr_rating}</td>
@@ -246,21 +251,25 @@ export default function Curiculum() {
                         </table>
                         {listCurriculums.length === 0 && 
                         <div className='px-6 py-3 text-center whitespace-nowrap text-sm font-medium text-gray-900'> Data Not Found...</div>}
-
-                            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-                            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center">
-                                
+                        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                                 <div>
-                                    <nav className="relative z-0 inline-flex rounded-none shadow-sm space-x" aria-label="Pagination">
+                                    <p className="text-sm text-gray-700">
+                                        Showing <span className="font-medium">{(currentPage-1)*10+1}</span> to <span className="font-medium">{(currentPage)*10<listCurriculums.length ? (currentPage)*10 : listCurriculums.length}</span> of{' '}
+                                        <span className="font-medium">{listCurriculums.length}</span> results
+                                    </p>
+                                </div>
+                                <div>
+                                    <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                                         <button
                                             onClick={()=>{
                                                 setCurrentPage(1)
                                                 setPageNumbers([...pageNumbers].map(val=>(val.number === 1 ? {...val,active:true} : {...val,active:false})))
                                                 setPageRange(0)
                                             }}
-                                            className="relative inline-flex items-center px-4 py-2 rounded-l-full border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                                            className="relative inline-flex items-center px-3 py-2 font-medium text-gray-600 hover:text-orange-600"
                                             >
-                                            <span>First</span>
+                                            <span className="underline">First</span>
                                         </button>
                                         <button
                                         onClick={()=>{
@@ -269,7 +278,7 @@ export default function Curiculum() {
                                                 setPageRange(pageRange-1)
                                             }
                                         }}
-                                        className="relative inline-flex items-center px-2 py-2 rounded-none border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                                         >
                                         <span className="sr-only">Previous</span>
                                             <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
@@ -296,7 +305,7 @@ export default function Curiculum() {
                                                 setPageRange(pageRange+1)
                                             }
                                         }}
-                                        className="relative inline-flex items-center px-2 py-2 rounded-none border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                                         >
                                         <span className="sr-only">Next</span>
                                         <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
@@ -308,20 +317,20 @@ export default function Curiculum() {
                                                 setPageNumbers([...pageNumbers].map(val=>(val.number === pageNumbers.length ? {...val,active:true} : {...val,active:false})))
                                                 setPageRange(max)
                                             }}
-                                            className="relative inline-flex items-center px-4 py-2 rounded-r-full border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                                            className="relative inline-flex items-center px-3 py-2 font-medium text-gray-600 hover:text-orange-600"
                                             >
-                                            <span>Last</span>
+                                            <span className="underline">Last</span>
                                         </button>
                                     </nav>
                                 </div>
                             </div>
                         </div>
                 </div>
+                </div>
+            </Page>
+            <div className='z-30' >
+                <ToastContainer autoClose={2000}/>
             </div>
-        </Page>
-        <div className='z-30' >
-            <ToastContainer autoClose={2000}/>
-        </div>
-        </>
-    )
-}
+            </>
+        )
+    }
