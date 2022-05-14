@@ -6,12 +6,17 @@ import TalentReducer from "./TalentReducer";
 import CurriculumReducer from "./CurriculumReducer";
 import AppCurriculumReducer from './AppCurriculumReducer';
 
+import BatchReducer from "./BatchReducer";
+import AppBatchReducer from './AppBatchReducer';
+
 const rootReducer = combineReducers({
   userState: userReducer,
   PlacemenState: PlacementReducer,
   curriculumState: CurriculumReducer,
   curriculumAppState : AppCurriculumReducer,
-  talentState: TalentReducer
+  talentState: TalentReducer,
+  batchState: BatchReducer,
+  batchAppState : AppBatchReducer
 });
 
 export default rootReducer;
