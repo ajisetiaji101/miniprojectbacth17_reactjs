@@ -173,7 +173,7 @@ export default function Talent() {
                         <div>{console.log(data)}</div>
                       </td>
                       <td className="pr-6">
-                        <Menu as="div" className="relative flex justify-end items-center">
+                        {/* <Menu as="div" className="relative flex justify-end items-center">
                           {({ open }) => (
                             <>
                               <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-600 rounded-full hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ">
@@ -207,7 +207,7 @@ export default function Talent() {
                               </Transition>
                             </>
                           )}
-                        </Menu>
+                        </Menu> */}
                       </td>
                     </tr>
                   ))}
