@@ -2,10 +2,11 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon, DotsVerticalIcon, LockClosedIcon, PencilAltIcon } from "@heroicons/react/outline";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { doGetPlacementRequest } from "../../../redux-saga/actions/Placement";
+import { doGetPlacementRequest, doDeletePlacementRequest } from "../../../redux-saga/actions/Placement";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
+import { TrashIcon } from "@heroicons/react/solid";
 
 const columns = [{ name: "CONTRACT NO." }, { name: "CLIENT" }, { name: "TALENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
 const placementStatus = ["trial", "placement", "closed"];
@@ -74,6 +75,10 @@ export default function Placement() {
     );
   };
 
+  const onDelete = async (id) => {
+    dispatch(doDeletePlacementRequest(id));
+    toast.success("Data has been deleted.");
+  };
   return (
     <>
       <Page title="Placement" titleButton="Create" onClick={() => navigate("/app/placement/new")}>
@@ -145,7 +150,7 @@ export default function Placement() {
                         <div>{data.place_end_date}</div>
                       </td>
                       <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">Novelina</td>
-                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">
+                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 capitalize mr-6">
                         <div>{data.place_status}</div>
                         {data.talent_placements.map((talent, i) => {
                           if (i == 0) {
@@ -185,6 +190,23 @@ export default function Placement() {
                                       </Menu.Item>
                                     </div>
                                   )}
+
+                                  <div className="py-1">
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                        <Link
+                                          to="#"
+                                          onClick={() => {
+                                            if (window.confirm("Delete this Placement ?")) onDelete(data.place_id);
+                                          }}
+                                          className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}
+                                        >
+                                          <TrashIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
+                                          Delete
+                                        </Link>
+                                      )}
+                                    </Menu.Item>
+                                  </div>
                                 </Menu.Items>
                               </Transition>
                             </>
@@ -197,8 +219,14 @@ export default function Placement() {
             </table>
             {listPlacements.length === 0 && <div className="px-6 py-3 text-center whitespace-nowrap text-sm font-medium text-gray-900"> Data Not Found...</div>}
 
-            <div className="bg-white px-4 py-3 flex items-center justify-center border-t border-gray-200 sm:px-6">
-              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center">
+            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm text-gray-700">
+                    Showing <span className="font-medium">{(currentPage - 1) * 10 + 1}</span> to <span className="font-medium">{currentPage * 10 < listPlacements.length ? currentPage * 10 : listPlacements.length}</span> of{" "}
+                    <span className="font-medium">{listPlacements.length}</span> results
+                  </p>
+                </div>
                 <div>
                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                     <button

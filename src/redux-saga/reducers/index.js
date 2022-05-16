@@ -4,19 +4,19 @@ import PlacementReducer from "./PlacementReducer";
 import TalentReducer from "./TalentReducer";
 
 import CurriculumReducer from "./CurriculumReducer";
-import AppCurriculumReducer from './AppCurriculumReducer';
+import AppCurriculumReducer from "./AppCurriculumReducer";
 
 import BatchReducer from "./BatchReducer";
-import AppBatchReducer from './AppBatchReducer';
+import AppBatchReducer from "./AppBatchReducer";
 
 const rootReducer = combineReducers({
   userState: userReducer,
-  PlacemenState: PlacementReducer,
+  placemenState: PlacementReducer,
   curriculumState: CurriculumReducer,
-  curriculumAppState : AppCurriculumReducer,
+  curriculumAppState: AppCurriculumReducer,
   talentState: TalentReducer,
   batchState: BatchReducer,
-  batchAppState : AppBatchReducer
+  batchAppState: AppBatchReducer,
 });
 
 export default rootReducer;

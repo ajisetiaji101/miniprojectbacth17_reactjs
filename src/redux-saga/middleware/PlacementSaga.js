@@ -1,6 +1,6 @@
 import apiPlacement from "../../api/api-placement";
 import { call, put } from "redux-saga/effects";
-import { doGetPlacementFailed, doGetPlacementSucceed } from "../actions/Placement";
+import { doDeletePlacementFailed, doDeletePlacementSucceed, doGetPlacementFailed, doGetPlacementSucceed } from "../actions/Placement";
 
 function* handleGetPlacementSaga() {
   try {
@@ -11,4 +11,14 @@ function* handleGetPlacementSaga() {
   }
 }
 
-export { handleGetPlacementSaga };
+function* handleDeletePlacementSaga(action) {
+  const { payload } = action;
+  try {
+    const result = yield call(apiPlacement.Delete, payload);
+    yield put(doDeletePlacementSucceed(payload));
+  } catch (error) {
+    yield put(doDeletePlacementFailed(error));
+  }
+}
+
+export { handleGetPlacementSaga, handleDeletePlacementSaga };

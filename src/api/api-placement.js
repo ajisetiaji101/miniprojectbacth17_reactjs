@@ -10,6 +10,16 @@ const List = async () => {
   }
 };
 
+const Delete = async (id) => {
+  try {
+    const result = await axios.delete(`${config.domain}/placement/${id}`);
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+
 export default {
   List,
+  Delete,
 };
