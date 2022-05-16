@@ -7,6 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
 import { TrashIcon } from "@heroicons/react/solid";
+import config from "../../../config/config";
 
 const columns = [{ name: "CONTRACT NO." }, { name: "CLIENT" }, { name: "TALENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
 const placementStatus = ["trial", "placement", "closed"];
@@ -125,7 +126,7 @@ export default function Placement() {
               <thead className="border-y border-gray-200">
                 <tr key="col_names">
                   {(columns || []).map((column) => (
-                    <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-900 uppercase">
                       <span className="">{column.name}</span>
                     </th>
                   ))}
@@ -136,21 +137,24 @@ export default function Placement() {
                 {Array.isArray(listPlacements) &&
                   listPlacements.slice((currentPage - 1) * 10, currentPage * 10).map((data) => (
                     <tr key={data.place_id}>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.place_contract_no}</td>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.place_client.client_name}</td>
-
-                      <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
-                        {data.talent_placements.map((talent) => (
-                          <p>{talent.tapl_tale.tale_fullname}</p>
-                        ))}
+                      <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.place_contract_no}</td>
+                      <td className="py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
+                        <div className="flex justify-between items-center overflow-hidden w-[8rem]">
+                          <div className="flex justify-left -space-x-1">
+                            {data.talent_placements.map((talent) => (
+                              <img className="block h-7 w-7 rounded-full ring-2 ring-white" src={`${config.domain}/placement/images/${talent.tapl_tale.tale_photo}`} />
+                            ))}
+                          </div>
+                          {data.talent_placements.length > 4 && <div className="pl-2">{"+" + (data.talent_placements.length - 4)}</div>}
+                        </div>
                       </td>
-
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                      <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">{data.place_client.client_name}</td>
+                      <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
                         <div>{data.place_start_date}</div>
                         <div>{data.place_end_date}</div>
                       </td>
-                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">Novelina</td>
-                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 capitalize mr-6">
+                      <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">Novelina</td>
+                      <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900 capitalize mr-6">
                         <div>{data.place_status}</div>
                         {data.talent_placements.map((talent, i) => {
                           if (i == 0) {

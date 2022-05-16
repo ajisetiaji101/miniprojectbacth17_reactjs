@@ -7,9 +7,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
 
-
 const columns = [{ name: "FULL NAME" }, { name: "TECHNOLOGY" }, { name: "BATCH" }, { name: "PERIODE" }, { name: "TRAINER" }, { name: "STATUS" }];
-const tal_status =['On Bootcamp','Idle','Trial','Placement']
+const tal_status = ["On Bootcamp", "Idle", "Trial", "Placement"];
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -26,7 +25,6 @@ export default function Talent() {
     select: "",
   });
 
-  
   const [pageNumbers, setPageNumbers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(0);
@@ -42,17 +40,16 @@ export default function Talent() {
     }
   }, []);
 
-
   useEffect(() => {
     setListTalents(
-        Array.isArray(talent) && talent.filter(data=>(
-            (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase())
-             || 
-            data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) &&
-            (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
-            ))
+      Array.isArray(talent) &&
+        talent.filter(
+          (data) =>
+            (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) &&
+            (filter.select === "Status" || data.tale_status_timeline.includes(filter.select))
         )
-}, [talent]);
+    );
+  }, [talent]);
 
   useEffect(() => {
     setPageNumbers(Array.from({ length: Math.ceil(listTalents.length / 10) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
@@ -69,14 +66,11 @@ export default function Talent() {
     setListTalents(
       Array.isArray(talent) &&
         talent.filter(
-          data =>(
-          (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) 
-          || 
-          data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase()
-          )) &&
-          (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
-          ))
-    )
+          (data) =>
+            (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) &&
+            (filter.select === "Status" || data.tale_status_timeline.includes(filter.select))
+        )
+    );
   };
 
   return (
@@ -102,13 +96,11 @@ export default function Talent() {
                 aria-label=".form-select-sm example"
               >
                 <option>Status</option>
-                {(tal_status || []).map((value, index) => 
-                (
+                {(tal_status || []).map((value, index) => (
                   <option className="capitalize" value={value} key={index}>
                     {value}
                   </option>
-                )
-                )}
+                ))}
               </select>
               <button
                 type="submit"
@@ -139,9 +131,7 @@ export default function Talent() {
                   listTalents.slice((currentPage - 1) * 10, currentPage * 10).map((data) => (
                     <tr key={data.tale_id}>
                       <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.tale_fullname}</td>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.tale_bootcamp}
-
-                    </td>
+                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.tale_bootcamp}</td>
 
                       <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
                         {data.talent_batches.map((talent) => (
@@ -152,11 +142,11 @@ export default function Talent() {
                       <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_start_date}</p>
-                        ))},
+                        ))}
+                        ,
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_end_date}</p>
                         ))}
-
                       </td>
                       <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
                         {data.talent_batches.map((talent) => (
