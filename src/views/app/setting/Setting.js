@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import * as moment from "moment";
 import Page from "../../../component/commons/Page";
 import config from "../../../config/config";
 import DatePicker from "react-datepicker";
@@ -12,7 +13,6 @@ import { doGetTalentRequest, doUpdateSettingsRequest, doUpdateTalentNoFileReques
 export default function Setting() {
   const [previewImg, setPreviewImg] = useState();
   const [uploaded, setUploaded] = useState(false);
-  const [attrb, setAttrb] = useState();
 
   const [fileResume, setFileResume] = useState(false);
   const [fileCoverLetter, setFileCoverLetter] = useState(false);
@@ -35,6 +35,10 @@ export default function Setting() {
     dispatch(doGetTalentRequest(userProfile.userId));
   }, []);
 
+  useEffect(() => {
+    let img = `${config.domain}/settings/images/${settings.tale_photo}`;
+    setPreviewImg(img);
+  }, [settings]);
   // useEffect(() => {
   //   if (settings) {
   //     setAttrb({
@@ -76,7 +80,6 @@ export default function Setting() {
     enableReinitialize: true,
     initialValues: {
       tale_fullname: settings.tale_fullname,
-      tale_email: settings.tale_email,
       tale_education: settings.tale_education,
       tale_major: settings.tale_major,
       tale_city: settings.tale_city,
@@ -90,66 +93,65 @@ export default function Setting() {
       tale_gpa: settings.tale_gpa,
       tale_province: settings.tale_province,
       tale_tag_skill: settings.tale_tag_skill,
+      tale_email: settings.tale_email,
+      tale_photo: settings.tale_photo,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const tglLahir = values.tale_birthdate.getFullYear() + "-" + (values.tale_birthdate.getMonth() + 1) + "-" + values.tale_birthdate.getDate();
+      const tglLahir = moment(formik.values.tale_birthdate).format("YYYY-MM-DD");
       let payload = new FormData();
       if (fileResume === true || fileCoverLetter === true) {
         payload.append("tale_fullname", values.tale_fullname);
-        payload.append("tale_email", values.tale_email);
+        payload.append("tale_birthdate", tglLahir);
         payload.append("tale_education", values.tale_education);
         payload.append("tale_major", values.tale_major);
-        payload.append("tale_city", values.tale_city);
-        payload.append("tale_bootcamp", values.tale_bootcamp);
-        payload.append("tale_resume", values.tale_resume);
-        payload.append("tale_cover_letter", values.tale_cover_letter);
-        payload.append("tale_birthdate", tglLahir);
-        payload.append("tale_handphone", values.tale_handphone);
         payload.append("tale_school_name", values.tale_school_name);
+        payload.append("tale_handphone", values.tale_handphone);
+        payload.append("tale_bootcamp", values.tale_bootcamp);
         payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
         payload.append("tale_gpa", parseInt(values.tale_gpa));
+        payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
         payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_resume", values.tale_resume);
+        payload.append("tale_cover_letter", values.tale_cover_letter);
         payload.append("tale_user_id", parseInt(userProfile.userId));
         dispatch(doUpdateTalentRequest(payload));
       } else if (fileResume === true) {
         payload.append("tale_fullname", values.tale_fullname);
-        payload.append("tale_email", values.tale_email);
+        payload.append("tale_birthdate", tglLahir);
         payload.append("tale_education", values.tale_education);
         payload.append("tale_major", values.tale_major);
-        payload.append("tale_city", values.tale_city);
-        payload.append("tale_bootcamp", values.tale_bootcamp);
-        payload.append("tale_resume", values.tale_resume);
-        payload.append("tale_birthdate", tglLahir);
-        payload.append("tale_handphone", values.tale_handphone);
         payload.append("tale_school_name", values.tale_school_name);
+        payload.append("tale_handphone", values.tale_handphone);
+        payload.append("tale_bootcamp", values.tale_bootcamp);
         payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
         payload.append("tale_gpa", parseInt(values.tale_gpa));
+        payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
         payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_resume", values.tale_resume);
         payload.append("tale_user_id", parseInt(userProfile.userId));
         dispatch(doUpdateTalentRequest(payload));
       } else if (fileCoverLetter === true) {
         payload.append("tale_fullname", values.tale_fullname);
-        payload.append("tale_email", values.tale_email);
+        payload.append("tale_birthdate", tglLahir);
         payload.append("tale_education", values.tale_education);
         payload.append("tale_major", values.tale_major);
-        payload.append("tale_city", values.tale_city);
-        payload.append("tale_bootcamp", values.tale_bootcamp);
-        payload.append("tale_cover_letter", values.tale_cover_letter);
-        payload.append("tale_birthdate", tglLahir);
-        payload.append("tale_handphone", values.tale_handphone);
         payload.append("tale_school_name", values.tale_school_name);
+        payload.append("tale_handphone", values.tale_handphone);
+        payload.append("tale_bootcamp", values.tale_bootcamp);
         payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
         payload.append("tale_gpa", parseInt(values.tale_gpa));
+        payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
         payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_cover_letter", values.tale_cover_letter);
         payload.append("tale_user_id", parseInt(userProfile.userId));
       } else {
         const payload = {
           tale_fullname: values.tale_fullname,
-          tale_birthdate: settings.tale_birthdate && new Date(settings.tale_birthdate),
+          tale_birthdate: tglLahir,
           tale_education: values.tale_education,
           tale_major: values.tale_major,
           tale_school_name: values.tale_school_name,
@@ -174,11 +176,10 @@ export default function Setting() {
 
     reader.onloadend = () => {
       formik.setFieldValue("tale_resume", file);
-      setPreviewImg(reader.result);
     };
 
     reader.readAsDataURL(file);
-    setUploaded(true);
+    setFileResume(true);
   };
 
   const uploadOnChangeCover = (name) => (event) => {
@@ -187,7 +188,18 @@ export default function Setting() {
 
     reader.onloadend = () => {
       formik.setFieldValue("tale_cover_letter", file);
-      setPreviewImg(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+    setFileCoverLetter(true);
+  };
+
+  const uploadOnChangeImage = (name) => (event) => {
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      formik.setFieldValue("tale_photo", file);
     };
 
     reader.readAsDataURL(file);
@@ -310,7 +322,7 @@ export default function Setting() {
                     autoComplete="tale_bootcamp"
                     className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   >
-                    {(listBootcamps || []).map((value, index) => (
+                    {listBootcamps.map((value, index) => (
                       <option value={value} key={index}>
                         {value}
                       </option>
@@ -403,7 +415,7 @@ export default function Setting() {
 
                 <div className="col-span-6 row-start-3 sm:col-span-2">
                   <label htmlFor="tale_school_name" className="block text-sm font-medium text-gray-700">
-                    Pendidikan
+                    Universitas
                   </label>
                   <input
                     type="text"
@@ -500,7 +512,7 @@ export default function Setting() {
                   <div className="">
                     <img src={previewImg} className="h-44 w-44 rounded-full ring-2 ring-red-600" />
                   </div>
-                  {/* <input type="file" accept="image/*" id="prod_url_image" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChange("file")} /> */}
+                  <input type="file" accept="image/*" id="prod_url_image" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
                 </div>
               </div>
             </div>

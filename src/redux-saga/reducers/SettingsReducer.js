@@ -15,15 +15,13 @@ const SettingReducer = (state = INIT_STATE, action) => {
       };
     case ActionType.GET_TALENT_SUCCEED:
       return applyGetTalentSucceed(state, action);
-    case ActionType.UPDATE_TALENT_REQUEST: {
+    case ActionType.UPDATE_TALENT_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
-    }
-    case ActionType.UPDATE_TALENT_SUCCEED: {
+    case ActionType.UPDATE_TALENT_SUCCEED:
       return applyUpdateTalentSucceed(state, action);
-    }
     case ActionType.UPDATE_TALENTNOFILE_REQUEST:
       return {
         ...state,
