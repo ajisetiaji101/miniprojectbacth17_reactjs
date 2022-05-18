@@ -1,6 +1,7 @@
 import { takeEvery, all } from "redux-saga/effects";
 import * as ActionTypeUser from "../constants/User";
 import * as ActionTypePlacement from "../constants/Placement";
+import * as ActionTypeSettings from "../constants/Settings";
 import * as ActionTypeTalent from "../constants/Talent";
 
 import * as ActionTypeAppCurriculum from "../constants/AppCurriculum";
@@ -16,6 +17,7 @@ import { handleAddCurriculum, handleGetCurriculum } from "./CurriculumSaga";
 import { handleGetTalentSaga } from "./TalentSaga";
 import { handleGetBatch, handleAddBatch } from "./BatchSaga";
 import { handleGetAppBatch, handleEditBatchStatus, handleDeleteBatch, handleGetBatchId, handleEditBatch } from "./AppBatchSaga";
+import { handleGetTalent, handleUpdateTalent, handleUpdateTalentNoFile } from "./SettingsSaga";
 
 function* watchAll() {
   yield all([
@@ -25,6 +27,10 @@ function* watchAll() {
 
     takeEvery(ActionTypePlacement.GET_PLACEMENT_REQUEST, handleGetPlacementSaga),
     takeEvery(ActionTypePlacement.DELETE_PLACEMENT_REQUEST, handleDeletePlacementSaga),
+
+    takeEvery(ActionTypeSettings.GET_TALENT_REQUEST, handleGetTalent),
+    takeEvery(ActionTypeSettings.UPDATE_TALENT_REQUEST, handleUpdateTalent),
+    takeEvery(ActionTypeSettings.UPDATE_TALENTNOFILE_REQUEST, handleUpdateTalentNoFile),
 
     takeEvery(ActionTypeTalent.GET_TALENT_REQUEST, handleGetTalentSaga),
 

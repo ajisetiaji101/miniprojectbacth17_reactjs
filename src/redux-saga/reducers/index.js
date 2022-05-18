@@ -8,6 +8,7 @@ import AppCurriculumReducer from "./AppCurriculumReducer";
 
 import BatchReducer from "./BatchReducer";
 import AppBatchReducer from "./AppBatchReducer";
+import SettingReducer from "./SettingsReducer";
 
 const rootReducer = combineReducers({
   userState: userReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   talentState: TalentReducer,
   batchState: BatchReducer,
   batchAppState: AppBatchReducer,
+  settingState: SettingReducer,
 });
 
 export default rootReducer;

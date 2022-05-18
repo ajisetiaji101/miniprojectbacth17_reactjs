@@ -11,6 +11,7 @@ import config from "../../../config/config";
 
 const columns = [{ name: "CONTRACT NO." }, { name: "CLIENT" }, { name: "TALENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
 const placementStatus = ["trial", "placement", "closed"];
+const listBulan = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -135,90 +136,96 @@ export default function Placement() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-100">
                 {Array.isArray(listPlacements) &&
-                  listPlacements.slice((currentPage - 1) * 10, currentPage * 10).map((data) => (
-                    <tr key={data.place_id}>
-                      <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.place_contract_no}</td>
-                      <td className="py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
-                        <div className="flex justify-between items-center overflow-hidden w-[8rem]">
-                          <div className="flex justify-left -space-x-1">
-                            {data.talent_placements.map((talent) => (
-                              <img className="block h-7 w-7 rounded-full ring-2 ring-white" src={`${config.domain}/placement/images/${talent.tapl_tale.tale_photo}`} />
-                            ))}
+                  listPlacements.slice((currentPage - 1) * 10, currentPage * 10).map((data) => {
+                    const [yearstart, monthstart, daystart] = data.place_start_date.split("-");
+                    const [yearend, monthend, dayend] = data.place_end_date.split("-");
+
+                    return (
+                      <tr key={data.place_id}>
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.place_contract_no}</td>
+                        <td className="py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
+                          <div className="flex justify-between items-center overflow-hidden w-[8rem]">
+                            <div className="flex justify-left -space-x-1">
+                              {data.talent_placements.map((talent) => (
+                                <img className="block h-7 w-7 rounded-full ring-2 ring-white" src={`${config.domain}/placement/images/${talent.tapl_tale.tale_photo}`} />
+                              ))}
+                            </div>
+                            {data.talent_placements.length > 4 && <div className="pl-2">{"+" + (data.talent_placements.length - 4)}</div>}
                           </div>
-                          {data.talent_placements.length > 4 && <div className="pl-2">{"+" + (data.talent_placements.length - 4)}</div>}
-                        </div>
-                      </td>
-                      <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">{data.place_client.client_name}</td>
-                      <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
-                        <div>{data.place_start_date}</div>
-                        <div>{data.place_end_date}</div>
-                      </td>
-                      <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">Novelina</td>
-                      <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900 capitalize mr-6">
-                        <div>{data.place_status}</div>
-                        {data.talent_placements.map((talent, i) => {
-                          if (i == 0) {
-                            return <p>{talent.tapl_drop_date}</p>;
-                          }
-                        })}
-                        <div>{console.log(data)}</div>
-                      </td>
-                      <td className="pr-6">
-                        <Menu as="div" className="relative flex justify-end items-center">
-                          {({ open }) => (
-                            <>
-                              <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-600 rounded-full hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ">
-                                <span className="sr-only">Open options</span>
-                                <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                              </Menu.Button>
-                              <Transition
-                                show={open}
-                                as={Fragment}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95"
-                              >
-                                <Menu.Items static className="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg z-10 bg-gray-100 ring-1 ring-gray-900 ring-opacity-5 divide-y divide-gray-300 focus:outline-none">
-                                  {userProfile.userRoles === "administrator" && (
+                        </td>
+                        <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">{data.place_client.client_name}</td>
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
+                          <div>{`${daystart} ${listBulan[monthstart[1]]} ${yearstart}`}</div>
+                          <div>{`${dayend} ${listBulan[monthend[1]]} ${yearend}`}</div>
+                        </td>
+                        <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">Novelina</td>
+                        <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900 capitalize mr-6">
+                          <div>{data.place_status}</div>
+                          {data.talent_placements.map((talent, i) => {
+                            if (i == 0) {
+                              const [year, month, day] = talent.tapl_drop_date.split("-");
+                              return <p>{`${day} ${listBulan[month[1]]} ${year}`}</p>;
+                            }
+                          })}
+                          <div>{console.log(data)}</div>
+                        </td>
+                        <td className="pr-6">
+                          <Menu as="div" className="relative flex justify-end items-center">
+                            {({ open }) => (
+                              <>
+                                <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-600 rounded-full hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ">
+                                  <span className="sr-only">Open options</span>
+                                  <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
+                                </Menu.Button>
+                                <Transition
+                                  show={open}
+                                  as={Fragment}
+                                  enter="transition ease-out duration-100"
+                                  enterFrom="transform opacity-0 scale-95"
+                                  enterTo="transform opacity-100 scale-100"
+                                  leave="transition ease-in duration-75"
+                                  leaveFrom="transform opacity-100 scale-100"
+                                  leaveTo="transform opacity-0 scale-95"
+                                >
+                                  <Menu.Items static className="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg z-10 bg-gray-100 ring-1 ring-gray-900 ring-opacity-5 divide-y divide-gray-300 focus:outline-none">
+                                    {userProfile.userRoles === "administrator" && (
+                                      <div className="py-1">
+                                        <Menu.Item>
+                                          {({ active }) => (
+                                            <Link to={"/app/batch/edit/" + data.place_id} className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}>
+                                              <PencilAltIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
+                                              Edit
+                                            </Link>
+                                          )}
+                                        </Menu.Item>
+                                      </div>
+                                    )}
+
                                     <div className="py-1">
                                       <Menu.Item>
                                         {({ active }) => (
-                                          <Link to={"/app/batch/edit/" + data.place_id} className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}>
-                                            <PencilAltIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
-                                            Edit
+                                          <Link
+                                            to="#"
+                                            onClick={() => {
+                                              if (window.confirm("Delete this Placement ?")) onDelete(data.place_id);
+                                            }}
+                                            className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}
+                                          >
+                                            <TrashIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
+                                            Delete
                                           </Link>
                                         )}
                                       </Menu.Item>
                                     </div>
-                                  )}
-
-                                  <div className="py-1">
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <Link
-                                          to="#"
-                                          onClick={() => {
-                                            if (window.confirm("Delete this Placement ?")) onDelete(data.place_id);
-                                          }}
-                                          className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}
-                                        >
-                                          <TrashIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
-                                          Delete
-                                        </Link>
-                                      )}
-                                    </Menu.Item>
-                                  </div>
-                                </Menu.Items>
-                              </Transition>
-                            </>
-                          )}
-                        </Menu>
-                      </td>
-                    </tr>
-                  ))}
+                                  </Menu.Items>
+                                </Transition>
+                              </>
+                            )}
+                          </Menu>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
             {listPlacements.length === 0 && <div className="px-6 py-3 text-center whitespace-nowrap text-sm font-medium text-gray-900"> Data Not Found...</div>}
