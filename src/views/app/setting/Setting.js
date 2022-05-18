@@ -1,8 +1,7 @@
 import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import * as Yup from "yup";
 import * as moment from "moment";
 import Page from "../../../component/commons/Page";
@@ -39,6 +38,7 @@ export default function Setting() {
     let img = `${config.domain}/settings/images/${settings.tale_photo}`;
     setPreviewImg(img);
   }, [settings]);
+
   // useEffect(() => {
   //   if (settings) {
   //     setAttrb({
@@ -100,7 +100,74 @@ export default function Setting() {
     onSubmit: async (values) => {
       const tglLahir = moment(formik.values.tale_birthdate).format("YYYY-MM-DD");
       let payload = new FormData();
-      if (fileResume === true || fileCoverLetter === true) {
+      // if (fileResume === true || fileCoverLetter === true) {
+      //   payload.append("tale_fullname", values.tale_fullname);
+      //   payload.append("tale_birthdate", tglLahir);
+      //   payload.append("tale_education", values.tale_education);
+      //   payload.append("tale_major", values.tale_major);
+      //   payload.append("tale_school_name", values.tale_school_name);
+      //   payload.append("tale_handphone", values.tale_handphone);
+      //   payload.append("tale_bootcamp", values.tale_bootcamp);
+      //   payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+      //   payload.append("tale_gpa", parseInt(values.tale_gpa));
+      //   payload.append("tale_city", values.tale_city);
+      //   payload.append("tale_province", values.tale_province);
+      //   payload.append("tale_tag_skill", values.tale_tag_skill);
+      //   payload.append("tale_resume", values.tale_resume);
+      //   payload.append("tale_cover_letter", values.tale_cover_letter);
+      //   payload.append("tale_user_id", parseInt(userProfile.userId));
+      //   dispatch(doUpdateTalentRequest(payload));
+      // } else if (fileResume === true) {
+      //   payload.append("tale_fullname", values.tale_fullname);
+      //   payload.append("tale_birthdate", tglLahir);
+      //   payload.append("tale_education", values.tale_education);
+      //   payload.append("tale_major", values.tale_major);
+      //   payload.append("tale_school_name", values.tale_school_name);
+      //   payload.append("tale_handphone", values.tale_handphone);
+      //   payload.append("tale_bootcamp", values.tale_bootcamp);
+      //   payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+      //   payload.append("tale_gpa", parseInt(values.tale_gpa));
+      //   payload.append("tale_city", values.tale_city);
+      //   payload.append("tale_province", values.tale_province);
+      //   payload.append("tale_tag_skill", values.tale_tag_skill);
+      //   payload.append("tale_resume", values.tale_resume);
+      //   payload.append("tale_user_id", parseInt(userProfile.userId));
+      //   dispatch(doUpdateTalentRequest(payload));
+      // } else if (fileCoverLetter === true) {
+      //   payload.append("tale_fullname", values.tale_fullname);
+      //   payload.append("tale_birthdate", tglLahir);
+      //   payload.append("tale_education", values.tale_education);
+      //   payload.append("tale_major", values.tale_major);
+      //   payload.append("tale_school_name", values.tale_school_name);
+      //   payload.append("tale_handphone", values.tale_handphone);
+      //   payload.append("tale_bootcamp", values.tale_bootcamp);
+      //   payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+      //   payload.append("tale_gpa", parseInt(values.tale_gpa));
+      //   payload.append("tale_city", values.tale_city);
+      //   payload.append("tale_province", values.tale_province);
+      //   payload.append("tale_tag_skill", values.tale_tag_skill);
+      //   payload.append("tale_cover_letter", values.tale_cover_letter);
+      //   payload.append("tale_user_id", parseInt(userProfile.userId));
+      // } else {
+      //   const payload = {
+      //     tale_fullname: values.tale_fullname,
+      //     tale_birthdate: tglLahir,
+      //     tale_education: values.tale_education,
+      //     tale_major: values.tale_major,
+      //     tale_school_name: values.tale_school_name,
+      //     tale_handphone: values.tale_handphone,
+      //     tale_bootcamp: values.tale_bootcamp,
+      //     tale_year_graduate: parseInt(values.tale_year_graduate),
+      //     tale_gpa: parseInt(values.tale_gpa),
+      //     tale_city: values.tale_city,
+      //     tale_province: values.tale_province,
+      //     tale_tag_skill: values.tale_tag_skill,
+      //     tale_user_id: parseInt(userProfile.userId),
+      //   };
+      //   console.log(payload);
+      //   dispatch(doUpdateTalentNoFileRequest(payload));
+      // }
+      if (fileResume === true || fileCoverLetter === true || uploaded === true) {
         payload.append("tale_fullname", values.tale_fullname);
         payload.append("tale_birthdate", tglLahir);
         payload.append("tale_education", values.tale_education);
@@ -115,6 +182,7 @@ export default function Setting() {
         payload.append("tale_tag_skill", values.tale_tag_skill);
         payload.append("tale_resume", values.tale_resume);
         payload.append("tale_cover_letter", values.tale_cover_letter);
+        payload.append("tale_photo", values.tale_photo);
         payload.append("tale_user_id", parseInt(userProfile.userId));
         dispatch(doUpdateTalentRequest(payload));
       } else if (fileResume === true) {
@@ -148,6 +216,21 @@ export default function Setting() {
         payload.append("tale_tag_skill", values.tale_tag_skill);
         payload.append("tale_cover_letter", values.tale_cover_letter);
         payload.append("tale_user_id", parseInt(userProfile.userId));
+      } else if (uploaded === true) {
+        payload.append("tale_fullname", values.tale_fullname);
+        payload.append("tale_birthdate", tglLahir);
+        payload.append("tale_education", values.tale_education);
+        payload.append("tale_major", values.tale_major);
+        payload.append("tale_school_name", values.tale_school_name);
+        payload.append("tale_handphone", values.tale_handphone);
+        payload.append("tale_bootcamp", values.tale_bootcamp);
+        payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        payload.append("tale_gpa", parseInt(values.tale_gpa));
+        payload.append("tale_city", values.tale_city);
+        payload.append("tale_province", values.tale_province);
+        payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_photo", values.tale_photo);
+        payload.append("tale_user_id", parseInt(userProfile.userId));
       } else {
         const payload = {
           tale_fullname: values.tale_fullname,
@@ -164,9 +247,9 @@ export default function Setting() {
           tale_tag_skill: values.tale_tag_skill,
           tale_user_id: parseInt(userProfile.userId),
         };
-        console.log(payload);
         dispatch(doUpdateTalentNoFileRequest(payload));
       }
+      navigate("/app", { state: { refresh: true } });
     },
   });
 
@@ -200,6 +283,7 @@ export default function Setting() {
 
     reader.onloadend = () => {
       formik.setFieldValue("tale_photo", file);
+      setPreviewImg(reader.result);
     };
 
     reader.readAsDataURL(file);
@@ -512,7 +596,7 @@ export default function Setting() {
                   <div className="">
                     <img src={previewImg} className="h-44 w-44 rounded-full ring-2 ring-red-600" />
                   </div>
-                  <input type="file" accept="image/*" id="prod_url_image" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
+                  <input type="file" accept="image/*" id="tale_photo" name="tale_photo" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
                 </div>
               </div>
             </div>
@@ -521,7 +605,7 @@ export default function Setting() {
               <button
                 type="button"
                 onClick={formik.handleSubmit}
-                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Save
               </button>
