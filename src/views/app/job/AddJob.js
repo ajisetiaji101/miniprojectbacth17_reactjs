@@ -19,7 +19,6 @@ import * as Yup from "yup";
 import CreateSuccess from "../../../component/Job/CreateSuccess";
 import Page from "../../../component/commons/Page";
 import Loader from "../../../component/loader/Loaders";
-import Toggle from "../../../component/Job/Toggle";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw } from "draft-js";
