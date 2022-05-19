@@ -320,7 +320,7 @@ export default function Batch() {
               Recommeded Bootcamp Members
             </h1>
 
-            <div className="flex flex-wrap justify-between  py-2 ">
+            <div className="flex flex-wrap justify-between py-2 ">
               {batch.talent &&
                 batch.talent.map((items) => (
                   <label class="relative flex w-72 mt-12 mb-10 bg-none items-center py-5 hover:scale-105">

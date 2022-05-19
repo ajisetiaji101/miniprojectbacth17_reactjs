@@ -9,6 +9,7 @@ import Signin from './component/layout/Signin';
 import Dashboard from './views/app/dashboard/Dashboard';
 import Candidat from './views/app/candidat/Candidat';
 import Batch from './views/app/batch/Batch';
+import EditBatch from './views/app/batch/EditBatch';
 import AddBatch from './views/app/batch/AddBatch';
 import Curriculum from './views/app/curriculum/Curriculum';
 import Hiring from './views/app/hiring/Hiring';
@@ -45,12 +46,13 @@ export default function Routes(isLoggedIn) {
         { path: 'dashboard', element: isLoggedIn ? <Dashboard/> : <Navigate to="/auth/signin"/>},
         { path: 'candidat', element: isLoggedIn ? <Candidat/>: <Navigate to="/auth/signin"/> },
         { path: 'batch', element: isLoggedIn ? <Batch /> : <Navigate to="/auth/signin"/>},
-        { path: "batch/new", element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin" />},
+        { path: 'batch/edit/:id', element: isLoggedIn ? <EditBatch /> : <Navigate to="/auth/signin"/>},
+        { path: "batch/new", element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin"/>},
         { path: 'placement', element: isLoggedIn ? <Placement />: <Navigate to="/auth/signin"/> },
         { path: 'talent', element: isLoggedIn ? <Talent />: <Navigate to="/auth/signin"/> },
-        { path: 'curriculum', element: isLoggedIn ? <Curriculum />: <Navigate to="/auth/signin"/> },
-        { path: 'hiring', element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin"/> },
-        { path: 'setting', element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin"/> },
+        { path: 'curriculum', element: isLoggedIn ? <Curriculum />: <Navigate to="/auth/signin"/>},
+        { path: 'hiring', element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin"/>},
+        { path: 'setting', element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin"/>},
       ]
     },
     { path: '*', element: <Navigate to="/404" replace /> }
