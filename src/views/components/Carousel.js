@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 export const CarouselData = [
   {
     image: "./assets/images/bootcamp.jpg",
-    data: ["Join", "Bootcamp", "signin"],
+    data: ["Join", "Bootcamp", "Join with us and work in your dream company", "signin"],
   },
   {
     image: "./assets/images/talent.jpg",
-    data: ["Need", "Talent ?", "#"],
+    data: ["Need", "Talent ?", "Trusted development partner in provide skillfull IT resource", "#"],
   },
   {
     image: "./assets/images/hiring.jpg",
-    data: ["We", "Hiring", "#"],
+    data: ["We", "Hiring", "It's time to build your career in technology", "#"],
   },
 ];
 
@@ -26,14 +26,14 @@ class Carousel extends Component {
     };
   }
 
-  componentDidMount() {
-    setInterval(() => {
-      if (this.state.paused === false) {
-        let newSlide = this.state.currentSlide === CarouselData.length - 1 ? 0 : this.state.currentSlide + 1;
-        this.setState({ currentSlide: newSlide });
-      }
-    }, 3000);
-  }
+  // componentDidMount() {
+  //   setInterval(() => {
+  //     if (this.state.paused === false) {
+  //       let newSlide = this.state.currentSlide === CarouselData.length - 1 ? 0 : this.state.currentSlide + 1;
+  //       this.setState({ currentSlide: newSlide });
+  //     }
+  //   }, 3000);
+  // }
 
   prevSlide = () => {
     let newSlide = this.state.currentSlide === 0 ? CarouselData.length - 1 : this.state.currentSlide - 1;
@@ -60,21 +60,24 @@ class Carousel extends Component {
                   src={slide.image}
                   alt="This is a carousel slide"
                   key={index}
-                  className={index === this.state.currentSlide ? "block w-screen h-screen object-cover saturate-0 backdrop-opacity-50" : "hidden"}
-                  onMouseEnter={() => {
-                    this.setState({ paused: true });
-                  }}
-                  onMouseLeave={() => {
-                    this.setState({ paused: false });
-                  }}
+                  className={index === this.state.currentSlide ? "block w-screen h-screen object-cover brightness-50 backdrop-opacity-50" : "hidden"}
+                  // onMouseEnter={() => {
+                  //   this.setState({ paused: true });
+                  // }}
+                  // onMouseLeave={() => {
+                  //   this.setState({ paused: false });
+                  // }}
                 />
-                <p key={index} className={index === this.state.currentSlide ? "absolute text-white left-1/4 top-1/4 text-4xl font-bold" : "hidden"}>
+                <p key={index} className={index === this.state.currentSlide ? "absolute text-white left-1/4 top-1/4 text-5xl font-bold" : "hidden"}>
                   {slide.data[0]}
                 </p>
-                <p key={index} className={index === this.state.currentSlide ? "absolute text-white left-1/4 top-1/3 text-6xl font-bold" : "hidden"}>
+                <p key={index} className={index === this.state.currentSlide ? "absolute text-white left-1/4 top-1/3 text-5xl font-bold" : "hidden"}>
                   {slide.data[1]}
                 </p>
-                <Link to={slide.data[2]}>
+                <p key={index} className={index === this.state.currentSlide ? "absolute text-white left-1/4 top-1/3 text-2xl font-bold mt-16" : "hidden"}>
+                  {slide.data[2]}
+                </p>
+                <Link to={slide.data[3]}>
                   <button
                     className={
                       index === this.state.currentSlide

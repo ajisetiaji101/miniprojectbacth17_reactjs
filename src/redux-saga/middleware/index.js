@@ -1,18 +1,19 @@
-import { takeEvery, all } from "redux-saga/effects";
-import * as ActionTypeUser from "../constants/User";
-import * as ActionTypePlacement from "../constants/Placement";
+import { takeEvery, all } from 'redux-saga/effects';
+import * as ActionTypeUser from '../constants/User';
+import * as ActionTypeTestimoni from '../constants/Testimoni';
+import * as ActionTypePlacement from "../constants/Placement"
+import * as ActionTypeInstructor from "../constants/Instructor";
 import * as ActionTypeSettings from "../constants/Settings";
 import * as ActionTypeTalent from "../constants/Talent";
-
 import * as ActionTypeAppCurriculum from "../constants/AppCurriculum";
 import * as ActionTypeCurriculum from "../constants/CurriculumConstant";
-
 import * as ActionTypeBatch from "../constants/BatchConstant";
 import * as ActionTypeAppBatch from "../constants/AppBatch";
-
 import * as ActionTypeJob from '../constants/Job'
 
 import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
+import { handleGetTestimoniSaga } from "./TestimoniSaga";
+import { handleGetInstructorSaga } from "./InstructorSaga";
 import { handleDeletePlacementSaga, handleGetPlacementSaga } from "./PlacementSaga";
 import { handleGetAppCurriculum, handleEditCurriculum, handleDeleteCurriculum, handleEditCurriculumStatus, handleGetCurriculumId } from "./AppCurriculumSaga";
 import { handleAddCurriculum, handleGetCurriculum } from "./CurriculumSaga";
@@ -27,7 +28,8 @@ function* watchAll() {
     takeEvery(ActionTypeUser.ADD_SIGNUP_REQUEST, handleSignup),
     takeEvery(ActionTypeUser.GET_SIGNIN_REQUEST, handleSignin),
     takeEvery(ActionTypeUser.GET_SIGNOUT_REQUEST, handleSignout),
-
+    takeEvery( ActionTypeTestimoni.GET_TESTIMONI_REQUEST,handleGetTestimoniSaga),
+    takeEvery(ActionTypeInstructor.GET_INSTRUCTOR_REQUEST,handleGetInstructorSaga),
     takeEvery(ActionTypePlacement.GET_PLACEMENT_REQUEST, handleGetPlacementSaga),
     takeEvery(ActionTypePlacement.DELETE_PLACEMENT_REQUEST, handleDeletePlacementSaga),
 
@@ -55,7 +57,9 @@ function* watchAll() {
   
     takeEvery(ActionTypeJob.GET_JOB_REQUEST, handleGetJob),
     takeEvery(ActionTypeJob.ADD_JOB_REQUEST, handleAddJob),
-    takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),]);
+    takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
+  ]);
+
 }
 
 export default watchAll;

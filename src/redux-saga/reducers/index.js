@@ -1,6 +1,8 @@
-import { combineReducers } from "redux";
-import userReducer from "./UserReducer";
+import { combineReducers } from 'redux';
+import userReducer from './UserReducer';
+import testimoniReducer from './TestimoniReducer'
 import PlacementReducer from "./PlacementReducer";
+import instructorReducer from './InstructorReducer';
 import TalentReducer from "./TalentReducer";
 
 import CurriculumReducer from "./CurriculumReducer";
@@ -12,8 +14,11 @@ import SettingReducer from "./SettingsReducer";
 import JobReducer from './JobReducer';
 
 const rootReducer = combineReducers({
-  userState: userReducer,
+  userState : userReducer,
+  testimoniState : testimoniReducer,
   placemenState: PlacementReducer,
+  instructorState: instructorReducer,
+
   curriculumState: CurriculumReducer,
   curriculumAppState: AppCurriculumReducer,
   talentState: TalentReducer,

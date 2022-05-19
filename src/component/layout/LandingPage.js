@@ -26,10 +26,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
 import Carousel from "../../views/components/Carousel";
 import Brands from "../../views/components/Brands";
+import Testimoni from "../../views/components/Testimoni";
+import Instructor from "../../views/components/Instructor";
+// import Testimoni2 from "../../views/components/Testimoni2"
 import Partner from "../../views/components/Partner";
 import Abouts from "../../views/components/Abouts";
 import Footer from "../../views/components/Footer";
-import Testimonials from "../../views/components/Testimonials";
 
 const solutions = [
   {
@@ -135,7 +137,7 @@ export default function LandingPage() {
                     )}
                   </Popover> */}
 
-                  <Link to="talent" className="text-base font-medium text-gray-500 hover:text-red-600">
+                  <Link to="why" className="text-base font-medium text-gray-500 hover:text-red-600">
                     Why
                   </Link>
                   <Link to="bootcamp" className="text-base font-medium text-gray-500 hover:text-red-600">
@@ -289,24 +291,16 @@ export default function LandingPage() {
           )}
         </Popover>
       </header>
-      <body>
-        <div>
-          <Carousel />
-          <Brands />
-          <Testimonials />
-          <Partner />
-          <Abouts />
-        </div>
-      </body>
-      <footer>
-        <Footer />
-      </footer>
+
       <main>
         {/* display contain page like bootcamp, hiring, talent in <Outlet/>*/}
-        <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div>
           <Outlet />
         </div>
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

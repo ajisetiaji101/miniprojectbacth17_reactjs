@@ -20,12 +20,14 @@ import Placement from "./views/app/placement/Placement";
 import Job from "./views/app/job/Job";
 import AddJob from "./views/app/job/AddJob";
 import Apply from "./views/app/apply/Apply";
+import Landing from "./views/components/Landing";
 export default function Routes(isLoggedIn) {
   return useRoutes([
     {
       path: "/",
       element: <LandingPage />,
       children: [
+        { path: "", element: <Landing /> },
         { path: "signin", element: <Navigate to="/auth/signin" /> },
         { path: "signup", element: <Navigate to="/auth/signup" /> },
         { path: "bootcamp", element: <Bootcamp /> },
@@ -51,13 +53,13 @@ export default function Routes(isLoggedIn) {
         { path: "batch/new", element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin" /> },
         { path: "placement", element: isLoggedIn ? <Placement /> : <Navigate to="/auth/signin" /> },
         { path: "talent", element: isLoggedIn ? <Talent /> : <Navigate to="/auth/signin" /> },
+        { path: "curriculum", element: isLoggedIn ? <Curriculum /> : <Navigate to="/auth/signin" /> },
+        { path: "hiring", element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin" /> },
         { path: "job", element: isLoggedIn ? <Job /> : <Navigate to="/auth/signin" /> },
         {
           path: "job/new",
           element: isLoggedIn ? <AddJob /> : <Navigate to="/auth/signin" />,
         },
-        { path: "curriculum", element: isLoggedIn ? <Curriculum /> : <Navigate to="/auth/signin" /> },
-        { path: "hiring", element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin" /> },
         { path: "setting", element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin" /> },
       ],
     },
