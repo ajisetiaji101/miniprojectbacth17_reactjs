@@ -73,12 +73,16 @@ export default function LandingPage() {
   const [previewImg, setPreviewImg] = useState();
 
   useEffect(() => {
-    dispatch(doGetTalentRequest(userProfile.userId));
+    if (isLoggedIn === true) {
+      dispatch(doGetTalentRequest(userProfile.userId));
+    }
   }, []);
 
   useEffect(() => {
-    let img = `${config.domain}/settings/images/${settings.tale_photo}`;
-    setPreviewImg(img);
+    if (isLoggedIn === true) {
+      let img = `${config.domain}/settings/images/${settings.tale_photo}`;
+      setPreviewImg(img);
+    }
   }, [settings]);
 
   const onSignout = () => {
