@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { doGetHiringRequest } from "../../redux-saga/actions/Hiring";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { ChevronLeftIcon, ChevronRightIcon,PencilAltIcon} from "@heroicons/react/outline";
 // import Page from "../../../component/commons/Page";
 import config from "../../config/config";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,6 +16,11 @@ import Sidebar from './Sidebar'
 import Search from './Search'
 
 
+
+const Har_status =['It Programmer','Marketing','Sales']
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 export default function Hiring() {
   let navigate = useNavigate();
   const location = useLocation();
@@ -48,20 +54,20 @@ export default function Hiring() {
     setListHiring(
         Array.isArray(hiring) && hiring.filter(data=> (
           data.jobs_city.toLowerCase().includes(filter.input.toLowerCase()) 
-        // || 
-        // data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase()
-        // )
+        || 
+        data.jobs_title.toLowerCase().includes(filter.input.toLowerCase()
+        )
         ) 
-                  // &&
-          // (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
+                  &&
+          (filter.select === 'All' || data.jobs_specification.includes(filter.select))
         ))
 }, [hiring]);
 
-  // useEffect(() => {
-  //   setPageNumbers(Array.from({ length: Math.ceil(listHiring.length / 10) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
-  //   setCurrentPage(1);
-  //   setPageRange(0);
-  // }, [listHiring]);
+  useEffect(() => {
+    setPageNumbers(Array.from({ length: Math.ceil(listHiring.length / 2) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
+    setCurrentPage(1);
+    setPageRange(0);
+  }, [listHiring]);
 
   const handleOnChange = (name) => (event) => {
     setFilter({ ...filter, [name]: event.target.value });
@@ -74,12 +80,12 @@ export default function Hiring() {
         hiring.filter(
           data =>(
           (data.jobs_city.toLowerCase().includes(filter.input.toLowerCase()) 
-          // || 
-          // data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase()
-          // )
+          || 
+          data.jobs_title.toLowerCase().includes(filter.input.toLowerCase()
+          )
           ) 
-          // &&
-          // (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
+          &&
+          (filter.select === 'All' || data.jobs_specification.includes(filter.select))
           ))
     )
   };
@@ -97,7 +103,7 @@ export default function Hiring() {
               <p className="text-sm mx-2 py-1">Search by Category</p>
               <input
                 type="search"
-                // onChange={handleOnChange("input")}
+                onChange={handleOnChange("input")}
                 className="form-control relative w-64 block px-4 py-0.5 ml-2 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:border-transparent focus:text-gray-700 focus:ring-1 focus:ring-offset-1 focus:ring-purple-500 focus:outline-none"
                 placeholder="Jabatan, Kata Kunci, Perusahaan"
                 aria-label="Search"
@@ -112,20 +118,20 @@ export default function Hiring() {
                 aria-describedby="button-addon2"
               />
               <select
-                name="tale_status_timeline"
-                id="tale_status_timeline"
-                // onChange={handleOnChange("select")}
+                name="jobs_specification"
+                id="jobs_specification"
+                onChange={handleOnChange("select")}
                 className="capitalize form-select form-select-sm appearance-none block mx-1 px-2 py-0.5 w-24 text-sm font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:border-transparent focus:text-gray-700 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-purple-500"
                 aria-label=".form-select-sm example"
               >
-                <option>Status</option>
-                {/* {(tal_status || []).map((value, index) => 
+                <option>All</option>
+                {(Har_status || []).map((value, index) => 
                 (
                   <option className="capitalize" value={value} key={index}>
                     {value}
                   </option>
                 )
-                )} */}
+                )}
               </select>
               <button
                 type="submit"
@@ -142,16 +148,17 @@ export default function Hiring() {
     </div>
 
 
-{/* Card */}
 <div className="flex">
   <div>
   <Sidebar />
 </div>
-<div className="grid grid-cols-2 ml-80 gap-4 sm:grid-cols-2 ">
+
+{/* card */}
+<div className="grid grid-cols-2 ml-80 gap-4 sm:grid-cols-2 bg-slate-50">
   
 {Array.isArray(listHiring)&&listHiring.map((data) => (
                     
-        <div className=" flex justify-end col-2 ml-10 mr-10 " >
+        <div className=" flex justify-end col-2 ml-10 mr-10  " >
   <div className="flex flex-wrap bg-white shadow-lg mt-10 ">
   <div className="grid grid-cols-2">
   <div className="ml-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} alt={`${data.jobs_id}`} style={{width:"150px", height:"150px"}}/></div>
@@ -161,6 +168,7 @@ export default function Hiring() {
   <div className=" mb-2 ml-3"><FontAwesomeIcon icon={faCalendarCheck} /> Actively Hiring</div>
   <div className="ml-8 "><FontAwesomeIcon icon={faClock} /> Dibuat 1 hari lalu</div>
   </div>  
+  
   </div>
 
   
@@ -171,8 +179,84 @@ export default function Hiring() {
 ))}
 
             </div>
+            
 </div>
 
+{/* page */}
+{listHiring.length === 0 && <div className="px-6 py-3 text-center whitespace-nowrap text-sm font-medium text-gray-900"> Data Not Found...</div>}
+<div className="bg-white ml-80 px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-5">
+              <div className="hidden ml-8 sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm text-gray-700">
+                    Showing <span className="font-medium">{(currentPage - 1) * 2 + 1}</span> to <span className="font-medium">{currentPage * 2 < listHiring.length ? currentPage * 2 : listHiring.length}</span> of{" "}
+                    <span className="font-medium">{listHiring.length}</span> results
+                  </p>
+                </div>
+                <div>
+                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                    <button
+                      onClick={() => {
+                        setCurrentPage(1);
+                        setPageNumbers([...pageNumbers].map((val) => (val.number === 1 ? { ...val, active: true } : { ...val, active: false })));
+                        setPageRange();
+                      }}
+                      className="relative inline-flex items-center px-3 py-2 font-medium text-gray-600 hover:text-orange-600"
+                    >
+                      <span className="underline">First</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        const min = 0;
+                        if (pageRange > min) {
+                          setPageRange(pageRange - 1);
+                        }
+                      }}
+                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    >
+                      <span className="sr-only">Previous</span>
+                      <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
+
+                    {pageNumbers.slice(pageRange * 2, pageRange * 2 + 2).map((el) => (
+                      <button
+                        onClick={() => {
+                          setCurrentPage(el.number);
+                          setPageNumbers([...pageNumbers].map((val) => (val.number === el.number ? { ...val, active: true } : { ...val, active: false })));
+                        }}
+                        aria-current="page"
+                        className={classNames(el.active ? "z-20 bg-orange-100 border-orange-600 text-orange-900" : "z-10 bg-white border-gray-300 text-gray-600", "relative inline-flex items-center px-4 py-2 border text-sm font-medium")}
+                      >
+                        {el.number}
+                      </button>
+                    ))}
+                    <button
+                      onClick={() => {
+                        const max = Math.ceil(pageNumbers.length / 10) - 1;
+                        if (pageRange < max) {
+                          setPageRange(pageRange + 1);
+                        }
+                      }}
+                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                    >
+                      <span className="sr-only">Next</span>
+                      <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        const max = Math.ceil(pageNumbers.length / 2) - 1;
+                        setCurrentPage(pageNumbers.length);
+                        setPageNumbers([...pageNumbers].map((val) => (val.number === pageNumbers.length ? { ...val, active: true } : { ...val, active: false })));
+                        setPageRange(max);
+                      }}
+                      className="relative inline-flex items-center px-3 py-2 font-medium text-gray-600 hover:text-orange-600"
+                    >
+                      <span className="underline">Last</span>
+                    </button>
+                  </nav>
+                </div>
+              </div>
+            </div>
 
 </div>
 
