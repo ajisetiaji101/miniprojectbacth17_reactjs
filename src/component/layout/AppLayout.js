@@ -35,6 +35,7 @@ const navigation = [
     { name: 'Placement', href: '/app/placement', icon: UserGroupIcon, current: false, roles: ['administrator','recruiter', 'sales'] },
     { name: 'Curriculum', href: '/app/curriculum', icon: BookOpenIcon, current: false, roles: ['administrator','trainer'] },
     { name: 'Hiring', href: '/app/hiring', icon: PhoneOutgoingIcon, current: false, roles: ['administrator','recruiter', 'bd', 'sales'] },
+    { name: 'Job', href: '/app/job', icon: UserGroupIcon, current: false, roles: ['administrator','recruiter', 'trainer'] },
     { name: 'Setting', href: '/app/setting', icon: CogIcon, current: false, roles: ['administrator','recruiter', 'bd', 'sales', 'trainer', 'candidate', 'talent', 'profesional'] },
 ]
 

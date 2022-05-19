@@ -2,13 +2,16 @@ import { Menu, Transition } from "@headlessui/react";
 import { ChevronLeftIcon, ChevronRightIcon, DotsVerticalIcon, LockClosedIcon, PencilAltIcon } from "@heroicons/react/outline";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { doGetPlacementRequest } from "../../../redux-saga/actions/Placement";
+import { doGetPlacementRequest, doDeletePlacementRequest } from "../../../redux-saga/actions/Placement";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
-import { data } from "autoprefixer";
+import { TrashIcon } from "@heroicons/react/solid";
+import config from "../../../config/config";
 
 const columns = [{ name: "CONTRACT NO." }, { name: "CLIENT" }, { name: "TALENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
+const placementStatus = ["trial", "placement", "closed"];
+const listBulan = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -74,6 +77,10 @@ export default function Placement() {
     );
   };
 
+  const onDelete = async (id) => {
+    dispatch(doDeletePlacementRequest(id));
+    toast.success("Data has been deleted.");
+  };
   return (
     <>
       <Page title="Placement" titleButton="Create" onClick={() => navigate("/app/placement/new")}>
@@ -97,9 +104,9 @@ export default function Placement() {
                 aria-label=".form-select-sm example"
               >
                 <option>Status</option>
-                {(listPlacements || []).map((value, index) => (
-                  <option className="capitalize" value={value.place_status} key={index}>
-                    {value.place_status}
+                {(placementStatus || []).map((value, index) => (
+                  <option className="capitalize" value={value} key={index}>
+                    {value}
                   </option>
                 ))}
               </select>
@@ -120,7 +127,7 @@ export default function Placement() {
               <thead className="border-y border-gray-200">
                 <tr key="col_names">
                   {(columns || []).map((column) => (
-                    <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-900 uppercase">
                       <span className="">{column.name}</span>
                     </th>
                   ))}
@@ -129,76 +136,108 @@ export default function Placement() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-100">
                 {Array.isArray(listPlacements) &&
-                  listPlacements.slice((currentPage - 1) * 10, currentPage * 10).map((data) => (
-                    <tr key={data.place_id}>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.place_contract_no}</td>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.place_client.client_name}</td>
+                  listPlacements.slice((currentPage - 1) * 10, currentPage * 10).map((data) => {
+                    const [yearstart, monthstart, daystart] = data.place_start_date.split("-");
+                    const [yearend, monthend, dayend] = data.place_end_date.split("-");
 
-                      <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
-                        {data.talent_placements.map((talent) => (
-                          <p>{talent.tapl_tale.tale_fullname}</p>
-                        ))}
-                      </td>
+                    return (
+                      <tr key={data.place_id}>
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.place_contract_no}</td>
+                        <td className="py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
+                          <div className="flex justify-between items-center overflow-hidden w-[8rem]">
+                            <div className="flex justify-left -space-x-1">
+                              {data.talent_placements.map((talent) => (
+                                <img className="block h-7 w-7 rounded-full ring-2 ring-white" src={`${config.domain}/placement/images/${talent.tapl_tale.tale_photo}`} />
+                              ))}
+                            </div>
+                            {data.talent_placements.length > 4 && <div className="pl-2">{"+" + (data.talent_placements.length - 4)}</div>}
+                          </div>
+                        </td>
+                        <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">{data.place_client.client_name}</td>
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
+                          <div>{`${daystart} ${listBulan[monthstart[1]]} ${yearstart}`}</div>
+                          <div>{`${dayend} ${listBulan[monthend[1]]} ${yearend}`}</div>
+                        </td>
+                        <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">Novelina</td>
+                        <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900 capitalize mr-6">
+                          <div>{data.place_status}</div>
+                          {data.talent_placements.map((talent, i) => {
+                            if (i == 0) {
+                              const [year, month, day] = talent.tapl_drop_date.split("-");
+                              return <p>{`${day} ${listBulan[month[1]]} ${year}`}</p>;
+                            }
+                          })}
+                          <div>{console.log(data)}</div>
+                        </td>
+                        <td className="pr-6">
+                          <Menu as="div" className="relative flex justify-end items-center">
+                            {({ open }) => (
+                              <>
+                                <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-600 rounded-full hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ">
+                                  <span className="sr-only">Open options</span>
+                                  <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
+                                </Menu.Button>
+                                <Transition
+                                  show={open}
+                                  as={Fragment}
+                                  enter="transition ease-out duration-100"
+                                  enterFrom="transform opacity-0 scale-95"
+                                  enterTo="transform opacity-100 scale-100"
+                                  leave="transition ease-in duration-75"
+                                  leaveFrom="transform opacity-100 scale-100"
+                                  leaveTo="transform opacity-0 scale-95"
+                                >
+                                  <Menu.Items static className="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg z-10 bg-gray-100 ring-1 ring-gray-900 ring-opacity-5 divide-y divide-gray-300 focus:outline-none">
+                                    {userProfile.userRoles === "administrator" && (
+                                      <div className="py-1">
+                                        <Menu.Item>
+                                          {({ active }) => (
+                                            <Link to={"/app/batch/edit/" + data.place_id} className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}>
+                                              <PencilAltIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
+                                              Edit
+                                            </Link>
+                                          )}
+                                        </Menu.Item>
+                                      </div>
+                                    )}
 
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
-                        <div>{data.place_start_date}</div>
-                        <div>{data.place_end_date}</div>
-                      </td>
-                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">Novelina</td>
-                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">
-                        <div>{data.place_status}</div>
-                        {data.talent_placements.map((talent, i) => {
-                          if (i == 0) {
-                            return <p>{talent.tapl_drop_date}</p>;
-                          }
-                        })}
-                        <div>{console.log(data)}</div>
-                      </td>
-                      <td className="pr-6">
-                        <Menu as="div" className="relative flex justify-end items-center">
-                          {({ open }) => (
-                            <>
-                              <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-600 rounded-full hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ">
-                                <span className="sr-only">Open options</span>
-                                <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
-                              </Menu.Button>
-                              <Transition
-                                show={open}
-                                as={Fragment}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95"
-                              >
-                                <Menu.Items static className="mx-3 origin-top-right absolute right-7 top-0 w-48 mt-1 rounded-md shadow-lg z-10 bg-gray-100 ring-1 ring-gray-900 ring-opacity-5 divide-y divide-gray-300 focus:outline-none">
-                                  {userProfile.userRoles === "administrator" && (
                                     <div className="py-1">
                                       <Menu.Item>
                                         {({ active }) => (
-                                          <Link to={"/app/batch/edit/" + data.place_id} className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}>
-                                            <PencilAltIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
-                                            Edit
+                                          <Link
+                                            to="#"
+                                            onClick={() => {
+                                              if (window.confirm("Delete this Placement ?")) onDelete(data.place_id);
+                                            }}
+                                            className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}
+                                          >
+                                            <TrashIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
+                                            Delete
                                           </Link>
                                         )}
                                       </Menu.Item>
                                     </div>
-                                  )}
-                                </Menu.Items>
-                              </Transition>
-                            </>
-                          )}
-                        </Menu>
-                      </td>
-                    </tr>
-                  ))}
+                                  </Menu.Items>
+                                </Transition>
+                              </>
+                            )}
+                          </Menu>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
             {listPlacements.length === 0 && <div className="px-6 py-3 text-center whitespace-nowrap text-sm font-medium text-gray-900"> Data Not Found...</div>}
 
-            <div className="bg-white px-4 py-3 flex items-center justify-center border-t border-gray-200 sm:px-6">
-              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center">
+            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm text-gray-700">
+                    Showing <span className="font-medium">{(currentPage - 1) * 10 + 1}</span> to <span className="font-medium">{currentPage * 10 < listPlacements.length ? currentPage * 10 : listPlacements.length}</span> of{" "}
+                    <span className="font-medium">{listPlacements.length}</span> results
+                  </p>
+                </div>
                 <div>
                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                     <button
