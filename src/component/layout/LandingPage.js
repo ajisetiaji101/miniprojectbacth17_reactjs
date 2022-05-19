@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 
 import { Popover, Dialog, Menu, Transition } from "@headlessui/react";
@@ -24,6 +24,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
+import { doGetTalentRequest } from "../../redux-saga/actions/Settings";
 import Carousel from "../../views/components/Carousel";
 import Brands from "../../views/components/Brands";
 import Testimoni from "../../views/components/Testimoni";
@@ -32,6 +33,7 @@ import Instructor from "../../views/components/Instructor";
 import Partner from "../../views/components/Partner";
 import Abouts from "../../views/components/Abouts";
 import Footer from "../../views/components/Footer";
+import config from "../../config/config";
 
 const solutions = [
   {
@@ -66,6 +68,18 @@ export default function LandingPage() {
 
   const dispatch = useDispatch();
   const { isLoggedIn, userProfile } = useSelector((state) => state.userState);
+  const { settings } = useSelector((state) => state.settingState);
+
+  const [previewImg, setPreviewImg] = useState();
+
+  useEffect(() => {
+    dispatch(doGetTalentRequest(userProfile.userId));
+  }, []);
+
+  useEffect(() => {
+    let img = `${config.domain}/settings/images/${settings.tale_photo}`;
+    setPreviewImg(img);
+  }, [settings]);
 
   const onSignout = () => {
     dispatch(doSignoutRequest());
@@ -151,9 +165,9 @@ export default function LandingPage() {
                   {isLoggedIn ? (
                     <Menu as="div" className="ml-3 relative">
                       <div>
-                        <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <Menu.Button className="ring-red-500 ring-2 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                          <img className=" h-10 w-10 rounded-full" src={previewImg} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition
