@@ -2,6 +2,7 @@ import { takeEvery, all } from "redux-saga/effects";
 import * as ActionTypeUser from "../constants/User";
 import * as ActionTypePlacement from "../constants/Placement";
 import * as ActionTypeTalent from "../constants/Talent";
+import * as ActionTypeHiring from "../constants/Hiring";
 
 import * as ActionTypeAppCurriculum from "../constants/AppCurriculum";
 import * as ActionTypeCurriculum from "../constants/CurriculumConstant";
@@ -14,6 +15,7 @@ import { handleDeletePlacementSaga, handleGetPlacementSaga } from "./PlacementSa
 import { handleGetAppCurriculum, handleEditCurriculum, handleDeleteCurriculum, handleEditCurriculumStatus, handleGetCurriculumId } from "./AppCurriculumSaga";
 import { handleAddCurriculum, handleGetCurriculum } from "./CurriculumSaga";
 import { handleGetTalentSaga } from "./TalentSaga";
+import { handleGetHiringSaga } from "./HiringSaga";
 import { handleGetBatch, handleAddBatch } from "./BatchSaga";
 import { handleGetAppBatch, handleEditBatchStatus, handleDeleteBatch, handleGetBatchId, handleEditBatch } from "./AppBatchSaga";
 
@@ -27,6 +29,7 @@ function* watchAll() {
     takeEvery(ActionTypePlacement.DELETE_PLACEMENT_REQUEST, handleDeletePlacementSaga),
 
     takeEvery(ActionTypeTalent.GET_TALENT_REQUEST, handleGetTalentSaga),
+    takeEvery(ActionTypeHiring.GET_HIRING_REQUEST, handleGetHiringSaga),
 
     takeEvery(ActionTypeAppCurriculum.GET_CURRICULUM_REQUEST, handleGetAppCurriculum),
     takeEvery(ActionTypeAppCurriculum.DELETE_CURRICULUM_REQUEST, handleDeleteCurriculum),

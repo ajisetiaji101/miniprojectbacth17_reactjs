@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import userReducer from "./UserReducer";
 import PlacementReducer from "./PlacementReducer";
 import TalentReducer from "./TalentReducer";
+import HiringReducer from "./HiringReducer";
 
 import CurriculumReducer from "./CurriculumReducer";
 import AppCurriculumReducer from "./AppCurriculumReducer";
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   curriculumState: CurriculumReducer,
   curriculumAppState: AppCurriculumReducer,
   talentState: TalentReducer,
+  hiringState: HiringReducer,
   batchState: BatchReducer,
   batchAppState: AppBatchReducer,
 });

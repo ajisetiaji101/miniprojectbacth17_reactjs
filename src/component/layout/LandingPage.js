@@ -24,12 +24,12 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
-import Carousel from "../../views/components/Carousel";
-import Brands from "../../views/components/Brands";
-import Partner from "../../views/components/Partner";
-import Abouts from "../../views/components/Abouts";
-import Footer from "../../views/components/Footer";
-import Testimonials from "../../views/components/Testimonials";
+// import Carousel from "../../views/components/Carousel";
+// import Brands from "../../views/components/Brands";
+// import Partner from "../../views/components/Partner";
+// import Abouts from "../../views/components/Abouts";
+// import Footer from "../../views/components/Footer";
+// import Testimonials from "../../views/components/Testimonials";
 
 const solutions = [
   {
@@ -135,7 +135,7 @@ export default function LandingPage() {
                     )}
                   </Popover> */}
 
-                  <Link to="talent" className="text-base font-medium text-gray-500 hover:text-red-600">
+                  <Link to="why" className="text-base font-medium text-gray-500 hover:text-red-600">
                     Why
                   </Link>
                   <Link to="bootcamp" className="text-base font-medium text-gray-500 hover:text-red-600">
@@ -284,19 +284,19 @@ export default function LandingPage() {
       </header>
       <body>
         <div>
-          <Carousel />
+          {/* <Carousel />
           <Brands />
           <Testimonials />
-          <Partner />
-          <Abouts />
+          <Partner /> */}
+          {/* <Abouts /> */}
         </div>
       </body>
       <footer>
-        <Footer />
+        {/* <Footer /> */}
       </footer>
       <main>
         {/* display contain page like bootcamp, hiring, talent in <Outlet/>*/}
-        <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div className="">
           <Outlet />
         </div>
       </main>
