@@ -8,6 +8,8 @@ import Page from "../../../component/commons/Page";
 import config from "../../../config/config";
 import DatePicker from "react-datepicker";
 import { doGetTalentRequest, doUpdateSettingsRequest, doUpdateTalentNoFileRequest, doUpdateTalentRequest } from "../../../redux-saga/actions/Settings";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar, faCalendarAlt, faCalendarDay, faCalendarTimes, faCalendarWeek } from "@fortawesome/free-solid-svg-icons";
 
 export default function Setting() {
   const [previewImg, setPreviewImg] = useState();
@@ -312,7 +314,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_fullname"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {formik.touched.tale_fullname && formik.errors.tale_fullname ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_fullname}</span> : null}
                 </div>
@@ -329,7 +331,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_email"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {/* {formik.touched.prod_name && formik.errors.prod_name ? (
                                         <span className="mt-2 text-sm text-red-600">{formik.errors.prod_name}</span>
@@ -347,7 +349,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_education"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   >
                     {listEducations.map((value, index) => (
                       <option value={value} key={index}>
@@ -369,7 +371,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_major"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {/* {formik.touched.prod_name && formik.errors.prod_name ? (
                                         <span className="mt-2 text-sm text-red-600">{formik.errors.prod_name}</span>
@@ -388,7 +390,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_city"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {formik.touched.tale_city && formik.errors.tale_city ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_city}</span> : null}
                 </div>
@@ -404,7 +406,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_bootcamp"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   >
                     {listBootcamps.map((value, index) => (
                       <option value={value} key={index}>
@@ -471,11 +473,16 @@ export default function Setting() {
                   <label htmlFor="tale_birthdate" className="block text-sm font-medium text-gray-700">
                     Birth Date
                   </label>
-                  <DatePicker
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    selected={formik.values.tale_birthdate}
-                    onChange={(date) => formik.setFieldValue("tale_birthdate", date)}
-                  />
+                  <div className="flex">
+                    <DatePicker
+                      className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      selected={formik.values.tale_birthdate}
+                      onChange={(date) => formik.setFieldValue("tale_birthdate", date)}
+                    />
+                    <span className="my-auto mx-2 text-red-600 hover:text-red-700">
+                      <FontAwesomeIcon icon={faCalendarAlt} size="2x" />
+                    </span>
+                  </div>
                 </div>
 
                 <div className="col-span-6 row-start-2 sm:col-span-2">
@@ -490,7 +497,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_handphone"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {/* {formik.touched.prod_name && formik.errors.prod_name ? (
                                         <span className="mt-2 text-sm text-red-600">{formik.errors.prod_name}</span>
@@ -509,7 +516,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_school_name"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {/* {formik.touched.prod_name && formik.errors.prod_name ? (
                                         <span className="mt-2 text-sm text-red-600">{formik.errors.prod_name}</span>
@@ -528,7 +535,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_year_graduate"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {/* {formik.touched.prod_name && formik.errors.prod_name ? (
                                         <span className="mt-2 text-sm text-red-600">{formik.errors.prod_name}</span>
@@ -547,7 +554,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_gpa"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {/* {formik.touched.prod_name && formik.errors.prod_name ? (
                                         <span className="mt-2 text-sm text-red-600">{formik.errors.prod_name}</span>
@@ -566,7 +573,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     autoComplete="tale_province"
-                    className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                   {/* {formik.touched.prod_name && formik.errors.prod_name ? (
                                         <span className="mt-2 text-sm text-red-600">{formik.errors.prod_name}</span>
@@ -584,7 +591,7 @@ export default function Setting() {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     rows={3}
-                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                    className="shadow-sm focus:ring-red-500 focus:border-red-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                     placeholder="NodeJS, React, PostgreSQL"
                     defaultValue={""}
                   />
