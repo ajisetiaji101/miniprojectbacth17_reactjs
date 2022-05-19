@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
 import { HomeIcon, MenuAlt1Icon, XIcon, SelectorIcon, ClipboardListIcon, CollectionIcon, CreditCardIcon, ViewGridAddIcon, CashIcon, CogIcon, PhoneOutgoingIcon, UserGroupIcon, AcademicCapIcon, BookOpenIcon } from "@heroicons/react/outline";
 
-import { ChevronRightIcon, DotsVerticalIcon, DuplicateIcon, PencilAltIcon, SearchIcon, TrashIcon, UserAddIcon } from "@heroicons/react/solid";
+import { ChevronRightIcon, DotsVerticalIcon, DuplicateIcon, PencilAltIcon, SearchIcon, TrashIcon, UserAddIcon, BriefcaseIcon } from "@heroicons/react/solid";
 
 const navigation = [
   { name: "Home", href: "/app/dashboard", icon: HomeIcon, current: true, roles: ["administrator", "recruiter", "bd", "sales", "trainer"] },
@@ -13,11 +13,10 @@ const navigation = [
   { name: "Batch", href: "/app/batch", icon: ViewGridAddIcon, current: false, roles: ["administrator", "recruiter", "trainer"] },
   { name: "Talent", href: "/app/talent", icon: UserGroupIcon, current: false, roles: ["administrator", "recruiter", "trainer", "bd", "sales"] },
   { name: "Placement", href: "/app/placement", icon: UserGroupIcon, current: false, roles: ["administrator", "recruiter", "sales"] },
+  { name: "Job", href: "/app/job", icon: UserGroupIcon, current: false, roles: ["administrator", "recruiter", "trainer"] },
   { name: "Curriculum", href: "/app/curriculum", icon: BookOpenIcon, current: false, roles: ["administrator", "trainer"] },
   { name: "Hiring", href: "/app/hiring", icon: PhoneOutgoingIcon, current: false, roles: ["administrator", "recruiter", "bd", "sales"] },
-  { name: "Job", href: "/app/job", icon: UserGroupIcon, current: false, roles: ["administrator", "recruiter", "trainer"] },
   { name: "Setting", href: "/app/setting", icon: CogIcon, current: false, roles: ["administrator", "recruiter", "bd", "sales", "trainer", "candidate", "talent", "profesional"] },
-  { name: "Apply", href: "/app/bootcamp", icon: CogIcon, current: false, roles: ["candidate", "talent", "profesional"] },
 ];
 
 function classNames(...classes) {
@@ -145,13 +144,6 @@ export default function AppLayout() {
                           {({ active }) => (
                             <Link to="#" className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}>
                               Settings
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link to="#" className={classNames(active ? "bg-gray-100 text-gray-900" : "text-gray-700", "block px-4 py-2 text-sm")}>
-                              Apply
                             </Link>
                           )}
                         </Menu.Item>

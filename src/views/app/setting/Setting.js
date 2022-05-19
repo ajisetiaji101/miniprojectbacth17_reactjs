@@ -295,7 +295,7 @@ export default function Setting() {
   let navigate = useNavigate();
   const location = useLocation();
   return (
-    <Page title="Setting Profile" titleButton="Back" onClick={() => navigate("/app/placement/new")}>
+    <Page title="Setting Profile" titleButton="Back" onClick={() => navigate(-1)}>
       <div className="mt-5 md:mt-0 md:col-span-2">
         <form method="POST" action="#">
           <div className="shadow overflow-hidden sm:rounded-md">

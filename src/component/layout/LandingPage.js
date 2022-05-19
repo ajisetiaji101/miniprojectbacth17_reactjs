@@ -189,6 +189,13 @@ export default function LandingPage() {
                                 </Link>
                               )}
                             </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <Link to="/apply" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
+                                  My Apply
+                                </Link>
+                              )}
+                            </Menu.Item>
                           </div>
 
                           <Menu.Item>
