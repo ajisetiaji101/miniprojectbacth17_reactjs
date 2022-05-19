@@ -24,7 +24,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
-import Carousel from "../molekul/Carousel";
+// import Carousel from "../molekul/Carousel";
 
 const solutions = [
   {
@@ -202,13 +202,13 @@ export default function LandingPage() {
                         to="signin"
                         className="whitespace-nowrap text-base font-medium shadow-md text-red-600 hover:text-white border-solid border hover:bg-gradient-to-r hover:from-orange-600 hover:to-red-600 hover:border-none border-red-600 px-4 py-2 rounded-md"
                       >
-                        Signup
+                        Signin
                       </Link>
                       <Link
                         to="signup"
                         className="ml-3 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-md text-base font-medium text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
                       >
-                        Signin
+                        Signup
                       </Link>
                     </>
                   )}
@@ -279,12 +279,12 @@ export default function LandingPage() {
       </header>
       <body>
         <div className="flex justify-center">
-          <Carousel />
+          {/* <Carousel /> */}
         </div>
       </body>
       <main>
         {/* display contain page like bootcamp, hiring, talent in <Outlet/>*/}
-        <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div>
           <Outlet />
         </div>
       </main>
