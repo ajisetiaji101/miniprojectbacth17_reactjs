@@ -26,8 +26,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
 import Carousel from "../../views/components/Carousel";
 import Brands from "../../views/components/Brands";
-import Testimoni from "../../views/components/Testimoni"
-import Instructor from "../../views/components/Instructor"
+import Testimoni from "../../views/components/Testimoni";
+import Instructor from "../../views/components/Instructor";
 // import Testimoni2 from "../../views/components/Testimoni2"
 import Partner from "../../views/components/Partner";
 import Abouts from "../../views/components/Abouts";
@@ -284,20 +284,10 @@ export default function LandingPage() {
           )}
         </Popover>
       </header>
-      <body>
-        <div>
-          {/* <Carousel />
-          <Brands />
-          <Testimoni/>
-          <Instructor/>
-          <Partner />
-          <Abouts /> */}
-        </div>
-      </body>
 
       <main>
         {/* display contain page like bootcamp, hiring, talent in <Outlet/>*/}
-        <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div>
           <Outlet />
         </div>
       </main>
