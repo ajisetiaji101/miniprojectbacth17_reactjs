@@ -286,12 +286,12 @@ export default function LandingPage() {
       </header>
       <body>
         <div>
-          <Carousel />
+          {/* <Carousel />
           <Brands />
           <Testimoni/>
           <Instructor/>
           <Partner />
-          <Abouts />
+          <Abouts /> */}
         </div>
       </body>
 
