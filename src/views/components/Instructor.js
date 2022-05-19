@@ -1,6 +1,6 @@
 import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { doGetTestimoniRequest } from "../../redux-saga/actions/Testimoni";
+import { doGetInstructorRequest } from "../../redux-saga/actions/Instructor";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -8,11 +8,11 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import config from '../../config/config';
 
 
-function Testimoni(){
+function Instructor(){
     const dispatch = useDispatch();
-    const { testi } = useSelector((state) => state.testimoniState);
+    const { instructor } = useSelector((state) => state.instructorState);
     useEffect(() => {
-        dispatch(doGetTestimoniRequest());
+        dispatch(doGetInstructorRequest());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -71,19 +71,19 @@ function Testimoni(){
       };
 
     return(
-        <div className="py-8" >
-          <h1 className="mb-2 font-medium text-xl ml-9">Testimonials</h1>
+        <div className="pb-12" >
+          <h1 className="mb-2 font-medium text-xl ml-9">Instructors</h1>
             <Slider {...settings}>
             {
-                testi.map((ripiw) =>(
+                instructor.map((itr) =>(
                     <div>
                       <div className="w-64 h-80 bg-slate-100 rounded-2xl border-slate-100 border-2 pt-5 mx-auto">
-                        <img src={`${config.urlImageCure}/${ripiw.cure_photo}`} alt={ripiw.cure_photo} className="h-24 w-24 mx-auto overflow-hidden rounded-full"/>
+                        <img src={`${config.urlImageInst}/${itr.inst_photo}`} alt={itr.inst_photo} className="h-24 w-24 mx-auto overflow-hidden rounded-full"/>
                         <div className=" py-1">
-                          <h4 className="text-black text-center text-lg">{ripiw.curr_user.user_name}</h4>
-                          <p className="text-black text-center text-sm">Graduate of {ripiw.cure_curr.curr_name} Learning Path</p>
+                          <h4 className="text-black text-center text-lg">{itr.inst_name}</h4>
+                          <p className="text-black text-center text-sm">Teacher of {itr.inst_bootcamp} Learning Path</p>
                         </div>
-                        <p className="text-black text-sm text-center pb-3 px-3 font-semibold">{ripiw.cure_review}</p>
+                        <p className="text-black text-sm text-center pb-3 px-3 font-semibold">{itr.inst_about}</p>
                       </div>
                     </div>
                 ))
@@ -96,4 +96,4 @@ function Testimoni(){
 
 }
 
-export default Testimoni;
+export default Instructor;

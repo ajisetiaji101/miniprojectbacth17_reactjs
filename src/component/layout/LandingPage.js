@@ -27,6 +27,8 @@ import { doSignoutRequest } from "../../redux-saga/actions/User";
 import Carousel from "../../views/components/Carousel";
 import Brands from "../../views/components/Brands";
 import Testimoni from "../../views/components/Testimoni"
+import Instructor from "../../views/components/Instructor"
+// import Testimoni2 from "../../views/components/Testimoni2"
 import Partner from "../../views/components/Partner";
 import Abouts from "../../views/components/Abouts";
 import Footer from "../../views/components/Footer";
@@ -135,7 +137,7 @@ export default function LandingPage() {
                     )}
                   </Popover> */}
 
-                  <Link to="talent" className="text-base font-medium text-gray-500 hover:text-red-600">
+                  <Link to="why" className="text-base font-medium text-gray-500 hover:text-red-600">
                     Why
                   </Link>
                   <Link to="bootcamp" className="text-base font-medium text-gray-500 hover:text-red-600">
@@ -287,6 +289,7 @@ export default function LandingPage() {
           <Carousel />
           <Brands />
           <Testimoni/>
+          <Instructor/>
           <Partner />
           <Abouts />
         </div>

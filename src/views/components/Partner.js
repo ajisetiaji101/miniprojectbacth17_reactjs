@@ -12,7 +12,7 @@ export const gambar = [
 export default function Partner() {
   return (
     <div className="bg-slate-100">
-      <div className="container mx-auto flex py-9">
+      <div className="container mx-auto flex pt-9 pb-14">
         <div className="flex-1 mr-20 my-auto">
           <h1 className="font-normal text-5xl mb-8 font-sans">Our Partner</h1>
           <p className="font-light leading-relaxed">
@@ -21,9 +21,9 @@ export default function Partner() {
           </p>
         </div>
         <div className="flex-auto">
-          <div className="grid gap-y-20 grid-cols-3">
+          <div className="grid gap-y-20 grid-cols-3 mr-2">
             {gambar.map((e) => {
-              return <img src={e.images} width="120px" />;
+              return <img src={e.images} width="137px" height="137px" />;
             })}
           </div>
         </div>
