@@ -28,3 +28,18 @@ export const doAddJobFailed = (payload) => ({
   type: ActionType.ADD_JOB_FAILED,
   payload,
 });
+
+export const doDeleteJobRequest = (payload) => ({
+  type: ActionType.DELETE_JOB_REQUEST,
+  payload,
+});
+
+export const doDeleteJobSucceed = (payload) => ({
+  type: ActionType.DELETE_JOB_SUCCEED,
+  payload,
+});
+
+export const doDeleteJobFailed = (payload) => ({
+  type: ActionType.DELETE_JOB_FAILED,
+  payload,
+});

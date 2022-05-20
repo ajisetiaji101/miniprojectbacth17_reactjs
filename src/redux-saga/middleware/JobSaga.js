@@ -4,7 +4,9 @@ import {
     doGetJobSucceed,
     doGetJobFailed,
     doAddJobSucceed,
-    doAddJobFailed
+    doAddJobFailed,
+    doDeleteJobSucceed,
+    doDeleteJobFailed,
  } from '../actions/Job';
 
 function* handleGetJob(){
@@ -28,4 +30,15 @@ function* handleAddJob(action) {
     }
   }
 
-export{ handleGetJob,handleAddJob };
+  
+function* handleDeleteJob(action) {
+  const {payload} = action;
+  try {
+      const result = yield call(apiJobPosting.deleteRow,payload);
+      yield put(doDeleteJobSucceed(payload));
+  } catch (error) {
+      yield put(doDeleteJobFailed(error));
+  }
+}
+
+export{ handleGetJob,handleAddJob,handleDeleteJob };

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook, faInstagramSquare } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faInstagram, faYoutube, faTelegramPlane } from "@fortawesome/free-brands-svg-icons";
 import React from "react";
 
 export default function Footer() {
@@ -23,8 +23,10 @@ export default function Footer() {
         <div>
           <h1 className="text-xl font-medium mb-2">Social Media</h1>
           <div className="flex mb-2">
-            <FontAwesomeIcon icon={faFacebook} className="mr-2" />
-            <FontAwesomeIcon icon={faInstagramSquare} className="mr-2" />
+            <FontAwesomeIcon icon={faFacebook} className="mr-2 text-2xl" />
+            <FontAwesomeIcon icon={faInstagram} className="mr-2 text-2xl" />
+            <FontAwesomeIcon icon={faYoutube} className="mr-2 text-2xl" />
+            <FontAwesomeIcon icon={faTelegramPlane} className="mr-2 text-2xl" />
           </div>
           <div className="flex">
             <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-1" placeholder="Enter Email ..." />
