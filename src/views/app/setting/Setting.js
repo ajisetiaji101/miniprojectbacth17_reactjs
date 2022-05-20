@@ -187,6 +187,51 @@ export default function Setting() {
         payload.append("tale_photo", values.tale_photo);
         payload.append("tale_user_id", parseInt(userProfile.userId));
         dispatch(doUpdateTalentRequest(payload));
+        // } else if (fileResume === true && fileCoverLetter === true) {
+        //   payload.append("tale_fullname", values.tale_fullname);
+        //   payload.append("tale_birthdate", tglLahir);
+        //   payload.append("tale_education", values.tale_education);
+        //   payload.append("tale_major", values.tale_major);
+        //   payload.append("tale_school_name", values.tale_school_name);
+        //   payload.append("tale_handphone", values.tale_handphone);
+        //   payload.append("tale_bootcamp", values.tale_bootcamp);
+        //   payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        //   payload.append("tale_gpa", parseInt(values.tale_gpa));
+        //   payload.append("tale_city", values.tale_city);
+        //   payload.append("tale_province", values.tale_province);
+        //   payload.append("tale_tag_skill", values.tale_tag_skill);
+        //   payload.append("tale_resume", values.tale_resume);
+        //   payload.append("tale_cover_letter", values.tale_cover_letter);
+        // } else if (fileResume === true && uploaded === true) {
+        //   payload.append("tale_fullname", values.tale_fullname);
+        //   payload.append("tale_birthdate", tglLahir);
+        //   payload.append("tale_education", values.tale_education);
+        //   payload.append("tale_major", values.tale_major);
+        //   payload.append("tale_school_name", values.tale_school_name);
+        //   payload.append("tale_handphone", values.tale_handphone);
+        //   payload.append("tale_bootcamp", values.tale_bootcamp);
+        //   payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        //   payload.append("tale_gpa", parseInt(values.tale_gpa));
+        //   payload.append("tale_city", values.tale_city);
+        //   payload.append("tale_province", values.tale_province);
+        //   payload.append("tale_tag_skill", values.tale_tag_skill);
+        //   payload.append("tale_resume", values.tale_resume);
+        //   payload.append("tale_photo", values.tale_photo);
+        // } else if (fileCoverLetter === true && uploaded === true) {
+        //   payload.append("tale_fullname", values.tale_fullname);
+        //   payload.append("tale_birthdate", tglLahir);
+        //   payload.append("tale_education", values.tale_education);
+        //   payload.append("tale_major", values.tale_major);
+        //   payload.append("tale_school_name", values.tale_school_name);
+        //   payload.append("tale_handphone", values.tale_handphone);
+        //   payload.append("tale_bootcamp", values.tale_bootcamp);
+        //   payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        //   payload.append("tale_gpa", parseInt(values.tale_gpa));
+        //   payload.append("tale_city", values.tale_city);
+        //   payload.append("tale_province", values.tale_province);
+        //   payload.append("tale_tag_skill", values.tale_tag_skill);
+        //   payload.append("tale_cover_letter", values.tale_cover_letter);
+        //   payload.append("tale_photo", values.tale_photo);
       } else if (fileResume === true) {
         payload.append("tale_fullname", values.tale_fullname);
         payload.append("tale_birthdate", tglLahir);
