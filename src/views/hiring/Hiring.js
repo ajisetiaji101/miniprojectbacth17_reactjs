@@ -31,8 +31,12 @@ export default function Hiring() {
   const [filter, setFilter] = useState({
     input: "",
     select: "",
+    checkbox:""
   });
 
+  const [checkbox, setCheckbox] = useState({
+    input: ""
+  });
   
   const [pageNumbers, setPageNumbers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,18 +57,15 @@ export default function Hiring() {
   useEffect(() => {
     setListHiring(
         Array.isArray(hiring) && hiring.filter(data=> (
-          data.jobs_city.toLowerCase().includes(filter.input.toLowerCase()) 
-        || 
-        data.jobs_title.toLowerCase().includes(filter.input.toLowerCase()
-        )
-        ) 
-                  &&
-          (filter.select === 'All' || data.jobs_specification.includes(filter.select))
+        data.jobs_city.toLowerCase().includes(filter.input.toLowerCase()) || 
+        data.jobs_title.toLowerCase().includes(filter.input.toLowerCase())) &&
+        (filter.select === 'All' || data.jobs_specification.includes(filter.select))
+        // (filter.checkbox || data.jobs_working_type.includes(filter.checkbox))
         ))
 }, [hiring]);
 
   useEffect(() => {
-    setPageNumbers(Array.from({ length: Math.ceil(listHiring.length / 2) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
+    setPageNumbers(Array.from({ length: Math.ceil(listHiring.length / 4) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
     setCurrentPage(1);
     setPageRange(0);
   }, [listHiring]);
@@ -79,17 +80,40 @@ export default function Hiring() {
       Array.isArray(hiring) &&
         hiring.filter(
           data =>(
-          (data.jobs_city.toLowerCase().includes(filter.input.toLowerCase()) 
-          || 
-          data.jobs_title.toLowerCase().includes(filter.input.toLowerCase()
-          )
-          ) 
-          &&
-          (filter.select === 'All' || data.jobs_specification.includes(filter.select))
+          (data.jobs_city.toLowerCase().includes(filter.input.toLowerCase()) || 
+          data.jobs_title.toLowerCase().includes(filter.input.toLowerCase())) &&
+          (filter.select === 'All' || data.jobs_specification.includes(filter.select)) 
           ))
     )
   };
 
+//   const [typeFilter, setTypeFilter] = useState("")
+//   const [dataMember, setDataMember] = useState("")
+
+//   useEffect(()=>{
+//     const filterCheck = hiring.results.filter(
+//       (member) => member.tipe === typeFilter
+//     );
+//     setListHiring(filterCheck)
+//   }, [typeFilter])
+
+//   useEffect(() => {
+//     setListHiring(
+//         Array.isArray(hiring) && hiring.filter(data=> (
+//         data.jobs_city.toLowerCase().includes(filter.input.toLowerCase()) || 
+//         data.jobs_title.toLowerCase().includes(filter.input.toLowerCase())) &&
+//         (filter.select === 'All' || data.jobs_specification.includes(filter.select))
+//         // (filter.checkbox || data.jobs_working_type.includes(filter.checkbox))
+//         ))
+// }, [hiring]);
+//   const checkboxFilterValue = {
+//     a : "Magang",
+//     b : "full-time",
+//     c : "part-time",
+//     d : "freelance"
+//   }
+
+//   console.log(listHiring)
   return (
   <div>
       <h1  class="text-xl font-serif" style={{marginLeft:"15px", fontWeight:'bold', marginTop:"15px"}}>Our Network</h1>
@@ -109,7 +133,7 @@ export default function Hiring() {
                 aria-label="Search"
                 aria-describedby="button-addon2"
               />
-                            <input
+                <input
                 type="search"
                 onChange={handleOnChange("input")}
                 className="form-control relative w-64 block px-4 py-0.5 mr-2 ml-2 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:border-transparent focus:text-gray-700 focus:ring-1 focus:ring-offset-1 focus:ring-purple-500 focus:outline-none"
@@ -147,16 +171,62 @@ export default function Hiring() {
 
     </div>
 
-
+<div className="font-medium mx-5 mb-5 font-serif">{listHiring.length} Lowongan Kerja Di Indonesia</div> 
 <div className="flex">
-  <div>
-  <Sidebar />
-</div>
+
+{/* sidebar */}
+{/* <div>
+      <aside className="w-72  h-full shadow-md bg-white absolute" aria-label="Sidebar">
+    <div className="overflow-y-auto py-4 px-3 bg-gray-50   rounded dark:bg-gray-800">
+        <ul className="space-y-2">
+          <li>
+              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <svg className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+      <span className="ml-3">Filter Pencarianmu</span>
+              </a>
+          </li>
+      <li>
+      <ul id="dropdown-example" className="hidden py-2 space-y-2">
+      <li className="relative">
+          <div className="flex space-x-2 justify-center">
+            <button type="button" className="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Match</button>
+            <button type="button" className="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Newest</button>
+          </div>
+        </li>
+      </ul>
+      </li>
+      <li>
+      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example1">
+          <svg className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
+      <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Tipe Pekerjaan</span>
+          <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+      </button>
+      <ul id="dropdown-example1" className="hidden py-2 space-y-2">
+      <li className="relative ml-12">
+      <div className="form-check">
+      <input className="form-check-input appearance-none h-3.5 w-3.5 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" 
+      type="checkbox" 
+      value={checkboxFilterValue.a}
+      checked={typeFilter === checkboxFilterValue.a}
+      onClick={({ target }) => setTypeFilter(target.value)}
+      id="flexCheckDefault"/>
+      <label className="form-check-label inline-block text-gray-800" for="flexCheckDefault" style={{fontSize:"12.5px"}}>
+      Magang
+      </label>
+      </div >
+        </li>
+        </ul>
+      </li>
+        </ul>
+        </div>
+      </aside>
+
+    </div> */}
 
 {/* card */}
 <div className="grid grid-cols-2 ml-80 gap-4 sm:grid-cols-2 bg-slate-50">
   
-{Array.isArray(listHiring)&&listHiring.map((data) => (
+{Array.isArray(listHiring)&&listHiring.slice((currentPage-1)*4,currentPage*4).map((data) => (
                     
         <div className=" flex justify-end col-2 ml-10 mr-10  " >
   <div className="flex flex-wrap bg-white shadow-lg mt-10 ">
@@ -218,7 +288,7 @@ export default function Hiring() {
                     </button>
                     {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
 
-                    {pageNumbers.slice(pageRange * 2, pageRange * 2 + 2).map((el) => (
+                    {pageNumbers.slice(pageRange * 4, pageRange * 4 + 4).map((el) => (
                       <button
                         onClick={() => {
                           setCurrentPage(el.number);
@@ -232,7 +302,7 @@ export default function Hiring() {
                     ))}
                     <button
                       onClick={() => {
-                        const max = Math.ceil(pageNumbers.length / 10) - 1;
+                        const max = Math.ceil(pageNumbers.length / 4) - 1;
                         if (pageRange < max) {
                           setPageRange(pageRange + 1);
                         }
@@ -244,7 +314,7 @@ export default function Hiring() {
                     </button>
                     <button
                       onClick={() => {
-                        const max = Math.ceil(pageNumbers.length / 2) - 1;
+                        const max = Math.ceil(pageNumbers.length / 4) - 1;
                         setCurrentPage(pageNumbers.length);
                         setPageNumbers([...pageNumbers].map((val) => (val.number === pageNumbers.length ? { ...val, active: true } : { ...val, active: false })));
                         setPageRange(max);
