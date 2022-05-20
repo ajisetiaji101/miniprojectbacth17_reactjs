@@ -19,7 +19,6 @@ const rootReducer = combineReducers({
   testimoniState: testimoniReducer,
   placemenState: PlacementReducer,
   instructorState: instructorReducer,
-
   curriculumState: CurriculumReducer,
   curriculumAppState: AppCurriculumReducer,
   talentState: TalentReducer,

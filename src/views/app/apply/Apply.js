@@ -6,27 +6,45 @@ import { useNavigate } from "react-router-dom";
 import Page from "../../../component/commons/Page";
 import DatePicker from "react-datepicker";
 import {} from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { doGetTalentRequest } from "../../../redux-saga/actions/Settings";
+import { doAddProcessBootcampRequest } from "../../../redux-saga/actions/ProcessBootcampConstant";
 import config from "../../../config/config";
 import * as Yup from "yup";
+import * as moment from "moment";
 import { useFormik } from "formik";
 
 export default function Apply() {
   const navigate = useNavigate();
   const [previewImg, setPreviewImg] = useState();
+  const [selectedDate, setSelectedDate] = useState(null);
+  const dispatch = useDispatch();
 
-  const { settings } = useSelector((state) => state.settingState);
+  console.log(previewImg);
   const { userProfile } = useSelector((state) => state.userState);
 
-  useEffect(() => {
-    doGetTalentRequest(userProfile.userId);
-  }, []);
+  const uploadOnChangeResume = (name) => (event) => {
+    let reader = new FileReader();
+    let file = event.target.files[0];
 
-  useEffect(() => {
-    let img = `${config.domain}/settings/images/${settings.tale_photo}`;
-    setPreviewImg(img);
-  }, [settings]);
+    reader.onloadend = () => {
+      formik.setFieldValue("tale_resume", file);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const uploadOnChangeImage = (name) => (event) => {
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      formik.setFieldValue("tale_photo", file);
+      setPreviewImg(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  };
 
   const validationSchema = Yup.object().shape({
     tale_fullname: Yup.string("Enter Fullname").required("Fullname is required"),
@@ -43,17 +61,36 @@ export default function Apply() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      tale_fullname: settings.tale_fullname,
-      tale_education: settings.tale_education,
-      tale_major: settings.tale_major,
-      tale_bootcamp: settings.tale_bootcamp,
-      tale_resume: settings.tale_resume,
-      tale_birthdate: settings.tale_birthdate && new Date(settings.tale_birthdate),
-      tale_handphone: settings.tale_handphone,
-      tale_school_name: settings.tale_school_name,
-      tale_motivation: settings.tale_motivation,
-      tale_photo: settings.tale_photo,
-      tale_resume: settings.tale_resume,
+      tale_fullname: "",
+      tale_education: "",
+      tale_major: "",
+      tale_bootcamp: "",
+      tale_resume: "",
+      tale_birthdate: "",
+      tale_handphone: "",
+      tale_school_name: "",
+      tale_motivation: "",
+      tale_photo: "",
+      tale_resume: "",
+    },
+    // validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      values.tale_birthdate = selectedDate;
+      const tglLahir = moment(selectedDate).format("YYYY-MM-DD");
+      let payload = new FormData();
+      payload.append("tale_fullname", values.tale_fullname);
+      payload.append("tale_birthdate", tglLahir);
+      payload.append("tale_major", values.tale_major);
+      payload.append("tale_school_name", values.tale_school_name);
+      payload.append("tale_education", values.tale_education);
+      payload.append("tale_handphone", values.tale_handphone);
+      payload.append("tale_bootcamp", values.tale_bootcamp);
+      payload.append("tale_motivation", values.tale_motivation);
+      payload.append("tale_resume", values.tale_resume);
+      payload.append("tale_photo", values.tale_photo);
+      payload.append("tale_user_id", parseInt(userProfile.userId));
+
+      dispatch(doAddProcessBootcampRequest(payload));
     },
   });
 
@@ -70,19 +107,14 @@ export default function Apply() {
       </div>
       <h1 className="font-bold text-2xl text-center">Bootcamp Application Process</h1>
       <div className="grid grid-cols-3 my-8 gap-12">
-        <div className="justify-self-center relative">
-          <div className="">
-            <img src={previewImg} className="h-32 w-32 rounded-full ring-2 ring-red-600" />
+        <form method="POST" action="#">
+          <div className="justify-self-center relative">
+            <div className="">
+              <img src={previewImg ? previewImg : `${config.domain}/settings/images/tes1.jpg`} className="h-32 w-32 rounded-full ring-2 ring-red-600" />
+            </div>
+            <input type="file" accept="image/*" id="tale_photo" name="tale_photo" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
           </div>
-          <input
-            type="file"
-            accept="image/*"
-            id="tale_photo"
-            name="tale_photo"
-            className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 "
-            //  onChange={uploadOnChangeImage("file")}
-          />
-        </div>
+        </form>
         <div>
           <div>
             <input
@@ -90,32 +122,34 @@ export default function Apply() {
               name="tale_fullname"
               id="tale_fullname"
               value={formik.values.tale_fullname}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md mb-4"
               placeholder="Fullname"
             />
+            {formik.touched.tale_fullname && formik.errors.tale_fullname ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_fullname}</span> : null}
           </div>
           <div className="flex mb-4">
             <DatePicker
               name="tale_birthdate"
               id="tale_birthdate"
-              // onBlur={formik.handleBlur}
+              onBlur={formik.handleBlur}
               className=" focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholderText="Birthdate"
-              // selected={selectedDate}
-              // onChange={(date) => setselectedDate(date)}
+              selected={selectedDate}
+              onChange={(date) => setSelectedDate(date)}
             />
             <FontAwesomeIcon icon={faCalendarAlt} className="h-8 w-8 mx-2 my-auto text-gray-500" />
-            <input type="text" name="tale_fullname" id="tale_fullname" className=" focus:ring-indigo-200 focus:border-indigo-200 w-full shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md" placeholder="Age" disabled />
+            <input type="text" className=" focus:ring-indigo-200 focus:border-indigo-200 w-full shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md" placeholder="Age" disabled />
           </div>
+          {formik.touched.tale_birthdate && formik.errors.tale_birthdate ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_birthdate}</span> : null}
           <div className="mb-4">
             <select
               id="tale_education"
               name="tale_education"
               value={formik.values.tale_education}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               autoComplete="tale_education"
               className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
@@ -124,6 +158,7 @@ export default function Apply() {
               <option>D3</option>
               <option>S1</option>
             </select>
+            {formik.touched.tale_education && formik.errors.tale_education ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_education}</span> : null}
           </div>
           <div className="mb-4">
             <input
@@ -131,11 +166,12 @@ export default function Apply() {
               name="tale_school_name"
               id="tale_school_name"
               value={formik.values.tale_school_name}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="Sekolah"
             />
+            {formik.touched.tale_school_name && formik.errors.tale_school_name ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_school_name}</span> : null}
           </div>
 
           <div className="mb-4">
@@ -144,12 +180,13 @@ export default function Apply() {
               name="tale_major"
               id="tale_major"
               value={formik.values.tale_major}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               autoComplete="given-name"
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="Jurusan"
             />
+            {formik.touched.tale_major && formik.errors.tale_major ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_major}</span> : null}
           </div>
 
           <div className="mb-4">
@@ -158,12 +195,13 @@ export default function Apply() {
               name="tale_handphone"
               id="tale_handphone"
               value={formik.values.tale_handphone}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               autoComplete="given-name"
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="No Hp"
             />
+            {formik.touched.tale_handphone && formik.errors.tale_handphone ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_handphone}</span> : null}
           </div>
 
           <div className="mb-4">
@@ -171,14 +209,15 @@ export default function Apply() {
               id="tale_bootcamp"
               name="tale_bootcamp"
               value={formik.values.tale_bootcamp}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               autoComplete="bootcamp"
               className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               <option>NodeJS</option>
               <option>Golang</option>
             </select>
+            {formik.touched.tale_bootcamp && formik.errors.tale_bootcamp ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_bootcamp}</span> : null}
           </div>
 
           <div className="mb-4">
@@ -187,30 +226,24 @@ export default function Apply() {
               name="tale_motivation"
               rows={3}
               value={formik.values.tale_motivation}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
               placeholder="Motivasi join bootcamp"
               defaultValue={""}
             />
+            {formik.touched.tale_motivation && formik.errors.tale_motivation ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_motivation}</span> : null}
           </div>
           <div className="col-span-6 sm:col-span-3 mb-4 flex">
             <span className=" text-base font-light my-auto mr-3">Resume </span>
-            <input
-              type="file"
-              accept="pdf/*"
-              className="border-2 flex-1"
-              // onChange={uploadOnChange('file')}
-            />
+            <input type="file" accept="pdf/*" name="tale_resume" id="tale_resume" className="border-2 flex-1" onChange={uploadOnChangeResume("file")} />
           </div>
           <div className="mb-4">
             <input
               type="text"
-              name="tale_resume"
-              id="tale_resume"
               value={formik.values.tale_resume}
-              // onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               autoComplete="given-name"
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100"
               placeholder="Your File Automatically Filled"
@@ -227,11 +260,7 @@ export default function Apply() {
             >
               Cancel
             </button>
-            <button
-              type="button"
-              className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-700"
-              // onClick={formik.handleSubmit}
-            >
+            <button type="button" className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-700" onClick={formik.handleSubmit}>
               Apply
             </button>
           </div>
