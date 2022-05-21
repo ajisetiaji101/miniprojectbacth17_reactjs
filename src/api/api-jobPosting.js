@@ -31,9 +31,20 @@ const deleteRow = async(id)=>{
         
     }
 }
+
+const editRow = async(data)=>{
+    try {
+        const result = await axios.put(`${config.domain}/jobs/${data.id}`, data);
+        return  result;
+    } catch (error) {
+        return error;
+        
+    }
+}
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     list,
     createJob,
-    deleteRow
+    deleteRow,
+    editRow
 }

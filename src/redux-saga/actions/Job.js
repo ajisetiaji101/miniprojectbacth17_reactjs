@@ -43,3 +43,18 @@ export const doDeleteJobFailed = (payload) => ({
   type: ActionType.DELETE_JOB_FAILED,
   payload,
 });
+
+export const doEditJobRequest = (payload) => ({
+  type: ActionType.EDIT_JOB_REQUEST,
+  payload,
+});
+
+export const doEditJobSucceed = (payload) => ({
+  type: ActionType.EDIT_JOB_SUCCEED,
+  payload,
+});
+
+export const doEditJobFailed = (payload) => ({
+  type: ActionType.EDIT_JOB_FAILED,
+  payload,
+});

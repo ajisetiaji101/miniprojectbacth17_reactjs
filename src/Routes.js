@@ -21,6 +21,7 @@ import Job from "./views/app/job/Job";
 import AddJob from "./views/app/job/AddJob";
 import Apply from "./views/app/apply/Apply";
 import Landing from "./views/components/Landing";
+import EditJob from "./views/app/job/EditJob";
 export default function Routes(isLoggedIn) {
   return useRoutes([
     {
@@ -60,6 +61,7 @@ export default function Routes(isLoggedIn) {
           path: "job/new",
           element: isLoggedIn ? <AddJob /> : <Navigate to="/auth/signin" />,
         },
+        {path: "job/edit/:id", element: isLoggedIn ? <EditJob /> : <Navigate to="/auth/signin"/>},
         { path: "setting", element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin" /> },
       ],
     },

@@ -39,6 +39,16 @@ const JobReducer = (state = INIT_STATE, action) => {
         case ActionType.DELETE_JOB_SUCCEED: {
             return applyDeleteJobSucceed(state,action)
         }
+        case ActionType.EDIT_JOB_REQUEST: {
+            return {
+                ...state,
+                isLoading: true,
+                isRefresh: false
+            }
+        }
+        case ActionType.EDIT_JOB_SUCCEED: {
+            return applyEditJobSucceed(state,action)
+        }
    
         default:
             return state;
@@ -69,4 +79,14 @@ const GetAddJobSucceed = (state, action) => {
         jobs : [...filterJob],
     }
 }
+
+const applyEditJobSucceed = (state, action) => {
+    const { payload } = action;
+    const filterJob= state.jobs.filter(el => el.jobs_id !== payload)
+    return {
+        ...state,
+        jobs : [...filterJob],
+    }
+}
+
 export default JobReducer

@@ -37,8 +37,6 @@ export default function AddJob() {
 
   const { userProfile } = useSelector((state) => state.userState);
 
-
-
   useEffect(() => {
     dispatch(doGetJobRequest());
     setTimeout(() => {
@@ -91,7 +89,6 @@ export default function AddJob() {
       const bln = "0" + (startDate.getMonth() + 1);
 
       const fix = [ch, y, bln];
-      
 
       //ganti format tanggal jadi isoString
       const SDate = startDate.toISOString();
@@ -156,7 +153,7 @@ export default function AddJob() {
                 <div class="grid grid-cols-7 gap-4">
                   <div class="col-start-1 col-end-5">
                     <label class="block text-sm font-medium text-gray-700">
-                      Title 
+                      Title
                     </label>
                     <input
                       type="text"
