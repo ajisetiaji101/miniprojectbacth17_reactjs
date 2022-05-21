@@ -372,23 +372,24 @@ export default function Hiring() {
 
 {/* card */}
 
-<div className="grid grid-cols-2 ml-80 gap-4 sm:grid-cols-2 bg-slate-50">
+<div className="grid grid-cols-2 ml-80 gap-4 sm:grid-cols-2 ">
   
 {Array.isArray(listHiring)&&listHiring.slice((currentPage-1)*4,currentPage*4).map((data) => (
                     
-        <div className=" flex justify-end col-2 ml-10 mr-10  " >
-          
-  <div className="flex flex-wrap bg-white shadow-lg mt-10 ">
+        <div className=" flex justify-end col-2 ml-10 mr-10 mb-8 " >
+    <button onClick={() => navigate('/hiring/new')}>     
+  <div className="flex flex-wrap bg-white shadow-lg ">
   <div className="grid grid-cols-2">
-  <div className="ml-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} alt={`${data.jobs_id}`} style={{width:"150px", height:"150px"}}/></div>
-  <div className="w-40 mb-5 ml-3 mr-5">{data.jobs_title}</div>
-  <div className="col-span-2 mb-2 ml-3 "><FontAwesomeIcon icon={faLocationDot}/> {data.jobs_city}</div>
-  <div className="col-span-2 mb-2 ml-3"><FontAwesomeIcon icon={faSuitcase} /> {data.job_upto_experience} tahun</div>
-  <div className=" mb-2 ml-3"><FontAwesomeIcon icon={faCalendarCheck} /> Actively Hiring</div>
-  <div className="ml-8 "><FontAwesomeIcon icon={faClock} /> Dibuat 1 hari lalu</div>
+  <div className="ml-4 mt-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} alt={`${data.jobs_id}`} style={{width:"150px", height:"150px"}}/></div>
+  <div className="w-40 mb-5 ml-3 mr-5 mt-2 text-start">{data.jobs_title}</div>
+  <div className="col-span-2 mb-2 ml-1 mr-72"><FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {data.jobs_city}</div>
+  <div className="col-span-2 mb-2 ml-1 mr-72"><FontAwesomeIcon className="mr-1"icon={faSuitcase} /> {data.job_upto_experience} tahun</div>
+  <div className="mb-2 mr-10"><FontAwesomeIcon className="mr-1"icon={faCalendarCheck} /> Actively Hiring</div>
+  <div className="mb-5 ml-5 "><FontAwesomeIcon icon={faClock} /> Dibuat 1 hari lalu</div>
   </div>  
   
   </div>
+  </button>
 
   
   </div>
