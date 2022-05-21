@@ -21,7 +21,12 @@ export default function Apply() {
   const dispatch = useDispatch();
 
   console.log(previewImg);
+  const { settings } = useSelector((state) => state.settingState);
   const { userProfile } = useSelector((state) => state.userState);
+
+  useEffect(() => {
+    dispatch(doGetTalentRequest(userProfile.userId));
+  }, []);
 
   const uploadOnChangeResume = (name) => (event) => {
     let reader = new FileReader();
@@ -147,6 +152,7 @@ export default function Apply() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md mb-4"
+              disabled={settings === null ? false : true}
               placeholder="Fullname"
             />
             {formik.touched.tale_fullname && formik.errors.tale_fullname ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_fullname}</span> : null}
@@ -161,6 +167,7 @@ export default function Apply() {
               onClick={calculate_age(selectedDate)}
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
+              disabled={settings === null ? false : true}
             />
             <FontAwesomeIcon icon={faCalendarAlt} className="h-8 w-8 mx-2 my-auto text-gray-500" />
             <input type="text" className=" focus:ring-indigo-200 focus:border-indigo-200 w-full shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md" value={calculate_age(selectedDate)} disabled />
@@ -175,6 +182,7 @@ export default function Apply() {
               onBlur={formik.handleBlur}
               autoComplete="tale_education"
               className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              disabled={settings === null ? false : true}
             >
               <option>Pendidikan</option>
               <option>SMA</option>
@@ -193,6 +201,7 @@ export default function Apply() {
               onBlur={formik.handleBlur}
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="Sekolah"
+              disabled={settings === null ? false : true}
             />
             {formik.touched.tale_school_name && formik.errors.tale_school_name ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_school_name}</span> : null}
           </div>
@@ -208,6 +217,7 @@ export default function Apply() {
               autoComplete="given-name"
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="Jurusan"
+              disabled={settings === null ? false : true}
             />
             {formik.touched.tale_major && formik.errors.tale_major ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_major}</span> : null}
           </div>
@@ -223,6 +233,7 @@ export default function Apply() {
               autoComplete="given-name"
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="No Hp"
+              disabled={settings === null ? false : true}
             />
             {formik.touched.tale_handphone && formik.errors.tale_handphone ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_handphone}</span> : null}
           </div>
@@ -236,6 +247,7 @@ export default function Apply() {
               onBlur={formik.handleBlur}
               autoComplete="bootcamp"
               className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              disabled={settings === null ? false : true}
             >
               <option>NodeJS</option>
               <option>Java</option>
@@ -255,12 +267,13 @@ export default function Apply() {
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
               placeholder="Motivasi join bootcamp"
               defaultValue={""}
+              disabled={settings === null ? false : true}
             />
             {formik.touched.tale_motivation && formik.errors.tale_motivation ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_motivation}</span> : null}
           </div>
           <div className="col-span-6 sm:col-span-3 mb-4 flex">
             <span className=" text-base font-light my-auto mr-3">Resume </span>
-            <input type="file" accept="pdf/*" name="tale_resume" id="tale_resume" className="border-2 flex-1" onChange={uploadOnChangeResume("file")} />
+            <input type="file" accept="pdf/*" name="tale_resume" id="tale_resume" className="border-2 flex-1" onChange={uploadOnChangeResume("file")} disabled={settings === null ? false : true} />
           </div>
           <div className="mb-4">
             <input
@@ -275,21 +288,37 @@ export default function Apply() {
             />
           </div>
           {formik.touched.tale_resume && formik.errors.tale_resume ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_resume}</span> : null}
-          <div className="pt-4 flex items-center space-x-4">
-            <button
-              type="button"
-              className="flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none bg-red-500 hover:bg-red-700"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Cancel
-            </button>
-            <button type="button" className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-700" onClick={formik.handleSubmit}>
-              Apply
-            </button>
-          </div>
+
+          {settings === null ? (
+            <div className="pt-4 flex items-center space-x-4">
+              <button type="button" className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-700 uppercase font-medium" onClick={formik.handleSubmit}>
+                Apply
+              </button>
+              <button
+                type="button"
+                className="flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none bg-red-500 hover:bg-red-700 uppercase font-medium"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div className="pt-4 flex items-center space-x-4">
+              <button
+                type="button"
+                className="flex justify-center uppercase font-medium items-center w-full text-white px-4 py-3 rounded-md focus:outline-none bg-red-500 hover:bg-red-700"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Return
+              </button>
+            </div>
+          )}
         </div>
+
         <div className="justify-self-center">
           <div className="flex items-center justify-center text-xl font-semibold relative">Step to Join Bootcamp</div>
           <div className="flex items-center justify-center text-xl font-semibold relative">
