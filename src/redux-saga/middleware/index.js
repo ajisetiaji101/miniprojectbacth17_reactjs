@@ -11,6 +11,7 @@ import * as ActionTypeBatch from "../constants/BatchConstant";
 import * as ActionTypeAppBatch from "../constants/AppBatch";
 
 import * as ActionTypeJob from '../constants/Job'
+import * as ActionTypeClient from '../constants/Client'
 
 import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
 import { handleDeletePlacementSaga, handleGetPlacementSaga } from "./PlacementSaga";
@@ -20,7 +21,10 @@ import { handleGetTalentSaga } from "./TalentSaga";
 import { handleGetBatch, handleAddBatch } from "./BatchSaga";
 import { handleGetAppBatch, handleEditBatchStatus, handleDeleteBatch, handleGetBatchId, handleEditBatch } from "./AppBatchSaga";
 import { handleGetTalent, handleUpdateTalent, handleUpdateTalentNoFile } from "./SettingsSaga";
-import {handleGetJob, handleAddJob,handleDeleteJob} from './JobSaga'
+import {handleGetJob, handleAddJob,handleDeleteJob
+} from './JobSaga'
+import { handleGetClient } from './ClientSaga'
+
 
 function* watchAll() {
   yield all([
@@ -55,7 +59,10 @@ function* watchAll() {
   
     takeEvery(ActionTypeJob.GET_JOB_REQUEST, handleGetJob),
     takeEvery(ActionTypeJob.ADD_JOB_REQUEST, handleAddJob),
-    takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),]);
+    takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
+    takeEvery(ActionTypeClient.GET_CLIENT_REQUEST, handleGetClient),
+
+  ]);
 }
 
 export default watchAll;

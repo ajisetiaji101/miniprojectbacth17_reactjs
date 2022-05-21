@@ -10,6 +10,8 @@ import BatchReducer from "./BatchReducer";
 import AppBatchReducer from "./AppBatchReducer";
 import SettingReducer from "./SettingsReducer";
 import JobReducer from './JobReducer';
+import ClientReducer from './ClientReducer';
+
 
 const rootReducer = combineReducers({
   userState: userReducer,
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   batchAppState: AppBatchReducer,
   settingState: SettingReducer,
   jobState: JobReducer,
+  clientState: ClientReducer,
+
 });
 
 export default rootReducer;

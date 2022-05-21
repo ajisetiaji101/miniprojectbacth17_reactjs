@@ -9,8 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   doGetJobRequest,
   doAddJobRequest,
-  doAddJobSucceed,
 } from "../../../redux-saga/actions/Job";
+import {doGetClientRequest} from "../../../redux-saga/actions/Client";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -31,12 +31,15 @@ export default function AddJob() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   let [isOpen, setIsOpen] = useState(false);
+  const [tgl, setTgl] = useState([]);
+
   const status = useSelector((state) => state.jobState);
   const [Loading, setLoading] = useState(true);
-  const [number, setNumber] = useState([]);
-
+  const [previewImg, setPreviewImg] = useState();
+  const [uploaded, setUploaded] = useState(false);
+  const { clients } = useSelector((state) => state.clientState);
   const { userProfile } = useSelector((state) => state.userState);
-
+  const [listClient, setListClient] = useState([]);
 
 
   useEffect(() => {
@@ -54,15 +57,13 @@ export default function AddJob() {
     }
   }, [status]);
 
-  // const validationSchema = Yup.object().shape({
-  //   jobs_title: Yup.string("Enter jobs_title").required(
-  //     "jobs_title is required"
-  //   ),
-  // });
+  useEffect(() => {
+    dispatch(doGetClientRequest());
+ 
+  }, []);
 
   const formik = useFormik({
     initialValues: {
-      jobs_post_no: "",
       jobs_title: "",
       jobs_start_date: "",
       jobs_end_date: "",
@@ -73,8 +74,8 @@ export default function AddJob() {
       jobs_secondary_skill: "",
       jobs_industry_type: "",
       jobs_working_type: "",
-      jobs_publish: false,
-      jobs_remotely: false,
+      jobs_publish: 0,
+      jobs_remotely: 0,
       jobs_spec_education: "",
       jobs_benefit: "",
       jobs_specification: "",
@@ -82,64 +83,67 @@ export default function AddJob() {
       jobs_location: "",
       jobs_city: "",
       jobs_user_id: 0,
-      jobs_client_id: 0,
+      jobs_client_id:1,
+      jobs_photo: undefined,
     },
     // validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const ch = "JOB#";
-      const y = startDate.getFullYear();
-      const bln = "0" + (startDate.getMonth() + 1);
-
-      const fix = [ch, y, bln];
-      
-
-      //ganti format tanggal jadi isoString
       const SDate = startDate.toISOString();
-      const EDate = endDate.toISOString();
+      const EDate = endDate.toISOString();      
 
-      const jobs_start_date = SDate;
-      const jobs_end_date = EDate;
+      values.jobs_start_date=SDate
+      values.jobs_end_date=EDate
+      values.jobs_user_id=userProfile.userId;
 
-      const jobs_post_no = fix.join("");
-      const jobs_user_id = userProfile.userId;
-
-      // const tglr=()=>{
-      //   tgl ? setTgl(false) : setTgl(true);
-      // }
-
-      //selisih
-      // const diffMonth = ((endDate.getFullYear()*12 + endDate.getMonth()) - (startDate.getFullYear()*12 + startDate.getMonth()))
-      //   const selisihMiliSecond = new Date(endDate) - new Date(startDate);
-      //   const miliSecondPerDay = 60 * 60 * 24 * 1000;
-      //   const selisihPerHari = selisihMiliSecond / miliSecondPerDay;
-      //   const diffDay = Math.round(selisihPerHari + 1);
-      const test = {
-        ...values,
-        jobs_post_no,
-        jobs_start_date,
-        jobs_end_date,
-        jobs_user_id,
-        // jobs_publish,
-        // tglr,
-        // setTgl,
-      };
-      console.log(test);
-
-      dispatch(
-        doAddJobRequest({
-          ...values,
-          jobs_post_no,
-          jobs_start_date,
-          jobs_end_date,
-          jobs_user_id,
-          // jobs_publish,
-          // tglr,
-          // setTgl,
-        })
+      let payload = new FormData();
+      payload.append("jobs_title", values.jobs_title);
+      payload.append("jobs_start_date", values.jobs_start_date);
+      payload.append("jobs_end_date", values.jobs_end_date);
+      payload.append("jobs_upto_salary", parseInt(values.jobs_upto_salary));
+      payload.append(
+        "job_upto_experience",
+        parseInt(values.job_upto_experience)
       );
+      payload.append("jobs_description", values.jobs_description);
+      payload.append("jobs_primary_skill", values.jobs_primary_skill);
+      payload.append("jobs_secondary_skill", values.jobs_secondary_skill);
+      payload.append("jobs_industry_type", values.jobs_industry_type);
+      payload.append("jobs_working_type", values.jobs_working_type);
+      payload.append("jobs_publish", values.jobs_publish);
+      payload.append("jobs_remotely", values.jobs_remotely);
+      payload.append("jobs_spec_education", values.jobs_spec_education);
+      payload.append("jobs_benefit", values.jobs_benefit);
+      payload.append("jobs_specification", values.jobs_specification);
+      payload.append("jobs_status", values.jobs_status);
+      payload.append("jobs_location", values.jobs_location);
+      payload.append("jobs_city", values.jobs_city);
+      payload.append("jobs_user_id", parseInt(values.jobs_user_id));
+      payload.append("jobs_client_id", parseInt(values.jobs_client_id));
+      payload.append("jobs_photo", values.jobs_photo);
+
+       dispatch(doAddJobRequest(payload));
+      // navigate("/app/job/success");
+
     },
   });
 
+  const uploadOnChange = (name) => (event) => {
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onload = () => {
+      formik.setFieldValue("jobs_photo", file);
+      setPreviewImg(reader.result);
+    };
+    reader.readAsDataURL(file);
+    setUploaded(true);
+  };
+
+  const onClearImage = (event) => {
+    event.preventDefault();
+    setUploaded(false);
+    setPreviewImg(null);
+  };
   return (
     <Page
       title="Create Job"
@@ -156,7 +160,7 @@ export default function AddJob() {
                 <div class="grid grid-cols-7 gap-4">
                   <div class="col-start-1 col-end-5">
                     <label class="block text-sm font-medium text-gray-700">
-                      Title 
+                      Title
                     </label>
                     <input
                       type="text"
@@ -166,22 +170,6 @@ export default function AddJob() {
                       value={formik.values.jobs_title}
                       onChange={formik.handleChange}
                       autocomplete="jobs_title"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
-                  </div>
-
-                  <div class="col-start-6 col-end-7">
-                    <label class="block text-sm font-medium text-gray-700">
-                      Posting Number
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="jobs_post_no"
-                      id="jobs_post_no"
-                      name="jobs_post_no"
-                      value={formik.values.jobs_post_no}
-                      onChange={formik.handleChange}
-                      autocomplete="jobs_post_no"
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
@@ -233,6 +221,67 @@ export default function AddJob() {
                     </div>
                   </div>
 
+                  <div class="col-start-6 col-end-8">
+                    <label className="block text-sm font-medium text-gray-700">
+                      Job Photo
+                    </label>
+                    <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                      <div className="space-y-1 text-center">
+                        {uploaded === false ? (
+                          <svg
+                            className="mx-auto h-12 w-12 text-gray-400"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 48 48"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                              strokeWidth={2}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        ) : (
+                          <>
+                            <img
+                              src={previewImg}
+                              alt="image"
+                              className="mx-auto h-48 w-48"
+                            />
+                            <div className="flex text-sm text-gray-600">
+                              <label className="relative cursor-pointer bg-white rounded-md font-medium text-orange-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                <span className="ml-4" onClick={onClearImage}>
+                                  Remove
+                                </span>
+                              </label>
+                            </div>
+                          </>
+                        )}
+
+                        <div className="flex text-sm text-gray-600">
+                          <label
+                            htmlFor="jobs_photo"
+                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                          >
+                            <span>Upload a file</span>
+                            <input
+                              type="file"
+                              id="jobs_photo"
+                              accept="image/*"
+                              onChange={uploadOnChange("file")}
+                              className="sr-only"
+                            />
+                          </label>
+                          <p className="pl-1">or drag and drop</p>
+                        </div>
+                        <p className="text-xs text-gray-500">
+                          PNG, JPG, GIF up to 10MB
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* jobs_upto_salary */}
                   <div class="col-start-1 col-end-3">
                     <label
@@ -274,6 +323,8 @@ export default function AddJob() {
                     />
                   </div>
 
+                  
+
                   {/* jobs_publish */}
                   <div class="col-start-6 col-end-7">
                     <label class="block text-sm font-medium text-gray-700">
@@ -291,43 +342,7 @@ export default function AddJob() {
                       onChange={formik.handleChange}
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
-                    {/* <Switch
-                    // type="checkbox"
-                      checked={tgl}
-                      onChange={setTgl}
-                      name="jobs_publish"
-                      value={formik.values.jobs_publish}
-                    >
-                      <span className="block bg-black rounded shadow p-2 h-8 w-56">
-                        <span
-                          className={`block h-full w-1/2 rounded transition duration-300 ease-in-out transform ${
-                            tgl
-                              ? "bg-green-500 translate-x-full"
-                              : "bg-red-500"
-                          }`}
-                        ></span>
-                      </span>
-                    </Switch> */}
-                    {/* <Toggle
-                      onChange={(event) => setTgl(event.target.checked)}
-
-                    ></Toggle> */}
-                    {/* <p>hasil {tgl ? "true" : "false"}</p> */}
-                    {/* <input
-                      name="jobs_publish"
-                      value={tgl ? "true" : "false"}
-                      onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    ></input> */}
-                  </div>
-
-                  {/* <input
-                        placeholder="jobs_publish"
-                        id="jobs_publish"
-                        name="jobs_publish"
-                        value={formik.values.jobs_publish}
-                        onChange={formik.handleChange}
-                      /> */}
+                    </div>
 
                   {/* jobs_primary_skill */}
                   <div class="col-start-1 col-end-5">
@@ -400,6 +415,27 @@ export default function AddJob() {
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
+
+                      {/* <Switch
+                    type="checkbox"
+                      onChange={formik.handleChange}
+                      name="jobs_status"
+                      value={formik.values.jobs_status}
+                    >
+                      <span className="block bg-black rounded shadow p-2 h-8 w-30">
+                        <span
+                          className={`block h-full w-1/2 rounded transition duration-300 ease-in-out transform ${
+                            tgl
+                              ? "bg-green-500 translate-x-full"
+                              : "bg-red-500"
+                          }`}
+                        ></span>
+                      </span>
+                      <p>hasil {tgl ? "open" : "close"}</p>
+
+                    </Switch>     */}
+                 
+                 
 
                   <div class="col-start-1 col-end-3">
                     <label
@@ -543,57 +579,51 @@ export default function AddJob() {
                   />
 
                   {/* jobs_client_id */}
-                  <div>
+                  <div class="col-start-1 col-end-5">
                     <label>jobs_client_id</label>
-                    {/* <select
-                                        name="jobs_client_id"
-                                        id="jobs_client_id"
-                                        value={formik.values.jobs_client_id }
-                                        onChange={formik.handleChange}
-                                        onBlur={formik.handleBlur}
-                                        autoComplete="jobs_client_id"
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                        {client && client.filter(el=>el.client_id === formik.values.jobs_client_id).map((value, index) =>
-                                            <option value={value.client_id} key={index} >{value.client_id}</option>
-                                        )}
-                                    </select> */}
-                    <input
-                      placeholder="jobs_client_id"
-                      id="jobs_client_id"
-                      name="jobs_client_id"
-                      value={formik.values.jobs_client_id}
-                      onChange={formik.handleChange}
-                    />
-                  </div>
+                    <select
+                        class="block w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                        name="jobs_client_id"
+                        id="jobs_client_id"
+                        value={formik.values.jobs_client_id}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        autoComplete="jobs_client_id"
+                      >
+                        {clients.map((cli) => (
+                          <option value={cli.client_id}>
+                            {cli.client_name}
+                          </option>
+                        ))}
+                        
+                        
+                      </select> 
+          
+                    </div>
 
                   <div class="col-start-1 col-end-3">
                     <label class="block text-sm font-medium text-gray-700">
                       Location City
                     </label>
-                    <input
-                      //           type="text"
-                      //           placeholder="jobs_description"
-                      // id="jobs_description"
-                      // name="jobs_description"
-                      // value={formik.values.jobs_description}
-                      // onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
+
+                    <select
+                        class="block w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                        name="jobs_location"
+                        id="jobs_location"
+                        value={formik.values.jobs_location}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        autoComplete="jobs_location"
+                      >
+                      
+                        
+                        
+                      </select> 
+
+                   
                   </div>
 
-                  {/* jobs_location */}
-
-                  <div>
-                    <label>jobs_location</label>
-
-                    <input
-                      placeholder="jobs_location"
-                      id="jobs_location"
-                      name="jobs_location"
-                      value={formik.values.jobs_location}
-                      onChange={formik.handleChange}
-                    />
-                  </div>
+            
 
                   {/* jobs_city */}
 
@@ -649,7 +679,7 @@ export default function AddJob() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => navigate("/app/batch")}
+                  onClick={() => navigate("/app/job")}
                   className="flex justify-center w-28 py-2 px-4 border border-slate-800 shadow-sm text-sm font-medium  text-slate-900 bg-white hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
                   Cancel

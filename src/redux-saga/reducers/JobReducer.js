@@ -3,6 +3,7 @@ import * as ActionType from '../constants/Job'
 const INIT_STATE={
     jobs:[],
     status:{},
+
 };
 
 const JobReducer = (state = INIT_STATE, action) => {
@@ -38,8 +39,9 @@ const JobReducer = (state = INIT_STATE, action) => {
         }
         case ActionType.DELETE_JOB_SUCCEED: {
             return applyDeleteJobSucceed(state,action)
-        }
-   
+        } 
+
+        
         default:
             return state;
     }
@@ -48,7 +50,7 @@ const JobReducer = (state = INIT_STATE, action) => {
 const GetJobSucceed = (state,action)=>{
     return{
         ...state,
-        jobs:action.payload
+        jobs:action.payload,
     }
 }
 
@@ -69,4 +71,6 @@ const GetAddJobSucceed = (state, action) => {
         jobs : [...filterJob],
     }
 }
+
+
 export default JobReducer
