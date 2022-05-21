@@ -46,16 +46,35 @@ export default function Apply() {
     reader.readAsDataURL(file);
   };
 
+  const calculate_age = (dob1) => {
+    if (dob1) {
+      const today = new Date();
+      let birthday = new Date(dob1);
+      let year = 0;
+      if (today.getMonth() < birthday.getMonth()) {
+        year = 1;
+      } else if (today.getMonth() == birthday.getMonth() && today.getDate() < birthday.getDate()) {
+        year = 1;
+      }
+      let age = `${today.getFullYear() - birthday.getFullYear() - year} tahun`;
+
+      if (age < 0) {
+        age = 0;
+      }
+      return age;
+    }
+  };
+
   const validationSchema = Yup.object().shape({
     tale_fullname: Yup.string("Enter Fullname").required("Fullname is required"),
-    tale_birthdate: Yup.string("Please enter birthdate").required("Birthdate is required"),
     tale_education: Yup.string("Tolong isi data pendidikan").required("Pendidikan is required"),
     tale_school_name: Yup.string("Tolong isi data Universitas").required("University is required"),
     tale_major: Yup.string("Tolong isi data jurusan").required("University is required"),
     tale_handphone: Yup.string("Tolong isi data handphone").required("handphone is required"),
     tale_bootcamp: Yup.string("Tolong isi data bootcamp").required("bootcamp is required"),
-    tale_province: Yup.string("Tolong isi data Daerah").required("Province is required"),
     tale_motivation: Yup.string("Tolong isi data motivation").required("motivation is required"),
+    tale_resume: Yup.string("Tolong upload Your Resume").required("Please Upload Your Resume"),
+    tale_photo: Yup.string("Tolong upload Your Photo").required("Please Upload Your Photo"),
   });
 
   const formik = useFormik({
@@ -73,7 +92,7 @@ export default function Apply() {
       tale_photo: "",
       tale_resume: "",
     },
-    // validationSchema: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       values.tale_birthdate = selectedDate;
       const tglLahir = moment(selectedDate).format("YYYY-MM-DD");
@@ -91,6 +110,8 @@ export default function Apply() {
       payload.append("tale_user_id", parseInt(userProfile.userId));
 
       dispatch(doAddProcessBootcampRequest(payload));
+
+      navigate("/apply/sukses");
     },
   });
 
@@ -114,6 +135,7 @@ export default function Apply() {
             </div>
             <input type="file" accept="image/*" id="tale_photo" name="tale_photo" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
           </div>
+          {formik.touched.tale_photo && formik.errors.tale_photo ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_photo}</span> : null}
         </form>
         <div>
           <div>
@@ -136,11 +158,12 @@ export default function Apply() {
               onBlur={formik.handleBlur}
               className=" focus:ring-indigo-500 focus:border-indigo-500 w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholderText="Birthdate"
+              onClick={calculate_age(selectedDate)}
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
             />
             <FontAwesomeIcon icon={faCalendarAlt} className="h-8 w-8 mx-2 my-auto text-gray-500" />
-            <input type="text" className=" focus:ring-indigo-200 focus:border-indigo-200 w-full shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md" placeholder="Age" disabled />
+            <input type="text" className=" focus:ring-indigo-200 focus:border-indigo-200 w-full shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md" value={calculate_age(selectedDate)} disabled />
           </div>
           {formik.touched.tale_birthdate && formik.errors.tale_birthdate ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_birthdate}</span> : null}
           <div className="mb-4">
@@ -215,7 +238,8 @@ export default function Apply() {
               className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
               <option>NodeJS</option>
-              <option>Golang</option>
+              <option>Java</option>
+              <option>.NET</option>
             </select>
             {formik.touched.tale_bootcamp && formik.errors.tale_bootcamp ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_bootcamp}</span> : null}
           </div>
@@ -250,6 +274,7 @@ export default function Apply() {
               disabled
             />
           </div>
+          {formik.touched.tale_resume && formik.errors.tale_resume ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_resume}</span> : null}
           <div className="pt-4 flex items-center space-x-4">
             <button
               type="button"
