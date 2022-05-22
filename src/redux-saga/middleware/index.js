@@ -22,7 +22,7 @@ import { handleGetTalentSaga } from "./TalentSaga";
 import { handleGetBatch, handleAddBatch } from "./BatchSaga";
 import { handleGetAppBatch, handleEditBatchStatus, handleDeleteBatch, handleGetBatchId, handleEditBatch } from "./AppBatchSaga";
 import { handleGetTalent, handleUpdateTalent, handleUpdateTalentNoFile } from "./SettingsSaga";
-import { handleGetJob, handleAddJob, handleDeleteJob } from "./JobSaga";
+import { handleGetJob, handleAddJob, handleDeleteJob, handleGetIdJob, handleEditJob } from "./JobSaga";
 import { handleAddProcessBootcampSaga } from "./ProcessBootcampSaga";
 
 function* watchAll() {
@@ -60,6 +60,8 @@ function* watchAll() {
     takeEvery(ActionTypeJob.GET_JOB_REQUEST, handleGetJob),
     takeEvery(ActionTypeJob.ADD_JOB_REQUEST, handleAddJob),
     takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
+    takeEvery(ActionTypeJob.EDIT_JOB_REQUEST, handleEditJob),
+    takeEvery(ActionTypeJob.GET_JOB_ID_REQUEST, handleGetIdJob),
 
     takeEvery(ActionTypeProcessBootcamp.ADD_PROCESS_BOOTCAMP_REQUEST, handleAddProcessBootcampSaga),
   ]);

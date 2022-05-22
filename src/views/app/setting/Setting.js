@@ -7,9 +7,20 @@ import * as moment from "moment";
 import Page from "../../../component/commons/Page";
 import config from "../../../config/config";
 import DatePicker from "react-datepicker";
-import { doGetTalentRequest, doUpdateSettingsRequest, doUpdateTalentNoFileRequest, doUpdateTalentRequest } from "../../../redux-saga/actions/Settings";
+import {
+  doGetTalentRequest,
+  doUpdateSettingsRequest,
+  doUpdateTalentNoFileRequest,
+  doUpdateTalentRequest,
+} from "../../../redux-saga/actions/Settings";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faCalendarAlt, faCalendarDay, faCalendarTimes, faCalendarWeek } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendar,
+  faCalendarAlt,
+  faCalendarDay,
+  faCalendarTimes,
+  faCalendarWeek,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Setting() {
   const [previewImg, setPreviewImg] = useState();
@@ -68,14 +79,24 @@ export default function Setting() {
   // }, [settings]);
 
   const validationSchema = Yup.object().shape({
-    tale_fullname: Yup.string("Enter Fullname").required("Fullname is required"),
-    tale_email: Yup.string("Please enter your email").required("Email is required"),
-    tale_major: Yup.string("Tolong isi data jurusan").required("Jurusan is required"),
+    tale_fullname: Yup.string("Enter Fullname").required(
+      "Fullname is required"
+    ),
+    tale_email: Yup.string("Please enter your email").required(
+      "Email is required"
+    ),
+    tale_major: Yup.string("Tolong isi data jurusan").required(
+      "Jurusan is required"
+    ),
     tale_city: Yup.string("Tolong isi data kota").required("City is required"),
-    tale_school_name: Yup.string("Tolong isi data Universitas").required("University is required"),
+    tale_school_name: Yup.string("Tolong isi data Universitas").required(
+      "University is required"
+    ),
     tale_year_graduate: Yup.number().min(1997).default(0),
     tale_gpa: Yup.number().min(1).default(0),
-    tale_province: Yup.string("Tolong isi data Daerah").required("Province is required"),
+    tale_province: Yup.string("Tolong isi data Daerah").required(
+      "Province is required"
+    ),
   });
 
   const formik = useFormik({
@@ -88,7 +109,8 @@ export default function Setting() {
       tale_bootcamp: settings.tale_bootcamp,
       tale_resume: settings.tale_resume,
       tale_cover_letter: settings.tale_cover_letter,
-      tale_birthdate: settings.tale_birthdate && new Date(settings.tale_birthdate),
+      tale_birthdate:
+        settings.tale_birthdate && new Date(settings.tale_birthdate),
       tale_handphone: settings.tale_handphone,
       tale_school_name: settings.tale_school_name,
       tale_year_graduate: settings.tale_year_graduate,
@@ -100,9 +122,15 @@ export default function Setting() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const tglLahir = moment(formik.values.tale_birthdate).format("YYYY-MM-DD");
+      const tglLahir = moment(formik.values.tale_birthdate).format(
+        "YYYY-MM-DD"
+      );
       let payload = new FormData();
-      if (fileResume === true || fileCoverLetter === true || uploaded === true) {
+      if (
+        fileResume === true ||
+        fileCoverLetter === true ||
+        uploaded === true
+      ) {
         payload.append("tale_fullname", values.tale_fullname);
         payload.append("tale_birthdate", tglLahir);
         payload.append("tale_education", values.tale_education);
@@ -110,7 +138,10 @@ export default function Setting() {
         payload.append("tale_school_name", values.tale_school_name);
         payload.append("tale_handphone", values.tale_handphone);
         payload.append("tale_bootcamp", values.tale_bootcamp);
-        payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        payload.append(
+          "tale_year_graduate",
+          parseInt(values.tale_year_graduate)
+        );
         payload.append("tale_gpa", parseInt(values.tale_gpa));
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
@@ -128,7 +159,10 @@ export default function Setting() {
         payload.append("tale_school_name", values.tale_school_name);
         payload.append("tale_handphone", values.tale_handphone);
         payload.append("tale_bootcamp", values.tale_bootcamp);
-        payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        payload.append(
+          "tale_year_graduate",
+          parseInt(values.tale_year_graduate)
+        );
         payload.append("tale_gpa", parseInt(values.tale_gpa));
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
@@ -144,7 +178,10 @@ export default function Setting() {
         payload.append("tale_school_name", values.tale_school_name);
         payload.append("tale_handphone", values.tale_handphone);
         payload.append("tale_bootcamp", values.tale_bootcamp);
-        payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        payload.append(
+          "tale_year_graduate",
+          parseInt(values.tale_year_graduate)
+        );
         payload.append("tale_gpa", parseInt(values.tale_gpa));
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
@@ -159,7 +196,10 @@ export default function Setting() {
         payload.append("tale_school_name", values.tale_school_name);
         payload.append("tale_handphone", values.tale_handphone);
         payload.append("tale_bootcamp", values.tale_bootcamp);
-        payload.append("tale_year_graduate", parseInt(values.tale_year_graduate));
+        payload.append(
+          "tale_year_graduate",
+          parseInt(values.tale_year_graduate)
+        );
         payload.append("tale_gpa", parseInt(values.tale_gpa));
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
@@ -228,15 +268,24 @@ export default function Setting() {
   let navigate = useNavigate();
   const location = useLocation();
   return (
-    <Page title="Setting Profile" titleButton="Back" onClick={() => navigate(-1)}>
+    <Page
+      title="Setting Profile"
+      titleButton="Back"
+      onClick={() => navigate(-1)}
+    >
       <div className="mt-5 md:mt-0 md:col-span-2">
         <form method="POST" action="#">
           <div className="shadow overflow-hidden sm:rounded-md">
-            <h1 className="p-6 font-light pt-2">This information will be display, so be careful what you share</h1>
+            <h1 className="p-6 font-light pt-2">
+              This information will be display, so be careful what you share
+            </h1>
             <div className="px-10 py-5 bg-white sm:p-6">
               <div className="sm:flex-1 lg:grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-2">
-                  <label htmlFor="tale_fullname" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_fullname"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Fullname
                   </label>
                   <input
@@ -249,11 +298,19 @@ export default function Setting() {
                     autoComplete="tale_fullname"
                     className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                  {formik.touched.tale_fullname && formik.errors.tale_fullname ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_fullname}</span> : null}
+                  {formik.touched.tale_fullname &&
+                  formik.errors.tale_fullname ? (
+                    <span className="mt-2 text-sm text-red-600">
+                      {formik.errors.tale_fullname}
+                    </span>
+                  ) : null}
                 </div>
 
                 <div className="col-span-6 row-start-2 sm:col-span-2">
-                  <label htmlFor="tale_email" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Email
                   </label>
                   <input
@@ -272,7 +329,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-3 sm:col-span-2">
-                  <label htmlFor="tale_education" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_education"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Pendidikan
                   </label>
                   <select
@@ -293,7 +353,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-4 sm:col-span-2">
-                  <label htmlFor="tale_major" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_major"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Jurusan
                   </label>
                   <input
@@ -312,7 +375,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-5 sm:col-span-2">
-                  <label htmlFor="tale_city" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_city"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Kota
                   </label>
                   <input
@@ -325,11 +391,18 @@ export default function Setting() {
                     autoComplete="tale_city"
                     className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                  {formik.touched.tale_city && formik.errors.tale_city ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_city}</span> : null}
+                  {formik.touched.tale_city && formik.errors.tale_city ? (
+                    <span className="mt-2 text-sm text-red-600">
+                      {formik.errors.tale_city}
+                    </span>
+                  ) : null}
                 </div>
 
                 <div className="col-span-6 row-start-6 sm:col-span-2">
-                  <label htmlFor="tale_bootcamp" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_bootcamp"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Joint Bootcamp
                   </label>
                   <select
@@ -350,7 +423,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-7 sm:col-span-2">
-                  <label htmlFor="tale_resume" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_resume"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Resume
                   </label>
                   <div className="flex">
@@ -377,7 +453,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-7 sm:col-span-2">
-                  <label htmlFor="tale_cover_letter" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_cover_letter"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Cover Letter
                   </label>
                   <div className="flex">
@@ -403,14 +482,19 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 sm:col-span-1 lg:col-span-2">
-                  <label htmlFor="tale_birthdate" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_birthdate"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Birth Date
                   </label>
                   <div className="flex">
                     <DatePicker
                       className="mt-1 focus:ring-red-500 focus:border-red-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       selected={formik.values.tale_birthdate}
-                      onChange={(date) => formik.setFieldValue("tale_birthdate", date)}
+                      onChange={(date) =>
+                        formik.setFieldValue("tale_birthdate", date)
+                      }
                     />
                     <span className="my-auto mx-2 text-red-600 hover:text-red-700">
                       <FontAwesomeIcon icon={faCalendarAlt} size="2x" />
@@ -419,7 +503,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-2 sm:col-span-2">
-                  <label htmlFor="tale_handphone" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_handphone"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Contact Number
                   </label>
                   <input
@@ -438,7 +525,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-3 sm:col-span-2">
-                  <label htmlFor="tale_school_name" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_school_name"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Universitas
                   </label>
                   <input
@@ -457,7 +547,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-4 sm:col-span-1">
-                  <label htmlFor="tale_year_graduate" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_year_graduate"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Tahun Lulus
                   </label>
                   <input
@@ -476,7 +569,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-4 sm:col-span-1">
-                  <label htmlFor="tale_gpa" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_gpa"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     IPK
                   </label>
                   <input
@@ -495,7 +591,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-5 sm:col-span-2">
-                  <label htmlFor="tale_province" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_province"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Provinsi
                   </label>
                   <input
@@ -514,7 +613,10 @@ export default function Setting() {
                 </div>
 
                 <div className="col-span-6 row-start-6 sm:col-span-2">
-                  <label htmlFor="tale_tag_skill" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="tale_tag_skill"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Skills
                   </label>
                   <textarea
@@ -534,9 +636,19 @@ export default function Setting() {
                 </div>
                 <div className="col-span-6 sm:col-span-2 row-span-3 justify-self-center py-4 relative">
                   <div className="">
-                    <img src={previewImg} className="h-44 w-44 rounded-full ring-2 ring-red-600" />
+                    <img
+                      src={previewImg}
+                      className="h-44 w-44 rounded-full ring-2 ring-red-600"
+                    />
                   </div>
-                  <input type="file" accept="image/*" id="tale_photo" name="tale_photo" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="tale_photo"
+                    name="tale_photo"
+                    className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 "
+                    onChange={uploadOnChangeImage("file")}
+                  />
                 </div>
               </div>
             </div>
