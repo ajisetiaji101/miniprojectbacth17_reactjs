@@ -12,7 +12,7 @@ export const CarouselData = [
     image7: "./assets/images/buma.jpg",
   },
   {
-    image1: "./assets/images/smartfren.jpg",
+    image1: "./assets/images/smartfrenn.jpg",
     image2: "./assets/images/linkaja.png",
     image3: "./assets/images/pegadaian.jpeg",
     image4: "./assets/images/digiresto.jpg",
