@@ -11,7 +11,8 @@ import Candidat from "./views/app/candidat/Candidat";
 import Batch from "./views/app/batch/Batch";
 import AddBatch from "./views/app/batch/AddBatch";
 import Curriculum from "./views/app/curriculum/Curriculum";
-import Hiring from "./views/app/hiring/Hiring";
+import Hiringg from './views/app/hiring/Hiringg'
+import Hiring from './views/hiring/Hiring';
 import Setting from "./views/app/setting/Setting";
 import Talent from "./views/app/talent/Talent";
 import BlankLayout from "./component/layout/BlankLayout";
@@ -21,7 +22,14 @@ import Job from "./views/app/job/Job";
 import AddJob from "./views/app/job/AddJob";
 import Apply from "./views/app/apply/Apply";
 import Landing from "./views/components/Landing";
+<<<<<<< HEAD
 import SignupSuccess from "./component/layout/SignupSuccess";
+=======
+import EditCurriculum from "./views/app/curriculum/EditCurriculum";
+import Applysukses from "./views/app/apply/Applysukses";
+
+
+>>>>>>> 8dd84a35efb3f626228666a8741cd923057332e8
 export default function Routes(isLoggedIn) {
   return useRoutes([
     {
@@ -33,7 +41,9 @@ export default function Routes(isLoggedIn) {
         // { path: "signup", element: <Navigate to="/auth/signup" /> },
         { path: "bootcamp", element: <Bootcamp /> },
         { path: "apply", element: isLoggedIn ? <Apply /> : <Navigate to="/auth/signin" /> },
+        { path: "apply/sukses", element: isLoggedIn ? <Applysukses /> : <Navigate to="/auth/signin" /> },
         { path: "404", element: <Page404 /> },
+        { path: 'hiring', element: <Hiring/> },
       ],
     },
     {
@@ -58,20 +68,58 @@ export default function Routes(isLoggedIn) {
       path: "/app",
       element: <AppLayout />,
       children: [
-        { path: "dashboard", element: isLoggedIn ? <Dashboard /> : <Navigate to="/auth/signin" /> },
-        { path: "candidat", element: isLoggedIn ? <Candidat /> : <Navigate to="/auth/signin" /> },
-        { path: "batch", element: isLoggedIn ? <Batch /> : <Navigate to="/auth/signin" /> },
-        { path: "batch/new", element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin" /> },
-        { path: "placement", element: isLoggedIn ? <Placement /> : <Navigate to="/auth/signin" /> },
-        { path: "talent", element: isLoggedIn ? <Talent /> : <Navigate to="/auth/signin" /> },
-        { path: "curriculum", element: isLoggedIn ? <Curriculum /> : <Navigate to="/auth/signin" /> },
-        { path: "hiring", element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin" /> },
-        { path: "job", element: isLoggedIn ? <Job /> : <Navigate to="/auth/signin" /> },
+        {
+          path: "dashboard",
+          element: isLoggedIn ? <Dashboard /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "candidat",
+          element: isLoggedIn ? <Candidat /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "batch",
+          element: isLoggedIn ? <Batch /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "batch/new",
+          element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "placement",
+          element: isLoggedIn ? <Placement /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "talent",
+          element: isLoggedIn ? <Talent /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "curriculum",
+          element: isLoggedIn ? <Curriculum /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "curriculum/edit/:id",
+          element: isLoggedIn ? (
+            <EditCurriculum />
+          ) : (
+            <Navigate to="/auth/signin" />
+          ),
+        },
+        {
+          path: "hiringg",
+          element: isLoggedIn ? <Hiringg /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "job",
+          element: isLoggedIn ? <Job /> : <Navigate to="/auth/signin" />,
+        },
         {
           path: "job/new",
           element: isLoggedIn ? <AddJob /> : <Navigate to="/auth/signin" />,
         },
-        { path: "setting", element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin" /> },
+        {
+          path: "setting",
+          element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin" />,
+        },
       ],
     },
     { path: "*", element: <Navigate to="/404" replace /> },
