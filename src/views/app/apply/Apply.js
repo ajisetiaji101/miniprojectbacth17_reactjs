@@ -9,6 +9,7 @@ import {} from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { doGetTalentRequest } from "../../../redux-saga/actions/Settings";
 import { doAddProcessBootcampRequest } from "../../../redux-saga/actions/ProcessBootcampConstant";
+import { doAddTalentTimelineRequest, doGetTalentTimelineRequest } from "../../../redux-saga/actions/TalentTimelineAction";
 import config from "../../../config/config";
 import * as Yup from "yup";
 import * as moment from "moment";
@@ -19,9 +20,17 @@ export default function Apply() {
   const [previewImg, setPreviewImg] = useState();
   const [selectedDate, setSelectedDate] = useState(null);
   const dispatch = useDispatch();
-
-  console.log(previewImg);
+  const { settings } = useSelector((state) => state.settingState);
   const { userProfile } = useSelector((state) => state.userState);
+  const { talenttimeline } = useSelector((state) => state.talenttimelineState);
+
+  useEffect(() => {
+    dispatch(doGetTalentRequest(userProfile.userId));
+  }, []);
+
+  useEffect(() => {
+    dispatch(doGetTalentTimelineRequest(userProfile.userId));
+  }, []);
 
   const uploadOnChangeResume = (name) => (event) => {
     let reader = new FileReader();
@@ -95,7 +104,10 @@ export default function Apply() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       values.tale_birthdate = selectedDate;
+      const harini = new Date();
       const tglLahir = moment(selectedDate).format("YYYY-MM-DD");
+      const today = moment(harini).format("YYYY-MM-DD");
+      const apply = "Apply";
       let payload = new FormData();
       payload.append("tale_fullname", values.tale_fullname);
       payload.append("tale_birthdate", tglLahir);
@@ -108,10 +120,17 @@ export default function Apply() {
       payload.append("tale_resume", values.tale_resume);
       payload.append("tale_photo", values.tale_photo);
       payload.append("tale_user_id", parseInt(userProfile.userId));
+      payload.append("tati_date", today);
+      payload.append("tati_tale_id", parseInt(userProfile.userId));
+      payload.append("tati_timeline_name", apply);
 
-      dispatch(doAddProcessBootcampRequest(payload));
+      await dispatch(doAddProcessBootcampRequest(payload));
 
-      navigate("/apply/sukses");
+      setTimeout(() => {
+        dispatch(doAddTalentTimelineRequest(payload));
+      }, [1000]);
+
+      setTimeout(() => navigate("/apply/sukses"), [5000]);
     },
   });
 
@@ -147,6 +166,7 @@ export default function Apply() {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md mb-4"
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
               placeholder="Fullname"
             />
             {formik.touched.tale_fullname && formik.errors.tale_fullname ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_fullname}</span> : null}
@@ -161,10 +181,12 @@ export default function Apply() {
               onClick={calculate_age(selectedDate)}
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
             />
             <FontAwesomeIcon icon={faCalendarAlt} className="h-8 w-8 mx-2 my-auto text-gray-500" />
             <input type="text" className=" focus:ring-indigo-200 focus:border-indigo-200 w-full shadow-sm sm:text-sm border-gray-300 bg-gray-100 rounded-md" value={calculate_age(selectedDate)} disabled />
           </div>
+
           {formik.touched.tale_birthdate && formik.errors.tale_birthdate ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_birthdate}</span> : null}
           <div className="mb-4">
             <select
@@ -175,6 +197,7 @@ export default function Apply() {
               onBlur={formik.handleBlur}
               autoComplete="tale_education"
               className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
             >
               <option>Pendidikan</option>
               <option>SMA</option>
@@ -193,6 +216,7 @@ export default function Apply() {
               onBlur={formik.handleBlur}
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="Sekolah"
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
             />
             {formik.touched.tale_school_name && formik.errors.tale_school_name ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_school_name}</span> : null}
           </div>
@@ -208,6 +232,7 @@ export default function Apply() {
               autoComplete="given-name"
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="Jurusan"
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
             />
             {formik.touched.tale_major && formik.errors.tale_major ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_major}</span> : null}
           </div>
@@ -223,6 +248,7 @@ export default function Apply() {
               autoComplete="given-name"
               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
               placeholder="No Hp"
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
             />
             {formik.touched.tale_handphone && formik.errors.tale_handphone ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_handphone}</span> : null}
           </div>
@@ -236,6 +262,7 @@ export default function Apply() {
               onBlur={formik.handleBlur}
               autoComplete="bootcamp"
               className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
             >
               <option>NodeJS</option>
               <option>Java</option>
@@ -255,12 +282,13 @@ export default function Apply() {
               className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"
               placeholder="Motivasi join bootcamp"
               defaultValue={""}
+              disabled={talenttimeline && talenttimeline.length < 1 ? false : true}
             />
             {formik.touched.tale_motivation && formik.errors.tale_motivation ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_motivation}</span> : null}
           </div>
           <div className="col-span-6 sm:col-span-3 mb-4 flex">
             <span className=" text-base font-light my-auto mr-3">Resume </span>
-            <input type="file" accept="pdf/*" name="tale_resume" id="tale_resume" className="border-2 flex-1" onChange={uploadOnChangeResume("file")} />
+            <input type="file" accept="pdf/*" name="tale_resume" id="tale_resume" className="border-2 flex-1" onChange={uploadOnChangeResume("file")} disabled={talenttimeline && talenttimeline.length < 1 ? false : true} />
           </div>
           <div className="mb-4">
             <input
@@ -275,76 +303,174 @@ export default function Apply() {
             />
           </div>
           {formik.touched.tale_resume && formik.errors.tale_resume ? <span className="mt-2 text-sm text-red-600">{formik.errors.tale_resume}</span> : null}
-          <div className="pt-4 flex items-center space-x-4">
-            <button
-              type="button"
-              className="flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none bg-red-500 hover:bg-red-700"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Cancel
-            </button>
-            <button type="button" className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-700" onClick={formik.handleSubmit}>
-              Apply
-            </button>
-          </div>
+
+          {talenttimeline && talenttimeline.length < 1 ? (
+            <div className="pt-4 flex items-center space-x-4">
+              <button type="button" className="bg-blue-500 flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none hover:bg-blue-700 uppercase font-medium" onClick={formik.handleSubmit}>
+                Apply
+              </button>
+              <button
+                type="button"
+                className="flex justify-center items-center w-full text-white px-4 py-3 rounded-md focus:outline-none bg-red-500 hover:bg-red-700 uppercase font-medium"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div className="pt-4 flex items-center space-x-4">
+              <button
+                type="button"
+                className="flex justify-center uppercase font-medium items-center w-full text-white px-4 py-3 rounded-md focus:outline-none bg-red-500 hover:bg-red-700"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Return
+              </button>
+            </div>
+          )}
         </div>
+
         <div className="justify-self-center">
           <div className="flex items-center justify-center text-xl font-semibold relative">Step to Join Bootcamp</div>
           <div className="flex items-center justify-center text-xl font-semibold relative">
             <div className="lg:py-6 lg:pr-16 ml-10">
               <div className="flex">
                 <div className="flex flex-col items-center mr-4">
-                  <div>
-                    <div className="flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full"></div>
-                  </div>
+                  {talenttimeline && talenttimeline !== undefined ? (
+                    <div>
+                      {talenttimeline && talenttimeline.length < 1 ? (
+                        <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                      ) : talenttimeline[0].tati_timeline_name === "Apply" ? (
+                        <div className="flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full"></div>
+                      ) : (
+                        <div className="flex items-center justify-center w-6 h-6 bg-red-500 rounded-full"></div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                  )}
                   <div className="w-px h-full border-2 border-gray-400" />
                 </div>
                 <div className="pb-8">
                   <p className="mb-2 text-lg -mt-1">Apply Application</p>
+                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 1 ? "" : <p className="font-thin text-sm">Applied on {moment(talenttimeline[0].tati_date).format("DD MMMM YYYY")}</p> : ""}
                 </div>
               </div>
               <div className="flex">
                 <div className="flex flex-col items-center mr-4">
                   <div>
-                    <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                    {talenttimeline && talenttimeline !== undefined ? (
+                      <div>
+                        {talenttimeline && talenttimeline.length < 2 ? (
+                          <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                        ) : talenttimeline[1].tati_timeline_name === "Filtering Test" ? (
+                          <div className="flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full"></div>
+                        ) : (
+                          <div className="flex items-center justify-center w-6 h-6 bg-red-500 rounded-full"></div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                    )}
                   </div>
                   <div className="w-px h-full border-2 border-gray-400" />
                 </div>
                 <div className="pb-8">
                   <p className="mb-2 text-lg -mt-1">Filtering Test</p>
+                  {talenttimeline && talenttimeline.length !== undefined ? (
+                    talenttimeline && talenttimeline.length < 2 ? (
+                      ""
+                    ) : (
+                      <p className="font-thin text-sm">Result Pass on {moment(talenttimeline[1].tati_date).format("DD MMMM YYYY")}</p>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               <div className="flex">
                 <div className="flex flex-col items-center mr-4">
                   <div>
-                    <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                    <div>
+                      {talenttimeline && talenttimeline !== undefined ? (
+                        <div>
+                          {talenttimeline && talenttimeline.length < 3 ? (
+                            <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                          ) : talenttimeline[2].tati_timeline_name === "Contract" ? (
+                            <div className="flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full"></div>
+                          ) : (
+                            <div className="flex items-center justify-center w-6 h-6 bg-red-500 rounded-full"></div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                      )}
+                    </div>
                   </div>
                   <div className="w-px h-full border-2 border-gray-400" />
                 </div>
                 <div className="pb-8">
                   <p className="mb-2 text-lg -mt-1">Contract</p>
+                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 3 ? "" : <p className="font-thin text-sm">Done on {moment(talenttimeline[2].tati_date).format("DD MMMM YYYY")}</p> : ""}
                 </div>
               </div>
               <div className="flex">
                 <div className="flex flex-col items-center mr-4">
                   <div>
-                    <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                    {talenttimeline && talenttimeline !== undefined ? (
+                      <div>
+                        {talenttimeline && talenttimeline.length < 4 ? (
+                          <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                        ) : talenttimeline[3].tati_timeline_name === "Briefing Bootcamp" ? (
+                          <div className="flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full"></div>
+                        ) : (
+                          <div className="flex items-center justify-center w-6 h-6 bg-red-500 rounded-full"></div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                    )}
                   </div>
                   <div className="w-px h-full border-2 border-gray-400" />
                 </div>
                 <div className="pb-8">
                   <p className="text-lg mb-2 -mt-1">Briefing Bootcamp</p>
+                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 4 ? "" : <p className="font-thin text-sm">Done on {moment(talenttimeline[3].tati_date).format("DD MMMM YYYY")}</p> : ""}
                 </div>
               </div>
               <div className="flex">
                 <div className="flex flex-col items-center mr-4">
-                  <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                  <div>
+                    {talenttimeline && talenttimeline !== undefined ? (
+                      <div>
+                        {talenttimeline && talenttimeline.length < 5 ? (
+                          <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                        ) : talenttimeline[4].tati_timeline_name === "Join Bootcamp" ? (
+                          <div className="flex items-center justify-center w-6 h-6 bg-blue-500 rounded-full"></div>
+                        ) : (
+                          <div className="flex items-center justify-center w-6 h-6 bg-red-500 rounded-full"></div>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center w-6 h-6 border-4 rounded-full border-gray-500"></div>
+                    )}
+                  </div>
                 </div>
                 <div className="">
                   <p className="mb-2 text-lg -mt-1">Join Bootcamp</p>
-                  <p className="text-gray-700" />
+                  {talenttimeline && talenttimeline.length !== undefined ? (
+                    talenttimeline && talenttimeline.length < 5 ? (
+                      ""
+                    ) : (
+                      <p className="font-thin text-sm">Already Join on {moment(talenttimeline[4].tati_date).format("DD MMMM YYYY")}</p>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>

@@ -28,6 +28,7 @@ import { doGetTalentRequest } from "../../redux-saga/actions/Settings";
 import Footer from "../../views/components/Footer";
 import config from "../../config/config";
 
+
 const solutions = [
   {
     name: "Company Training",
@@ -139,7 +140,7 @@ export default function LandingPage() {
                                       <p className="text-base font-medium text-gray-900">{item.name}</p>
                                       <p className="mt-1 text-sm text-gray-500">{item.description}</p>
                                     </div>
-                                  </Link>
+                                 </Link>
                                 ))}
                               </div>
                             </div>

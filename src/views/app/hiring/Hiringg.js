@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Hiring() {
+export default function Hiringg() {
   return (
     <div>Hiring</div>
   )
