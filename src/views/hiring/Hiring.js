@@ -378,7 +378,7 @@ export default function Hiring() {
                     
         <div className=" flex justify-end col-2 ml-10 mr-10 mb-8 " >
     <button onClick={() => navigate('/hiring/new')}>     
-  <div className="flex flex-wrap bg-white shadow-lg ">
+  <div className="flex flex-wrap bg-slate-50 shadow-lg ">
   <div className="grid grid-cols-2">
   <div className="ml-4 mt-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} alt={`${data.jobs_id}`} style={{width:"150px", height:"150px"}}/></div>
   <div className="w-40 mb-5 ml-3 mr-5 mt-2 text-start">{data.jobs_title}</div>
@@ -477,7 +477,6 @@ export default function Hiring() {
                 </div>
               </div>
             </div>
-
 </div>
 
   )
