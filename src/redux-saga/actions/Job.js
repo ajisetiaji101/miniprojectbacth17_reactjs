@@ -1,18 +1,18 @@
-import * as ActionType from '../constants/Job'
+import * as ActionType from "../constants/Job";
 
-export const doGetJobRequest = ()=>({
-    type : ActionType.GET_JOB_REQUEST
-})
+export const doGetJobRequest = () => ({
+  type: ActionType.GET_JOB_REQUEST,
+});
 
-export const doGetJobSucceed = (payload) =>({
-    type : ActionType.GET_JOB_SUCCEED,
-    payload,
-})
+export const doGetJobSucceed = (payload) => ({
+  type: ActionType.GET_JOB_SUCCEED,
+  payload,
+});
 
-export const doGetJobFailed = (payload)=>({
-    type : ActionType.GET_JOB_FAILED,
-    payload,
-})
+export const doGetJobFailed = (payload) => ({
+  type: ActionType.GET_JOB_FAILED,
+  payload,
+});
 
 export const doAddJobRequest = (payload) => ({
   type: ActionType.ADD_JOB_REQUEST,
@@ -43,7 +43,6 @@ export const doDeleteJobFailed = (payload) => ({
   type: ActionType.DELETE_JOB_FAILED,
   payload,
 });
-<<<<<<< HEAD
 
 export const doEditJobRequest = (payload) => ({
   type: ActionType.EDIT_JOB_REQUEST,
@@ -74,5 +73,3 @@ export const doGetJobIdFailed = (payload) => ({
   type: ActionType.GET_JOB_ID_FAILED,
   payload,
 });
-=======
->>>>>>> d1b56f4de613a412254b8f7fe2b7c01c8dd7fbb8
