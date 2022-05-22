@@ -381,7 +381,15 @@ export default function Apply() {
                 </div>
                 <div className="pb-8">
                   <p className="mb-2 text-lg -mt-1">Filtering Test</p>
-                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 2 ? "" : <p className="font-thin text-sm">Applied on {moment(talenttimeline[1].tati_date).format("DD MMMM YYYY")}</p> : ""}
+                  {talenttimeline && talenttimeline.length !== undefined ? (
+                    talenttimeline && talenttimeline.length < 2 ? (
+                      ""
+                    ) : (
+                      <p className="font-thin text-sm">Result Pass on {moment(talenttimeline[1].tati_date).format("DD MMMM YYYY")}</p>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               <div className="flex">
@@ -407,7 +415,7 @@ export default function Apply() {
                 </div>
                 <div className="pb-8">
                   <p className="mb-2 text-lg -mt-1">Contract</p>
-                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 3 ? "" : <p className="font-thin text-sm">Applied on {moment(talenttimeline[2].tati_date).format("DD MMMM YYYY")}</p> : ""}
+                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 3 ? "" : <p className="font-thin text-sm">Done on {moment(talenttimeline[2].tati_date).format("DD MMMM YYYY")}</p> : ""}
                 </div>
               </div>
               <div className="flex">
@@ -431,7 +439,7 @@ export default function Apply() {
                 </div>
                 <div className="pb-8">
                   <p className="text-lg mb-2 -mt-1">Briefing Bootcamp</p>
-                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 4 ? "" : <p className="font-thin text-sm">Applied on {moment(talenttimeline[3].tati_date).format("DD MMMM YYYY")}</p> : ""}
+                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 4 ? "" : <p className="font-thin text-sm">Done on {moment(talenttimeline[3].tati_date).format("DD MMMM YYYY")}</p> : ""}
                 </div>
               </div>
               <div className="flex">
@@ -454,7 +462,15 @@ export default function Apply() {
                 </div>
                 <div className="">
                   <p className="mb-2 text-lg -mt-1">Join Bootcamp</p>
-                  {talenttimeline && talenttimeline.length !== undefined ? talenttimeline && talenttimeline.length < 5 ? "" : <p className="font-thin text-sm">Applied on {moment(talenttimeline[4].tati_date).format("DD MMMM YYYY")}</p> : ""}
+                  {talenttimeline && talenttimeline.length !== undefined ? (
+                    talenttimeline && talenttimeline.length < 5 ? (
+                      ""
+                    ) : (
+                      <p className="font-thin text-sm">Already Join on {moment(talenttimeline[4].tati_date).format("DD MMMM YYYY")}</p>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
