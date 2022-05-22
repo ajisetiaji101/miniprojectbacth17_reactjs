@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import 'flowbite';
 //store redux saga
 import store from './redux-saga/stores'
 import { HelmetProvider } from 'react-helmet-async';

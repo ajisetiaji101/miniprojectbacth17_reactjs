@@ -4,6 +4,7 @@ import testimoniReducer from "./TestimoniReducer";
 import PlacementReducer from "./PlacementReducer";
 import instructorReducer from "./InstructorReducer";
 import TalentReducer from "./TalentReducer";
+import HiringReducer from "./HiringReducer";
 
 import CurriculumReducer from "./CurriculumReducer";
 import AppCurriculumReducer from "./AppCurriculumReducer";
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   curriculumAppState: AppCurriculumReducer,
   curriculumState1: CurriculumReducer1,
   talentState: TalentReducer,
+  hiringState: HiringReducer,
   batchState: BatchReducer,
   batchAppState: AppBatchReducer,
   settingState: SettingReducer,

@@ -5,6 +5,8 @@ import * as ActionTypePlacement from "../constants/Placement";
 import * as ActionTypeInstructor from "../constants/Instructor";
 import * as ActionTypeSettings from "../constants/Settings";
 import * as ActionTypeTalent from "../constants/Talent";
+import * as ActionTypeHiring from "../constants/Hiring";
+
 import * as ActionTypeAppCurriculum from "../constants/AppCurriculum";
 import * as ActionTypeCurriculum from "../constants/CurriculumConstant";
 import * as ActionTypeBatch from "../constants/BatchConstant";
@@ -35,6 +37,7 @@ import {
   handleAddCurriculumMateri,
 } from "./CurriculumSaga";
 import { handleGetTalentSaga } from "./TalentSaga";
+import { handleGetHiringSaga } from "./HiringSaga";
 import { handleGetBatch, handleAddBatch } from "./BatchSaga";
 import {
   handleGetAppBatch,
@@ -82,6 +85,7 @@ function* watchAll() {
     ),
 
     takeEvery(ActionTypeTalent.GET_TALENT_REQUEST, handleGetTalentSaga),
+    takeEvery(ActionTypeHiring.GET_HIRING_REQUEST, handleGetHiringSaga),
 
     takeEvery(
       ActionTypeAppCurriculum.GET_CURRICULUM_REQUEST,
