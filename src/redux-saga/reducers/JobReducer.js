@@ -3,6 +3,8 @@ import * as ActionType from '../constants/Job'
 const INIT_STATE={
     jobs:[],
     status:{},
+    isLoading: false,
+    isRefresh: false
 
 };
 
@@ -11,7 +13,9 @@ const JobReducer = (state = INIT_STATE, action) => {
         case ActionType.GET_JOB_REQUEST:
             return {
                 ...state,
-                status:""
+                status:"",
+                isLoading: true
+
         };
           
         case ActionType.GET_JOB_SUCCEED: {
@@ -21,7 +25,9 @@ const JobReducer = (state = INIT_STATE, action) => {
         case ActionType.ADD_JOB_REQUEST: {
             return {
               ...state,
-              status:""
+              status:"",
+              isLoading: true,
+              isRefresh: true
               
             };
         }
@@ -51,6 +57,8 @@ const GetJobSucceed = (state,action)=>{
     return{
         ...state,
         jobs:action.payload,
+        isLoading: false,
+        isRefresh: false
     }
 }
 
@@ -69,6 +77,8 @@ const GetAddJobSucceed = (state, action) => {
     return {
         ...state,
         jobs : [...filterJob],
+        isLoading: false,
+        isRefresh: false
     }
 }
 

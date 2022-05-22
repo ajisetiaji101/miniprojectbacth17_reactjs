@@ -51,6 +51,10 @@ export default function Job() {
   const [pageNumbers, setPageNumbers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(0);
+  const [tgl, setTgl] = useState(false);
+  const  jobs_publish=tgl
+
+
 
   useEffect(() => {
     dispatch(doGetJobRequest());
@@ -219,7 +223,10 @@ export default function Job() {
                         </td>
 
                         <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
-                          {data.jobs_publish}
+                          
+                  
+  
+
                         </td>
 
                         <td className="pr-6">

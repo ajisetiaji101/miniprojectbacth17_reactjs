@@ -21,7 +21,8 @@ import Page from "../../../component/commons/Page";
 import Loader from "../../../component/loader/Loaders";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
+// import draftToHtml from "draftjs-to-html"
 // import { RichEditorExample} from './RichEditor';
 //
 export default function AddJob() {
@@ -31,7 +32,8 @@ export default function AddJob() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   let [isOpen, setIsOpen] = useState(false);
-  const [tgl, setTgl] = useState([]);
+  const [tgl, setTgl] = useState("close");
+   const [bool, setBool] = useState(false);
 
   const status = useSelector((state) => state.jobState);
   const [Loading, setLoading] = useState(true);
@@ -39,7 +41,8 @@ export default function AddJob() {
   const [uploaded, setUploaded] = useState(false);
   const { clients } = useSelector((state) => state.clientState);
   const { userProfile } = useSelector((state) => state.userState);
-  const [listClient, setListClient] = useState([]);
+  const [addr, setAddr
+  ] = useState([]);
 
 
   useEffect(() => {
@@ -58,9 +61,15 @@ export default function AddJob() {
   }, [status]);
 
   useEffect(() => {
+    // dispatch(doGetClientRequest());
     dispatch(doGetClientRequest());
  
   }, []);
+
+  const chkChange = ()=>{
+    setTgl("open")
+  }
+
 
   const formik = useFormik({
     initialValues: {
@@ -74,8 +83,8 @@ export default function AddJob() {
       jobs_secondary_skill: "",
       jobs_industry_type: "",
       jobs_working_type: "",
-      jobs_publish: 0,
-      jobs_remotely: 0,
+      jobs_publish: false,
+      jobs_remotely: false,
       jobs_spec_education: "",
       jobs_benefit: "",
       jobs_specification: "",
@@ -94,6 +103,7 @@ export default function AddJob() {
       values.jobs_start_date=SDate
       values.jobs_end_date=EDate
       values.jobs_user_id=userProfile.userId;
+      values.jobs_status=tgl
 
       let payload = new FormData();
       payload.append("jobs_title", values.jobs_title);
@@ -144,6 +154,8 @@ export default function AddJob() {
     setUploaded(false);
     setPreviewImg(null);
   };
+
+
   return (
     <Page
       title="Create Job"
@@ -173,7 +185,7 @@ export default function AddJob() {
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
-
+      
                   <div class="col-start-1 col-end-5">
                     <div>
                       <label class="block text-sm font-medium text-gray-700">
@@ -339,8 +351,7 @@ export default function AddJob() {
                       id="jobs_publish"
                       name="jobs_publish"
                       value={formik.values.jobs_publish}
-                      onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      onChange={formik.handleChange}                  
                     />
                     </div>
 
@@ -365,7 +376,7 @@ export default function AddJob() {
 
                   <div class="col-start-6 col-end-7">
                     <label class="block text-sm font-medium text-gray-700">
-                      Remotely ?
+                      Remotely ? 
                     </label>
                   </div>
                   <div class="col-start-7 col-end-7">
@@ -378,6 +389,8 @@ export default function AddJob() {
                       onChange={formik.handleChange}
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
+                   
+                 
                   </div>
 
                   {/* jobs_secondary_skill */}
@@ -405,15 +418,18 @@ export default function AddJob() {
                   </div>
 
                   <div class="col-start-7 col-end-7">
+                    
                     <input
                       type="checkbox"
                       placeholder="jobs_status"
                       id="jobs_status"
                       name="jobs_status"
-                      value={formik.values.jobs_status}
-                      onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                    />
+                 
+
+                      value={tgl}
+                      onChange={chkChange}
+                      // class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"/>
                   </div>
 
                       {/* <Switch
@@ -591,7 +607,7 @@ export default function AddJob() {
                         autoComplete="jobs_client_id"
                       >
                         {clients.map((cli) => (
-                          <option value={cli.client_id}>
+                          <option key={cli.client_id} value={cli.client_id}>
                             {cli.client_name}
                           </option>
                         ))}
