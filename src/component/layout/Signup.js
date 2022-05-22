@@ -45,7 +45,7 @@ export default function Signup() {
       
       setTimeout(() => {
           navigate("/auth/signup/success");
-        }, 8000);
+        }, 7000);
     }
   });
 
