@@ -44,6 +44,8 @@ export default function Job() {
     input: "",
     select: "",
   });
+  const [ck, setCk] = useState(false);
+
 
   const { jobs } = useSelector((state) => state.jobState);
   const { userProfile } = useSelector((state) => state.userState);
@@ -51,6 +53,10 @@ export default function Job() {
   const [pageNumbers, setPageNumbers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(0);
+  const [tgl, setTgl] = useState(false);
+  const  jobs_publish=tgl
+
+
 
   useEffect(() => {
     dispatch(doGetJobRequest());
@@ -202,8 +208,8 @@ export default function Job() {
                         <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
                           {/* <div>{moment(data.jobs_start_date).format("DD/MM/YYYY")}</div> */}
                           {/* <Moment format='MMMM Do YYYY, h:mm:ss a'>{data.jobs_start_date}</Moment> */}
-                          <div>{moment(data.jobs_start_date).format("LL")}</div>
-                          <div>{moment(data.jobs_end_date).format("LL")}</div>
+                          <div>{moment(data.jobs_start_date).format("DD MMMM YYYY")}</div>
+                          <div>{moment(data.jobs_end_date).format("DD MMMM YYYY")}</div>
                         </td>
 
                         <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
@@ -219,7 +225,14 @@ export default function Job() {
                         </td>
 
                         <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
-                          {data.jobs_publish}
+                      
+                     
+  
+<label for="default-toggle" class="inline-flex relative items-center cursor-pointer">
+  <input  checked={data.jobs_publish===!ck} name={data.jobs_publish} type="checkbox" value="" id="default-toggle" class="sr-only peer"/>
+  <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+</label>
+
                         </td>
 
                         <td className="pr-6">

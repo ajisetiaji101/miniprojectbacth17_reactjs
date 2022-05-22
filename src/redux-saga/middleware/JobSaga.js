@@ -7,6 +7,7 @@ import {
     doAddJobFailed,
     doDeleteJobSucceed,
     doDeleteJobFailed,
+
  } from '../actions/Job';
 
 function* handleGetJob(){
@@ -41,4 +42,6 @@ function* handleDeleteJob(action) {
   }
 }
 
-export{ handleGetJob,handleAddJob,handleDeleteJob };
+
+
+export{ handleGetJob,handleAddJob,handleDeleteJob};
