@@ -1,6 +1,5 @@
 import * as ActionType from "../constants/Job";
 
-<<<<<<< HEAD
 const INIT_STATE = {
   jobs: [],
   status: {},
@@ -25,58 +24,6 @@ const JobReducer = (state = INIT_STATE, action) => {
         ...state,
         status: "",
       };
-=======
-const INIT_STATE={
-    jobs:[],
-    status:{},
-    isLoading: false,
-    isRefresh: false
-
-};
-
-const JobReducer = (state = INIT_STATE, action) => {
-    switch (action.type) {
-        case ActionType.GET_JOB_REQUEST:
-            return {
-                ...state,
-                status:"",
-                isLoading: true
-
-        };
-          
-        case ActionType.GET_JOB_SUCCEED: {
-            return GetJobSucceed(state,action)
-        }
-
-        case ActionType.ADD_JOB_REQUEST: {
-            return {
-              ...state,
-              status:"",
-              isLoading: true,
-              isRefresh: true
-              
-            };
-        }
-          
-        case ActionType.ADD_JOB_SUCCEED: {
-           return GetAddJobSucceed(state, action);
-        }
-
-        case ActionType.DELETE_JOB_REQUEST: {
-            return {
-                ...state,
-                isLoading: true,
-                isRefresh: false
-            }
-        }
-        case ActionType.DELETE_JOB_SUCCEED: {
-            return applyDeleteJobSucceed(state,action)
-        } 
-
-        
-        default:
-            return state;
->>>>>>> d1b56f4de613a412254b8f7fe2b7c01c8dd7fbb8
     }
 
     case ActionType.ADD_JOB_SUCCEED: {
@@ -86,15 +33,9 @@ const JobReducer = (state = INIT_STATE, action) => {
     case ActionType.DELETE_JOB_REQUEST: {
       return {
         ...state,
-<<<<<<< HEAD
         isLoading: true,
         isRefresh: false,
       };
-=======
-        jobs:action.payload,
-        isLoading: false,
-        isRefresh: false
->>>>>>> d1b56f4de613a412254b8f7fe2b7c01c8dd7fbb8
     }
     case ActionType.DELETE_JOB_SUCCEED: {
       return applyDeleteJobSucceed(state, action);

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { call, put } from "redux-saga/effects";
 import apiJobPosting from "../../api/api-jobPosting";
 import {
@@ -13,19 +12,6 @@ import {
   doGetJobIdSucceed,
   doGetJobIdFailed,
 } from "../actions/Job";
-=======
-import {call,put} from 'redux-saga/effects';
-import apiJobPosting from '../../api/api-jobPosting';
-import { 
-    doGetJobSucceed,
-    doGetJobFailed,
-    doAddJobSucceed,
-    doAddJobFailed,
-    doDeleteJobSucceed,
-    doDeleteJobFailed,
-
- } from '../actions/Job';
->>>>>>> d1b56f4de613a412254b8f7fe2b7c01c8dd7fbb8
 
 function* handleGetJob() {
   console.log("sudah sampai di middleware");
