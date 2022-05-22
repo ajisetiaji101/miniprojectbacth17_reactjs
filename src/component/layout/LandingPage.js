@@ -92,7 +92,7 @@ export default function LandingPage() {
             <>
               <div className="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
                 <div className="flex justify-start lg:w-0 lg:flex-1">
-                  <Link to="#">
+                  <Link to="/">
                     <span className="sr-only">codeid</span>
                     <img className="h-14 w-auto sm:h-14" src="./assets/images/codeid.png" alt="codeid" />
                   </Link>
@@ -225,13 +225,13 @@ export default function LandingPage() {
                   ) : (
                     <>
                       <Link
-                        to="signup"
+                        to="/auth/signup"
                         className="whitespace-nowrap text-base font-medium shadow-md text-red-600 hover:text-white border-solid border hover:bg-gradient-to-r hover:from-orange-600 hover:to-red-600 hover:border-none border-red-600 px-4 py-2 rounded-md"
                       >
                         Signup
                       </Link>
                       <Link
-                        to="signin"
+                        to="/auth/signin"
                         className="ml-3 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-md text-base font-medium text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
                       >
                         Signin
