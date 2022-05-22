@@ -15,6 +15,8 @@ import * as ActionTypeJob from "../constants/Job";
 import * as ActionTypeProcessBootcamp from "../constants/ProcessBootcampConstant";
 import * as ActionTypeTalentTimeline from "../constants/TalentTimelineConstant";
 
+import * as ActionTypeClient from '../constants/Client'
+
 import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
 import { handleGetTestimoniSaga } from "./TestimoniSaga";
 import { handleGetInstructorSaga } from "./InstructorSaga";
@@ -54,6 +56,9 @@ import {
 import { handleGetJob, handleAddJob, handleDeleteJob } from "./JobSaga";
 import { handleAddProcessBootcampSaga } from "./ProcessBootcampSaga";
 import { handleAddTalentTimelineSaga, handleGetTalentTimelineSaga } from "./TalentTimelineSaga";
+
+import { handleGetClient } from './ClientSaga'
+
 
 function* watchAll() {
   yield all([
@@ -137,10 +142,14 @@ function* watchAll() {
     takeEvery(ActionTypeJob.GET_JOB_REQUEST, handleGetJob),
     takeEvery(ActionTypeJob.ADD_JOB_REQUEST, handleAddJob),
     takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
+
     takeEvery(ActionTypeProcessBootcamp.ADD_PROCESS_BOOTCAMP_REQUEST, handleAddProcessBootcampSaga),
 
     takeEvery(ActionTypeTalentTimeline.GET_TALENTTIMELINE_REQUEST, handleGetTalentTimelineSaga),
     takeEvery(ActionTypeTalentTimeline.ADD_TALENTTIMELINE_REQUEST, handleAddTalentTimelineSaga),
+
+    takeEvery(ActionTypeClient.GET_CLIENT_REQUEST, handleGetClient),
+
   ]);
 }
 
