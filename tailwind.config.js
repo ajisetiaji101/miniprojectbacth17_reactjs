@@ -1,5 +1,7 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}",        
+  "./node_modules/flowbite/**/*.js"
+],
   theme: {
     listStyleType: {
       none: "none",
@@ -14,5 +16,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/aspect-ratio"), require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/forms"), 
+  require("@tailwindcss/aspect-ratio"), 
+  require("@tailwindcss/typography"),        
+  require('flowbite/plugin')
+],
 };
