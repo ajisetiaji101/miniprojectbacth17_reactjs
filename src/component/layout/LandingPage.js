@@ -25,13 +25,6 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
 import { doGetTalentRequest } from "../../redux-saga/actions/Settings";
-import Carousel from "../../views/components/Carousel";
-import Brands from "../../views/components/Brands";
-import Testimoni from "../../views/components/Testimoni";
-import Instructor from "../../views/components/Instructor";
-// import Testimoni2 from "../../views/components/Testimoni2"
-import Partner from "../../views/components/Partner";
-import Abouts from "../../views/components/Abouts";
 import Footer from "../../views/components/Footer";
 import config from "../../config/config";
 
@@ -70,7 +63,8 @@ export default function LandingPage() {
   const { isLoggedIn, userProfile } = useSelector((state) => state.userState);
   const { settings } = useSelector((state) => state.settingState);
 
-  const [previewImg, setPreviewImg] = useState();
+  // const [previewImg, setPreviewImg] = useState();
+
 
   useEffect(() => {
     if (isLoggedIn === true) {
@@ -78,12 +72,12 @@ export default function LandingPage() {
     }
   }, []);
 
-  useEffect(() => {
-    if (isLoggedIn === true) {
-      let img = `${config.domain}/settings/images/${settings.tale_photo}`;
-      setPreviewImg(img);
-    }
-  }, [settings]);
+  // useEffect(() => {
+  //   if (isLoggedIn === true) {
+  //     let img = `${config.domain}/settings/images/${settings.tale_photo}`;
+  //     setPreviewImg(img);
+  //   }
+  // }, [settings]);
 
   const onSignout = () => {
     dispatch(doSignoutRequest());
@@ -100,7 +94,7 @@ export default function LandingPage() {
                 <div className="flex justify-start lg:w-0 lg:flex-1">
                   <Link to="#">
                     <span className="sr-only">codeid</span>
-                    <img className="h-14 w-auto sm:h-14" src="./assets/images/codeid.png" alt="codeid" />
+                    <img className="h-14 w-auto sm:h-14" src={`${config.domain}/settings/images/codeid.png`} alt="codeid" />
                   </Link>
                 </div>
                 <div className="-mr-2 -my-2 md:hidden">
@@ -171,7 +165,7 @@ export default function LandingPage() {
                       <div>
                         <Menu.Button className="ring-red-500 ring-2 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img className=" h-10 w-10 rounded-full" src={previewImg} alt="" />
+                          <img className=" h-10 w-10 rounded-full" src={(settings && settings !== null ? `${config.domain}/settings/images/${settings.tale_photo}` : "https://thispersondoesnotexist.com/image")} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -253,7 +247,7 @@ export default function LandingPage() {
                     <div className="pt-5 pb-6 px-5">
                       <div className="flex items-center justify-between">
                         <div>
-                          <img className="h-8 w-auto" src="./assets/images/codeid.png" alt="Workflow" />
+                          <img className="h-8 w-auto" src={`${config.domain}/settings/images/codeid.png`} alt="Workflow" />
                         </div>
                         <div className="-mr-2">
                           <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">

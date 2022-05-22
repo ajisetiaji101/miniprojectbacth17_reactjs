@@ -13,13 +13,13 @@ import BatchReducer from "./BatchReducer";
 import AppBatchReducer from "./AppBatchReducer";
 import SettingReducer from "./SettingsReducer";
 import JobReducer from "./JobReducer";
+import ProcessBootcampReducer from "./ProcessBootcampReducer";
 
 const rootReducer = combineReducers({
   userState: userReducer,
   testimoniState: testimoniReducer,
   placemenState: PlacementReducer,
   instructorState: instructorReducer,
-
   curriculumState: CurriculumReducer,
   curriculumAppState: AppCurriculumReducer,
   curriculumState1: CurriculumReducer1,
@@ -28,6 +28,7 @@ const rootReducer = combineReducers({
   batchAppState: AppBatchReducer,
   settingState: SettingReducer,
   jobState: JobReducer,
+  processState: ProcessBootcampReducer,
 });
 
 export default rootReducer;

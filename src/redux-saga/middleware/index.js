@@ -10,6 +10,7 @@ import * as ActionTypeCurriculum from "../constants/CurriculumConstant";
 import * as ActionTypeBatch from "../constants/BatchConstant";
 import * as ActionTypeAppBatch from "../constants/AppBatch";
 import * as ActionTypeJob from "../constants/Job";
+import * as ActionTypeProcessBootcamp from "../constants/ProcessBootcampConstant";
 
 import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
 import { handleGetTestimoniSaga } from "./TestimoniSaga";
@@ -47,6 +48,7 @@ import {
   handleUpdateTalentNoFile,
 } from "./SettingsSaga";
 import { handleGetJob, handleAddJob, handleDeleteJob } from "./JobSaga";
+import { handleAddProcessBootcampSaga } from "./ProcessBootcampSaga";
 
 function* watchAll() {
   yield all([
@@ -129,6 +131,7 @@ function* watchAll() {
     takeEvery(ActionTypeJob.GET_JOB_REQUEST, handleGetJob),
     takeEvery(ActionTypeJob.ADD_JOB_REQUEST, handleAddJob),
     takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
+    takeEvery(ActionTypeProcessBootcamp.ADD_PROCESS_BOOTCAMP_REQUEST, handleAddProcessBootcampSaga),
   ]);
 }
 
