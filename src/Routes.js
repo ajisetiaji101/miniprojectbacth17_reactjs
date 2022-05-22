@@ -21,7 +21,9 @@ import Job from "./views/app/job/Job";
 import AddJob from "./views/app/job/AddJob";
 import Apply from "./views/app/apply/Apply";
 import Landing from "./views/components/Landing";
+import EditCurriculum from "./views/app/curriculum/EditCurriculum";
 import Applysukses from "./views/app/apply/Applysukses";
+
 export default function Routes(isLoggedIn) {
   return useRoutes([
     {
@@ -49,20 +51,58 @@ export default function Routes(isLoggedIn) {
       path: "/app",
       element: <AppLayout />,
       children: [
-        { path: "dashboard", element: isLoggedIn ? <Dashboard /> : <Navigate to="/auth/signin" /> },
-        { path: "candidat", element: isLoggedIn ? <Candidat /> : <Navigate to="/auth/signin" /> },
-        { path: "batch", element: isLoggedIn ? <Batch /> : <Navigate to="/auth/signin" /> },
-        { path: "batch/new", element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin" /> },
-        { path: "placement", element: isLoggedIn ? <Placement /> : <Navigate to="/auth/signin" /> },
-        { path: "talent", element: isLoggedIn ? <Talent /> : <Navigate to="/auth/signin" /> },
-        { path: "curriculum", element: isLoggedIn ? <Curriculum /> : <Navigate to="/auth/signin" /> },
-        { path: "hiring", element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin" /> },
-        { path: "job", element: isLoggedIn ? <Job /> : <Navigate to="/auth/signin" /> },
+        {
+          path: "dashboard",
+          element: isLoggedIn ? <Dashboard /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "candidat",
+          element: isLoggedIn ? <Candidat /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "batch",
+          element: isLoggedIn ? <Batch /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "batch/new",
+          element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "placement",
+          element: isLoggedIn ? <Placement /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "talent",
+          element: isLoggedIn ? <Talent /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "curriculum",
+          element: isLoggedIn ? <Curriculum /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "curriculum/edit/:id",
+          element: isLoggedIn ? (
+            <EditCurriculum />
+          ) : (
+            <Navigate to="/auth/signin" />
+          ),
+        },
+        {
+          path: "hiring",
+          element: isLoggedIn ? <Hiring /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "job",
+          element: isLoggedIn ? <Job /> : <Navigate to="/auth/signin" />,
+        },
         {
           path: "job/new",
           element: isLoggedIn ? <AddJob /> : <Navigate to="/auth/signin" />,
         },
-        { path: "setting", element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin" /> },
+        {
+          path: "setting",
+          element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin" />,
+        },
       ],
     },
     { path: "*", element: <Navigate to="/404" replace /> },
