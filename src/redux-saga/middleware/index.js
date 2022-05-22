@@ -11,6 +11,7 @@ import * as ActionTypeBatch from "../constants/BatchConstant";
 import * as ActionTypeAppBatch from "../constants/AppBatch";
 import * as ActionTypeJob from "../constants/Job";
 import * as ActionTypeProcessBootcamp from "../constants/ProcessBootcampConstant";
+import * as ActionTypeTalentTimeline from "../constants/TalentTimelineConstant";
 
 import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
 import { handleGetTestimoniSaga } from "./TestimoniSaga";
@@ -24,6 +25,7 @@ import { handleGetAppBatch, handleEditBatchStatus, handleDeleteBatch, handleGetB
 import { handleGetTalent, handleUpdateTalent, handleUpdateTalentNoFile } from "./SettingsSaga";
 import { handleGetJob, handleAddJob, handleDeleteJob } from "./JobSaga";
 import { handleAddProcessBootcampSaga } from "./ProcessBootcampSaga";
+import { handleAddTalentTimelineSaga, handleGetTalentTimelineSaga } from "./TalentTimelineSaga";
 
 function* watchAll() {
   yield all([
@@ -62,6 +64,9 @@ function* watchAll() {
     takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
 
     takeEvery(ActionTypeProcessBootcamp.ADD_PROCESS_BOOTCAMP_REQUEST, handleAddProcessBootcampSaga),
+
+    takeEvery(ActionTypeTalentTimeline.GET_TALENTTIMELINE_REQUEST, handleGetTalentTimelineSaga),
+    takeEvery(ActionTypeTalentTimeline.ADD_TALENTTIMELINE_REQUEST, handleAddTalentTimelineSaga),
   ]);
 }
 

@@ -13,6 +13,7 @@ import AppBatchReducer from "./AppBatchReducer";
 import SettingReducer from "./SettingsReducer";
 import JobReducer from "./JobReducer";
 import ProcessBootcampReducer from "./ProcessBootcampReducer";
+import TalentTimelineReducer from "./TalentTimelineReducer";
 
 const rootReducer = combineReducers({
   userState: userReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   settingState: SettingReducer,
   jobState: JobReducer,
   processState: ProcessBootcampReducer,
+  talenttimelineState: TalentTimelineReducer,
 });
 
 export default rootReducer;

@@ -151,6 +151,7 @@ export default function Setting() {
         payload.append("tale_tag_skill", values.tale_tag_skill);
         payload.append("tale_cover_letter", values.tale_cover_letter);
         payload.append("tale_user_id", parseInt(userProfile.userId));
+        dispatch(doUpdateTalentRequest(payload));
       } else if (uploaded === true) {
         payload.append("tale_fullname", values.tale_fullname);
         payload.append("tale_birthdate", tglLahir);
@@ -166,6 +167,7 @@ export default function Setting() {
         payload.append("tale_tag_skill", values.tale_tag_skill);
         payload.append("tale_photo", values.tale_photo);
         payload.append("tale_user_id", parseInt(userProfile.userId));
+        dispatch(doUpdateTalentRequest(payload));
       } else {
         const payload = {
           tale_fullname: values.tale_fullname,

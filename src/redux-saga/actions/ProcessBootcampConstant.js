@@ -5,11 +5,11 @@ export const doAddProcessBootcampRequest = (payload) => ({
   payload,
 });
 export const doAddProcessBootcampSucceed = (payload) => ({
-  type: ActionType.ADD_PROCESS_BOOTCAMP_REQUEST,
+  type: ActionType.ADD_PROCESS_BOOTCAMP_SUCCEED,
   payload,
 });
 export const doAddProcessBootcampFailed = (payload) => ({
-  type: ActionType.ADD_PROCESS_BOOTCAMP_REQUEST,
+  type: ActionType.ADD_PROCESS_BOOTCAMP_FAILED,
   payload,
 });
 
@@ -18,11 +18,11 @@ export const doUpdateProcessBootcampRequest = (payload) => ({
   payload,
 });
 export const doUpdateProcessBootcampSucceed = (payload) => ({
-  type: ActionType.UPDATE_PROCESS_BOOTCAMP_REQUEST,
+  type: ActionType.UPDATE_PROCESS_BOOTCAMP_SUCCEED,
   payload,
 });
 export const doUpdateProcessBootcampFailed = (payload) => ({
-  type: ActionType.UPDATE_PROCESS_BOOTCAMP_REQUEST,
+  type: ActionType.UPDATE_PROCESS_BOOTCAMP_FAILED,
   payload,
 });
 
