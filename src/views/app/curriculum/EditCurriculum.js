@@ -14,6 +14,8 @@ import {
   ChevronDownIcon,
   SelectorIcon,
 } from "@heroicons/react/solid";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   doGetByIdCurriculumRequest,
@@ -37,7 +39,7 @@ const MyInput = ({ label, ...props }) => {
   const [field] = useField(props);
 
   return (
-    <div className="mb-3 xl:w-96">
+    <div className="mb-3">
       <label
         className="form-label inline-block mb-2 text-gray-700 text-sm"
         htmlFor={props.id || props.name}
@@ -57,7 +59,7 @@ const MyTextarea = ({ label, ...props }) => {
   const [field] = useField(props);
 
   return (
-    <div className="mb-3 xl:w-96">
+    <div className="mb-3">
       <label
         className="form-label inline-block mb-2 text-gray-700 text-sm"
         htmlFor={props.id || props.name}
@@ -83,7 +85,7 @@ const MyListbox = ({ label, ...props }) => {
   }, [field.value]);
 
   return (
-    <div className="mb-3 xl:w-96">
+    <div className="mb-3">
       <Listbox
         value={selected}
         onChange={(value) => {
@@ -162,7 +164,7 @@ const Instructor = (props) => {
   }, [props.data, field.value]);
 
   return (
-    <div className="mb-3 xl:w-96">
+    <div className="mb-3">
       {props.children({
         ...props,
         selected,
@@ -192,9 +194,7 @@ const InstructorPhoto = (props) => {
         .catch((error) => console.log(error));
   }, [props.data, field.value]);
 
-  return (
-    <div className="mb-3 xl:w-96">{props.children({ ...props, url })}</div>
-  );
+  return <div className="mb-3">{props.children({ ...props, url })}</div>;
 };
 const SectionModal = ({ isOpen, setIsOpen, initialValues, handleSubmit }) => {
   return (
@@ -278,7 +278,7 @@ const SubSectionModal = ({
                   type="text"
                   placeholder="Subsection"
                 />
-                <div className="mb-3 xl:w-96">
+                <div className="mb-3">
                   <label className="form-label inline-block mb-2 text-gray-700 text-sm">
                     Duration
                   </label>
@@ -349,6 +349,7 @@ export default function EditCurriculum({ match }) {
 
   const [refresh, setRefresh] = useState(false);
   const [cuma, setCuma] = useState();
+  // const [success, setSuccess] = useState(false);
 
   const [previewImg, setPreviewImg] = useState();
   const [uploaded, setUploaded] = useState(false);
@@ -458,10 +459,14 @@ export default function EditCurriculum({ match }) {
     };
     dispatch(doUpdateCurriculumRequest(payload));
 
+    toast.success("Curriculum has been updated.");
+
     setRefresh(true);
   };
   const handleSubmitSection = async (values) => {
     dispatch(doAddCurriculumMateriRequest(values));
+
+    toast.success("Section has been added.");
 
     setRefresh(true);
   };
@@ -476,6 +481,8 @@ export default function EditCurriculum({ match }) {
       cuma_cuma_id: values.cuma_cuma_id,
     };
     dispatch(doAddCurriculumMateriRequest(payload));
+
+    toast.success("Sub section has been added.");
 
     setRefresh(true);
   };
@@ -522,167 +529,181 @@ export default function EditCurriculum({ match }) {
                     placeholder="Title"
                   />
 
-                  <MyListbox
-                    label="Payment"
-                    name="curr_type_payment"
-                    data={{
-                      data: payment,
-                    }}
-                  />
+                  <div className="md:flex md:justify-between md:space-x-5">
+                    <MyListbox
+                      label="Payment"
+                      name="curr_type_payment"
+                      data={{
+                        data: payment,
+                      }}
+                    />
 
-                  <MyListbox
-                    label="Learning"
-                    name="curr_learning_type"
-                    data={{
-                      data: learning,
-                    }}
-                  />
+                    <MyListbox
+                      label="Learning"
+                      name="curr_learning_type"
+                      data={{
+                        data: learning,
+                      }}
+                    />
 
-                  <MyInput
-                    label="Duration in month"
-                    name="curr_duration"
-                    type="number"
-                    placeholder="0"
-                  />
-
-                  <MyListbox
-                    label="Category"
-                    name="curr_category"
-                    data={{
-                      data: category,
-                    }}
-                  />
-
-                  <MyListbox
-                    label="Language"
-                    name="curr_language"
-                    data={{
-                      data: language,
-                    }}
-                  />
-
-                  <MyInput
-                    label="Price"
-                    name="curr_price"
-                    type="number"
-                    placeholder="Rp. 0"
-                  />
-
-                  <MyInput
-                    label="Tags Skill"
-                    name="curr_tag_skill"
-                    type="text"
-                    placeholder="Tags Skill"
-                  />
-
-                  <Instructor name="curr_inst_id" data={instructor}>
-                    {({
-                      selected,
-                      setSelected,
-                      query,
-                      setQuery,
-                      helpers,
-                      data,
-                    }) => {
-                      const filteredInstructor =
-                        query === ""
-                          ? data
-                          : data.filter((inst) =>
-                              inst.inst_name
-                                .toLowerCase()
-                                .includes(query.toLowerCase())
-                            );
-
-                      return (
-                        <Combobox
-                          value={selected}
-                          onChange={(instructor) => {
-                            setSelected(() => instructor);
-                            helpers.setValue(instructor.inst_id);
-                          }}
-                        >
-                          <div className="relative">
-                            <Combobox.Label className="form-label inline-block mb-2 text-gray-700 text-sm">
-                              Instructor
-                            </Combobox.Label>
-                            <Combobox.Input
-                              className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-                              onChange={(e) => setQuery(e.target.value)}
-                              displayValue={(instructor) =>
-                                instructor && instructor.inst_name
-                              }
-                              autoComplete="off"
-                            />
-                            <Transition
-                              as={Fragment}
-                              leave="transition ease-in duration-100"
-                              leaveFrom="opacity-100"
-                              leaveTo="opacity-0"
-                              afterLeave={() => setQuery("")}
-                            >
-                              <Combobox.Options className="absolute w-full max-h-60 border border-gray-200 mt-1 py-1 text-base overflow-auto z-10 bg-white rounded-md shadow-lg focus:outline-none">
-                                {filteredInstructor.map((inst) => (
-                                  <Combobox.Option
-                                    className={({ active }) =>
-                                      `cursor-default select-none relative py-2 pl-10 pr-4 ${
-                                        active
-                                          ? "bg-gray-100 text-gray-900"
-                                          : "text-gray-700"
-                                      }`
-                                    }
-                                    key={inst.inst_id}
-                                    value={inst}
-                                  >
-                                    {({ selected }) => (
-                                      <>
-                                        <span
-                                          className={`block truncate text-sm ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                          }`}
-                                        >
-                                          {inst.inst_name}
-                                        </span>
-                                        {selected ? (
-                                          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-600">
-                                            <CheckIcon
-                                              className="w-h h-5"
-                                              aria-hidden="true"
-                                            />
-                                          </span>
-                                        ) : null}
-                                      </>
-                                    )}
-                                  </Combobox.Option>
-                                ))}
-                              </Combobox.Options>
-                            </Transition>
-                          </div>
-                        </Combobox>
-                      );
-                    }}
-                  </Instructor>
-
-                  <InstructorPhoto
-                    name="curr_inst_id"
-                    data={instructor.length && instructor}
-                  >
-                    {({ url }) => (
-                      <img
-                        className="mx-auto h-28 w-28 rounded-full object-cover"
-                        src={url}
-                        alt="Instructor avatar"
+                    <div className="md:flex-none md:w-[15vw]">
+                      <MyInput
+                        label="Duration in month"
+                        name="curr_duration"
+                        type="number"
+                        placeholder="0"
                       />
-                    )}
-                  </InstructorPhoto>
+                    </div>
+                  </div>
 
-                  <MyInput
-                    label="Min. Scoring"
-                    name="curr_min_score"
-                    type="number"
-                    placeholder="0"
-                  />
+                  <div className="md:flex md:justify-between md:space-x-5">
+                    <MyListbox
+                      label="Category"
+                      name="curr_category"
+                      data={{
+                        data: category,
+                      }}
+                    />
+
+                    <MyListbox
+                      label="Language"
+                      name="curr_language"
+                      data={{
+                        data: language,
+                      }}
+                    />
+
+                    <div className="md:flex-none md:w-[15vw]">
+                      <MyInput
+                        label="Price"
+                        name="curr_price"
+                        type="number"
+                        placeholder="Rp. 0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="md:flex md:items-center md:justify-between md:space-x-5">
+                    <MyInput
+                      label="Tags Skill"
+                      name="curr_tag_skill"
+                      type="text"
+                      placeholder="Tags Skill"
+                    />
+
+                    <div className="md:flex-none md:w-[10vw]">
+                      <MyInput
+                        label="Min. Scoring"
+                        name="curr_min_score"
+                        type="number"
+                        placeholder="0"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="md:flex md:items-center md:justify-between md:space-x-5 md:pt-3 md:pr-8">
+                    <Instructor name="curr_inst_id" data={instructor}>
+                      {({
+                        selected,
+                        setSelected,
+                        query,
+                        setQuery,
+                        helpers,
+                        data,
+                      }) => {
+                        const filteredInstructor =
+                          query === ""
+                            ? data
+                            : data.filter((inst) =>
+                                inst.inst_name
+                                  .toLowerCase()
+                                  .includes(query.toLowerCase())
+                              );
+
+                        return (
+                          <Combobox
+                            value={selected}
+                            onChange={(instructor) => {
+                              setSelected(() => instructor);
+                              helpers.setValue(instructor.inst_id);
+                            }}
+                          >
+                            <div className="relative">
+                              <Combobox.Label className="form-label inline-block mb-2 text-gray-700 text-sm">
+                                Instructor
+                              </Combobox.Label>
+                              <Combobox.Input
+                                className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+                                onChange={(e) => setQuery(e.target.value)}
+                                displayValue={(instructor) =>
+                                  instructor && instructor.inst_name
+                                }
+                                autoComplete="off"
+                              />
+                              <Transition
+                                as={Fragment}
+                                leave="transition ease-in duration-100"
+                                leaveFrom="opacity-100"
+                                leaveTo="opacity-0"
+                                afterLeave={() => setQuery("")}
+                              >
+                                <Combobox.Options className="absolute w-full max-h-60 border border-gray-200 mt-1 py-1 text-base overflow-auto z-10 bg-white rounded-md shadow-lg focus:outline-none">
+                                  {filteredInstructor.map((inst) => (
+                                    <Combobox.Option
+                                      className={({ active }) =>
+                                        `cursor-default select-none relative py-2 pl-10 pr-4 ${
+                                          active
+                                            ? "bg-gray-100 text-gray-900"
+                                            : "text-gray-700"
+                                        }`
+                                      }
+                                      key={inst.inst_id}
+                                      value={inst}
+                                    >
+                                      {({ selected }) => (
+                                        <>
+                                          <span
+                                            className={`block truncate text-sm ${
+                                              selected
+                                                ? "font-medium"
+                                                : "font-normal"
+                                            }`}
+                                          >
+                                            {inst.inst_name}
+                                          </span>
+                                          {selected ? (
+                                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-600">
+                                              <CheckIcon
+                                                className="w-h h-5"
+                                                aria-hidden="true"
+                                              />
+                                            </span>
+                                          ) : null}
+                                        </>
+                                      )}
+                                    </Combobox.Option>
+                                  ))}
+                                </Combobox.Options>
+                              </Transition>
+                            </div>
+                          </Combobox>
+                        );
+                      }}
+                    </Instructor>
+
+                    <InstructorPhoto
+                      name="curr_inst_id"
+                      data={instructor.length && instructor}
+                    >
+                      {({ url }) => (
+                        <img
+                          className="mx-auto h-28 w-28 rounded-full object-cover"
+                          src={url}
+                          alt="Instructor avatar"
+                        />
+                      )}
+                    </InstructorPhoto>
+                  </div>
 
                   <MyTextarea
                     label="Descriptions"
@@ -701,7 +722,7 @@ export default function EditCurriculum({ match }) {
                     </span>
                   </div>
 
-                  <div className="min-w-max max-w-xs flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                  <div className="flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                     <div className="space-y-1 text-center">
                       {uploaded || previewImg ? (
                         <>
@@ -761,7 +782,7 @@ export default function EditCurriculum({ match }) {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end mt-2 px-4 py-2 space-x-2 bg-black/5">
+              <div className="flex justify-end mt-2 px-4 py-2 space-x-2 bg-black/5 md:pr-10">
                 <button
                   type="submit"
                   className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:order-1 sm:ml-3"
@@ -780,8 +801,8 @@ export default function EditCurriculum({ match }) {
         }}
       </Formik>
 
-      <div className="space-y-2 mt-8 mb-3">
-        <div className="px-4 space-y-2">
+      <div className="mt-8 mb-3 space-y-2">
+        <div className="px-4 space-y-2 md:pr-10">
           <h1>Materi (Add Section & Sub Section Materi)</h1>
           <div className="flex justify-end px-4 text-gray-700">
             <button onClick={() => setIsOpenSection(true)}>
@@ -847,7 +868,9 @@ export default function EditCurriculum({ match }) {
                           className="px-4 pt-2 pb-1 text-sm text-gray-500"
                         >
                           <div className="flex justify-between">
-                            <div>{ss.cuma_subsection || ss.cuma_section}</div>
+                            <div className="underline">
+                              {ss.cuma_subsection || ss.cuma_section}
+                            </div>
                             <div className="flex space-x-2">
                               <div>
                                 <span>
@@ -927,6 +950,8 @@ export default function EditCurriculum({ match }) {
         initialValues={subSectionValues}
         handleSubmit={handleSubmitSubSection}
       />
+
+      <ToastContainer className="z-50 absolute" autoClose={2000} />
     </Page>
   );
 }
