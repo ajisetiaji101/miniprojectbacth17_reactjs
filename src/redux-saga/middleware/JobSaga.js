@@ -25,7 +25,7 @@ function* handleAddJob(action) {
     const { payload } = action;
     try {
       const result = yield call(apiJobPosting.createJob, payload);
-      yield put(doAddJobSucceed(result));
+      yield put(doAddJobSucceed(payload));
     } catch (error) {
       yield put(doAddJobFailed(error));
     }
