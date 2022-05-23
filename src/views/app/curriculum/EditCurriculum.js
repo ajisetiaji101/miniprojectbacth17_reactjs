@@ -689,6 +689,7 @@ export default function EditCurriculum({ match }) {
                     name="curr_description"
                     placeholder="Descriptions"
                   />
+                  
                 </div>
 
                 <div className="px-10 space-y-5">

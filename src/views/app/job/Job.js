@@ -53,7 +53,6 @@ export default function Job() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(0);
   const [tgl, setTgl] = useState(false);
-  const jobs_publish = tgl;
 
   useEffect(() => {
     dispatch(doGetJobRequest());
