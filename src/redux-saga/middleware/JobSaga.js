@@ -14,7 +14,7 @@ import {
 } from "../actions/Job";
 
 function* handleGetJob() {
-  console.log("sudah sampai di middleware");
+  // console.log("sudah sampai di middleware");
 
   try {
     const result = yield call(apiJobPosting.list);

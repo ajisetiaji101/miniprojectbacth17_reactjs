@@ -53,7 +53,13 @@ import {
   handleUpdateTalent,
   handleUpdateTalentNoFile,
 } from "./SettingsSaga";
-import { handleGetJob, handleAddJob, handleDeleteJob } from "./JobSaga";
+import {
+  handleGetJob,
+  handleAddJob,
+  handleDeleteJob,
+  handleEditJob,
+  handleGetIdJob,
+} from "./JobSaga";
 import { handleAddProcessBootcampSaga } from "./ProcessBootcampSaga";
 import {
   handleAddTalentTimelineSaga,

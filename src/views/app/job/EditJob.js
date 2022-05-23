@@ -17,8 +17,24 @@ import {
   doGetJobIdRequest,
 } from "../../../redux-saga/actions/Job";
 
+import { doGetClientRequest } from "../../../redux-saga/actions/Client";
+import config from "../../../config/config";
+
 export default function EditJob() {
   let navigate = useNavigate();
+  const [ck, setCk] = useState(false);
+  const { clients } = useSelector((state) => state.clientState);
+  const [uploaded, setUploaded] = useState(false);
+  const [previewImg, setPreviewImg] = useState();
+  const onClearImage = (event) => {
+    event.preventDefault();
+    setUploaded(false);
+    setPreviewImg(null);
+  };
+  const [tgl, setTgl] = useState("close");
+  const chkChange = () => {
+    setTgl("open");
+  };
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -38,6 +54,29 @@ export default function EditJob() {
       setLoading(false);
     }, 5000);
   }, []);
+
+  useEffect(() => {
+    // dispatch(doGetClientRequest());
+    dispatch(doGetClientRequest());
+  }, []);
+
+  useEffect(() => {
+    let img = `${config.domain}/settings/images/${jobs.jobs_photo}`;
+    setPreviewImg(img);
+  });
+
+  const uploadOnChange = (name) => (event) => {
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      formik.setFieldValue("jobs_photo", file);
+      setPreviewImg(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+    setUploaded(true);
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -63,6 +102,7 @@ export default function EditJob() {
       jobs_city: jobs.jobs_city,
       jobs_user_id: jobs.jobs_user_id,
       jobs_client_id: jobs.jobs_client_id,
+      jobs_photo: jobs.jobs_photo,
       jobs_id: jobs.jobs_id,
     },
     onSubmit: async (values) => {
@@ -89,10 +129,11 @@ export default function EditJob() {
       payload.append("jobs_city", values.jobs_city);
       payload.append("jobs_user_id", parseInt(values.jobs_user_id));
       payload.append("jobs_client_id", parseInt(values.jobs_client_id));
+      payload.append("jobs_photo", values.jobs_photo);
       payload.append("jobs_id", parseInt(values.jobs_id));
-      console.log(payload);
+      // console.log(payload);
       dispatch(doEditJobRequest(payload));
-      navigate("/app", { state: { updated: true } });
+      navigate("/app/job", { state: { updated: true } });
     },
   });
 
@@ -106,7 +147,7 @@ export default function EditJob() {
         <form action="#" method="POST">
           <div class="shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 bg-white sm:p-6">
-              <div class="grid grid-cols-10 gap-2">
+              <div class="grid grid-cols-7 gap-2">
                 <div class="col-start-1 col-end-5">
                   <label class="block text-sm font-medium text-gray-700">
                     Title
@@ -128,13 +169,75 @@ export default function EditJob() {
                     </span>
                   ) : null}
                 </div>
-                <div class="col-start-6 col-end-7">
+                <div class="col-start-6 col-end-8 row-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Job Photo
+                  </label>
+                  <div className="mt-1 flex justify-center px-4 pt-4 pb-4 border-2 border-gray-300 border-dashed rounded-md">
+                    <div className="space-y-1 text-center">
+                      {uploaded === false ? (
+                        <svg
+                          className="h-6 w-6 text-gray-200"
+                          stroke="currentColor"
+                          fill="none"
+                          viewBox="0 0 20 20"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      ) : (
+                        <>
+                          <img
+                            src={previewImg}
+                            center
+                            alt="image"
+                            className="h-20 w-37"
+                          />
+                          <div className="flex text-sm text-gray-600 center">
+                            <label className="relative cursor-pointer bg-white rounded-md font-medium text-orange-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                              <span className="ml-4" onClick={onClearImage}>
+                                Remove
+                              </span>
+                            </label>
+                          </div>
+                        </>
+                      )}
+
+                      <div className="flex text-sm text-gray-600">
+                        <label
+                          htmlFor="jobs_photo"
+                          className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                        >
+                          <span>Upload a file</span>
+                          <input
+                            type="file"
+                            name="jobs_photo"
+                            id="jobs_photo"
+                            accept="image/*"
+                            onChange={uploadOnChange("file")}
+                            className="sr-only"
+                          />
+                        </label>
+                        <p className="pl-1">or drag and drop</p>
+                      </div>
+                      <p className="text-xs text-gray-500">
+                        PNG, JPG, GIF up to 10MB
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {/* <div class="col-start-6 col-end-7">
                   <label class="block text-sm font-medium text-gray-700">
                     Posting Number
                   </label>
                   <input
                     type="text"
-                    placeholder="jobs_post_no"
+                    placeholder="Posting Number"
                     id="jobs_post_no"
                     name="jobs_post_no"
                     value={formik.values.jobs_post_no}
@@ -143,7 +246,7 @@ export default function EditJob() {
                     autocomplete="jobs_post_no"
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                </div>
+                </div> */}
                 <div class="col-start-1 col-end-5">
                   <div>
                     <label class="block text-sm font-medium text-gray-700">
@@ -203,7 +306,7 @@ export default function EditJob() {
                     name="jobs_upto_salary"
                     value={formik.values.jobs_upto_salary}
                     onChange={formik.handleChange}
-                    // onBlur={formik.handleBlur}
+                    onBlur={formik.handleBlur}
                     autocomplete="jobs_upto_salary"
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
@@ -218,7 +321,7 @@ export default function EditJob() {
                   </label>
                   <input
                     type="number"
-                    placeholder="job_upto_experience"
+                    placeholder="Max Experience"
                     id="job_upto_experience"
                     name="job_upto_experience"
                     value={formik.values.job_upto_experience}
@@ -235,15 +338,31 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-7 col-end-7">
-                  <input
+                  <label
+                    for="jobs_publish"
+                    class="inline-flex relative items-center cursor-pointer"
+                  >
+                    <input
+                      name="jobs_publish"
+                      type="checkbox"
+                      checked={formik.jobs_publish === !ck}
+                      value={formik.values.jobs_publish}
+                      onChange={formik.handleChange}
+                      id="jobs_publish"
+                      class="sr-only peer"
+                    />
+                    <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  </label>
+                  {/* <input
                     type="checkbox"
                     placeholder="jobs_publish"
+                    checked={formik.jobs_publish === !ck}
+                    name={formik.jobs_publish}
                     id="jobs_publish"
-                    name="jobs_publish"
                     value={formik.values.jobs_publish}
                     onChange={formik.handleChange}
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
+                  /> */}
                   {/* <Switch
                     // type="checkbox"
                       checked={tgl}
@@ -294,29 +413,29 @@ export default function EditJob() {
                   </label>
                 </div>
                 <div class="col-start-7 col-end-7">
+                  <label
+                    for="jobs_remotely"
+                    class="inline-flex relative items-center cursor-pointer"
+                  >
+                    <input
+                      name="jobs_remotely"
+                      type="checkbox"
+                      value={formik.values.jobs_remotely}
+                      onChange={formik.handleChange}
+                      id="jobs_remotely"
+                      class="sr-only peer"
+                    />
+                    <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  </label>
                   {/* <input
                     type="checkbox"
-                    placeholder="jobs_remotely"
-                    id="jobs_remotely"
-                    name="jobs_remotely"
+                    checked={formik.jobs_remotely === !ck}
+                    name={formik.jobs_remotely}
                     value={formik.values.jobs_remotely}
                     onChange={formik.handleChange}
-                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    id="jobs_remotely"
+                    class="sr-only peer"
                   /> */}
-                  <Switch
-                    checked={enabled}
-                    onChange={formik.values.jobs_remotely}
-                    className={`${
-                      enabled ? "bg-blue-600" : "bg-gray-200"
-                    } relative inline-flex h-6 w-11 items-center rounded-full`}
-                  >
-                    <span className="sr-only">Enable notifications</span>
-                    <span
-                      className={`${
-                        enabled ? "translate-x-6" : "translate-x-1"
-                      } inline-block h-4 w-4 transform rounded-full bg-white`}
-                    />
-                  </Switch>
                 </div>
                 <div class="col-start-1 col-end-5">
                   <label class="block text-sm font-medium text-gray-700">
@@ -339,7 +458,21 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-7 col-end-7">
-                  <input
+                  <label
+                    for="jobs_status"
+                    class="inline-flex relative items-center cursor-pointer"
+                  >
+                    <input
+                      name="jobs_status"
+                      type="checkbox"
+                      value={tgl}
+                      onChange={chkChange}
+                      id="jobs_status"
+                      class="sr-only peer"
+                    />
+                    <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  </label>
+                  {/* <input
                     type="checkbox"
                     placeholder="jobs_status"
                     id="jobs_status"
@@ -347,7 +480,7 @@ export default function EditJob() {
                     value={formik.values.jobs_status}
                     onChange={formik.handleChange}
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  />
+                  /> */}
                 </div>
 
                 <div class="col-start-1 col-end-3">
@@ -476,9 +609,9 @@ export default function EditJob() {
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <label>jobs_client_id</label>
-                  {/* <select
+                  <select
                                         name="jobs_client_id"
                                         id="jobs_client_id"
                                         value={formik.values.jobs_client_id }
@@ -489,7 +622,7 @@ export default function EditJob() {
                                         {client && client.filter(el=>el.client_id === formik.values.jobs_client_id).map((value, index) =>
                                             <option value={value.client_id} key={index} >{value.client_id}</option>
                                         )}
-                                    </select> */}
+                                    </select>
                   <input
                     placeholder="jobs_client_id"
                     id="jobs_client_id"
@@ -497,8 +630,28 @@ export default function EditJob() {
                     value={formik.values.jobs_client_id}
                     onChange={formik.handleChange}
                   />
+                </div> */}
+                <div class="col-start-1 col-end-5">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Client Name
+                  </label>
+                  <select
+                    class="block w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                    name="jobs_client_id"
+                    id="jobs_client_id"
+                    value={formik.values.jobs_client_id}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    autoComplete="jobs_client_id"
+                  >
+                    {clients.map((cli) => (
+                      <option key={cli.client_id} value={cli.client_id}>
+                        {cli.client_name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div class="col-start-1 col-end-3">
+                {/* <div class="col-start-1 col-end-3">
                   <label class="block text-sm font-medium text-gray-700">
                     Location City
                   </label>
@@ -511,9 +664,9 @@ export default function EditJob() {
                     // onChange={formik.handleChange}
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                </div>
+                </div> */}
 
-                <div>
+                {/* <div>
                   <label>jobs_location</label>
 
                   <input
@@ -523,9 +676,9 @@ export default function EditJob() {
                     value={formik.values.jobs_location}
                     onChange={formik.handleChange}
                   />
-                </div>
+                </div> */}
 
-                <div>
+                {/* <div>
                   <label>jobs_city</label>
 
                   <input
@@ -534,6 +687,35 @@ export default function EditJob() {
                     name="jobs_city"
                     value={formik.values.jobs_city}
                     onChange={formik.handleChange}
+                  />
+                </div> */}
+                <div class="col-start-1 col-end-3">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    name="jobs_location"
+                    placeholder="Location"
+                    id="jobs_location"
+                    value={formik.values.jobs_location}
+                    onChange={formik.handleChange}
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  />
+                </div>
+
+                <div class="col-start-3 col-end-5">
+                  <label class="block text-sm font-medium text-gray-700">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="jobs_city"
+                    placeholder="City"
+                    id="jobs_city"
+                    value={formik.values.jobs_city}
+                    onChange={formik.handleChange}
+                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
                 </div>
                 <div class="col-start-1 col-end-5">

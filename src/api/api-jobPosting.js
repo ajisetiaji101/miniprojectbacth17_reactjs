@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config/config";
 
 const list = async () => {
-  console.log("sudah sampai di apiJob");
+  // console.log("sudah sampai di apiJob");
   try {
     const result = await axios.get(`${config.domain}/jobs`);
     return result.data;
@@ -20,7 +20,7 @@ const getJob = async (id) => {
 };
 
 const createJob = async (payload) => {
-  console.log("sudah sampai di apiJob");
+  // console.log("sudah sampai di apiJob");
   try {
     const result = await axios.post(`${config.domain}/jobs`, payload);
     return result.data;
@@ -40,6 +40,7 @@ const deleteRow = async (id) => {
 
 const editRow = async (payload) => {
   const jobid = parseInt(payload.get("jobs_id"));
+  console.log(jobid);
   try {
     const result = await axios.put(`${config.domain}/jobs/${jobid}`, payload);
     return result;
