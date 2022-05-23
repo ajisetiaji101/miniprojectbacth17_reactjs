@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import Page from '../../../component/commons/Page';
 import { useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
+import Rating from '@mui/material/Rating';
 
 // import config from '../../config/config';
 
@@ -26,6 +27,7 @@ import {
     ChevronLeftIcon
 } from '@heroicons/react/solid'
 import config from '../../../config/config';
+
 
 const columns = [
     { name: 'NAME' },
@@ -169,7 +171,7 @@ export default function Curiculum() {
                                             <div>{data.curr_total_batch} batchs</div>
                                             </td>
                                             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">{data.curr_learning_type}</td>
-                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">{data.curr_rating}</td>
+                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize"><Rating name="read-only" value={data.curr_rating} readOnly /></td>
                                             <td className="pr-6">
                                                 <Menu as="div" className="relative flex justify-end items-center">
                                                     {({ open }) => (
