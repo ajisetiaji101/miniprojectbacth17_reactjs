@@ -697,7 +697,7 @@ export default function EditCurriculum({ match }) {
                       Curriculum Register No
                     </span>
                     <span className="block py-1 px-2 border border-gray-300 bg-gray-600 text-sm font-medium text-white rounded-lg shadow-md">
-                      CURR200202#0001
+                      {initialValues.curr_name}
                     </span>
                   </div>
 
