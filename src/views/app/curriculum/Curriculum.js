@@ -163,14 +163,14 @@ export default function Curiculum() {
                             <tbody className="bg-white divide-y divide-gray-100">
                                 { Array.isArray(listCurriculums) && listCurriculums.slice((currentPage-1)*10,currentPage*10).map((data) => (
                                         <tr key={data.curr_id}>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_name}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_title}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_duration}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.curr_name}</td>
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.curr_title}</td>
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.curr_duration}</td>
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
                                             <div>{data.curr_total_talents} members</div>
                                             <div>{data.curr_total_batch} batchs</div>
                                             </td>
-                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">{data.curr_learning_type}</td>
+                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">{data.curr_learning_type}</td>
                                             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize"><Rating name="read-only" value={data.curr_rating} readOnly /></td>
                                             <td className="pr-6">
                                                 <Menu as="div" className="relative flex justify-end items-center">
