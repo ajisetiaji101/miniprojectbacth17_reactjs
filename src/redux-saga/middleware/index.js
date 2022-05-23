@@ -15,7 +15,7 @@ import * as ActionTypeJob from "../constants/Job";
 import * as ActionTypeProcessBootcamp from "../constants/ProcessBootcampConstant";
 import * as ActionTypeTalentTimeline from "../constants/TalentTimelineConstant";
 
-import * as ActionTypeClient from '../constants/Client'
+import * as ActionTypeClient from "../constants/Client";
 
 import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
 import { handleGetTestimoniSaga } from "./TestimoniSaga";
@@ -53,12 +53,20 @@ import {
   handleUpdateTalent,
   handleUpdateTalentNoFile,
 } from "./SettingsSaga";
-import { handleGetJob, handleAddJob, handleDeleteJob } from "./JobSaga";
+import {
+  handleGetJob,
+  handleAddJob,
+  handleDeleteJob,
+  handleEditJob,
+  handleGetIdJob,
+} from "./JobSaga";
 import { handleAddProcessBootcampSaga } from "./ProcessBootcampSaga";
-import { handleAddTalentTimelineSaga, handleGetTalentTimelineSaga } from "./TalentTimelineSaga";
+import {
+  handleAddTalentTimelineSaga,
+  handleGetTalentTimelineSaga,
+} from "./TalentTimelineSaga";
 
-import { handleGetClient } from './ClientSaga'
-
+import { handleGetClient } from "./ClientSaga";
 
 function* watchAll() {
   yield all([
@@ -142,14 +150,24 @@ function* watchAll() {
     takeEvery(ActionTypeJob.GET_JOB_REQUEST, handleGetJob),
     takeEvery(ActionTypeJob.ADD_JOB_REQUEST, handleAddJob),
     takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
+    takeEvery(ActionTypeJob.EDIT_JOB_REQUEST, handleEditJob),
+    takeEvery(ActionTypeJob.GET_JOB_ID_REQUEST, handleGetIdJob),
 
-    takeEvery(ActionTypeProcessBootcamp.ADD_PROCESS_BOOTCAMP_REQUEST, handleAddProcessBootcampSaga),
+    takeEvery(
+      ActionTypeProcessBootcamp.ADD_PROCESS_BOOTCAMP_REQUEST,
+      handleAddProcessBootcampSaga
+    ),
 
-    takeEvery(ActionTypeTalentTimeline.GET_TALENTTIMELINE_REQUEST, handleGetTalentTimelineSaga),
-    takeEvery(ActionTypeTalentTimeline.ADD_TALENTTIMELINE_REQUEST, handleAddTalentTimelineSaga),
+    takeEvery(
+      ActionTypeTalentTimeline.GET_TALENTTIMELINE_REQUEST,
+      handleGetTalentTimelineSaga
+    ),
+    takeEvery(
+      ActionTypeTalentTimeline.ADD_TALENTTIMELINE_REQUEST,
+      handleAddTalentTimelineSaga
+    ),
 
     takeEvery(ActionTypeClient.GET_CLIENT_REQUEST, handleGetClient),
-
   ]);
 }
 

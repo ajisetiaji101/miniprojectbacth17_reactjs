@@ -11,8 +11,8 @@ import Candidat from "./views/app/candidat/Candidat";
 import Batch from "./views/app/batch/Batch";
 import AddBatch from "./views/app/batch/AddBatch";
 import Curriculum from "./views/app/curriculum/Curriculum";
-import Hiringg from './views/app/hiring/Hiringg'
-import Hiring from './views/hiring/Hiring';
+import Hiringg from "./views/app/hiring/Hiringg";
+import Hiring from "./views/hiring/Hiring";
 import Setting from "./views/app/setting/Setting";
 import Talent from "./views/app/talent/Talent";
 import BlankLayout from "./component/layout/BlankLayout";
@@ -22,9 +22,9 @@ import Job from "./views/app/job/Job";
 import AddJob from "./views/app/job/AddJob";
 import Apply from "./views/app/apply/Apply";
 import Landing from "./views/components/Landing";
+import EditJob from "./views/app/job/EditJob";
 import EditCurriculum from "./views/app/curriculum/EditCurriculum";
 import Applysukses from "./views/app/apply/Applysukses";
-
 
 export default function Routes(isLoggedIn) {
   return useRoutes([
@@ -36,10 +36,20 @@ export default function Routes(isLoggedIn) {
         { path: "signin", element: <Navigate to="/auth/signin" /> },
         { path: "signup", element: <Navigate to="/auth/signup" /> },
         { path: "bootcamp", element: <Bootcamp /> },
-        { path: "apply", element: isLoggedIn ? <Apply /> : <Navigate to="/auth/signin" /> },
-        { path: "apply/sukses", element: isLoggedIn ? <Applysukses /> : <Navigate to="/auth/signin" /> },
+        {
+          path: "apply",
+          element: isLoggedIn ? <Apply /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "apply/sukses",
+          element: isLoggedIn ? (
+            <Applysukses />
+          ) : (
+            <Navigate to="/auth/signin" />
+          ),
+        },
         { path: "404", element: <Page404 /> },
-        { path: 'hiring', element: <Hiring/> },
+        { path: "hiring", element: <Hiring /> },
       ],
     },
     {
@@ -101,6 +111,14 @@ export default function Routes(isLoggedIn) {
         {
           path: "job/new",
           element: isLoggedIn ? <AddJob /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "job/edit/:id",
+          element: isLoggedIn ? <EditJob /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "setting",
+          element: isLoggedIn ? <Setting /> : <Navigate to="/auth/signin" />,
         },
         {
           path: "setting",

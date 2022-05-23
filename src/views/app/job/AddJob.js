@@ -21,6 +21,7 @@ import { useFormik } from "formik";
 import CreateSuccess from "../../../component/Job/CreateSuccess";
 import Page from "../../../component/commons/Page";
 import Loader from "../../../component/loader/Loaders";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import * as Yup from "yup";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
