@@ -1,15 +1,15 @@
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronLeftIcon, ChevronRightIcon, DotsVerticalIcon, LockClosedIcon, PencilAltIcon } from "@heroicons/react/outline";
+import { ChevronLeftIcon, ChevronRightIcon,PencilAltIcon} from "@heroicons/react/outline";
 import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { doGetTalentRequest } from "../../../redux-saga/actions/Talent";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
-
+import config from "../../../config/config";
 
 const columns = [{ name: "FULL NAME" }, { name: "TECHNOLOGY" }, { name: "BATCH" }, { name: "PERIODE" }, { name: "TRAINER" }, { name: "STATUS" }];
-const tal_status =['On Bootcamp','Idle','Trial','Placement']
+const tal_status = ["On Bootcamp", "Idle", "Trial", "Placement"];
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -26,7 +26,6 @@ export default function Talent() {
     select: "",
   });
 
-  
   const [pageNumbers, setPageNumbers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(0);
@@ -42,17 +41,16 @@ export default function Talent() {
     }
   }, []);
 
-
   useEffect(() => {
     setListTalents(
-        Array.isArray(talent) && talent.filter(data=>(
-            (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase())
-             || 
-            data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) &&
-            (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
-            ))
+      Array.isArray(talent) &&
+        talent.filter(
+          (data) =>
+            (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) &&
+            (filter.select === "Status" || data.tale_status_timeline.includes(filter.select))
         )
-}, [talent]);
+    );
+  }, [talent]);
 
   useEffect(() => {
     setPageNumbers(Array.from({ length: Math.ceil(listTalents.length / 10) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
@@ -69,14 +67,11 @@ export default function Talent() {
     setListTalents(
       Array.isArray(talent) &&
         talent.filter(
-          data =>(
-          (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) 
-          || 
-          data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase()
-          )) &&
-          (filter.select === 'Status' || data.tale_status_timeline.includes(filter.select))
-          ))
-    )
+          (data) =>
+            (data.tale_fullname.toLowerCase().includes(filter.input.toLowerCase()) || data.tale_bootcamp.toLowerCase().includes(filter.input.toLowerCase())) &&
+            (filter.select === "Status" || data.tale_status_timeline.includes(filter.select))
+        )
+    );
   };
 
   return (
@@ -102,13 +97,11 @@ export default function Talent() {
                 aria-label=".form-select-sm example"
               >
                 <option>Status</option>
-                {(tal_status || []).map((value, index) => 
-                (
+                {(tal_status || []).map((value, index) => (
                   <option className="capitalize" value={value} key={index}>
                     {value}
                   </option>
-                )
-                )}
+                ))}
               </select>
               <button
                 type="submit"
@@ -127,7 +120,7 @@ export default function Talent() {
               <thead className="border-y border-gray-200">
                 <tr key="col_names">
                   {(columns || []).map((column) => (
-                    <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                    <th className="px-6 py-3 bg-gray-50 text-center text-xs font-bold text-gray-900 uppercase">
                       <span className="">{column.name}</span>
                     </th>
                   ))}
@@ -138,32 +131,48 @@ export default function Talent() {
                 {Array.isArray(listTalents) &&
                   listTalents.slice((currentPage - 1) * 10, currentPage * 10).map((data) => (
                     <tr key={data.tale_id}>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.tale_fullname}</td>
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.tale_bootcamp}
+                                                <td className="px-6 py-4 whitespace-nowrap">
+                                                    <div className="flex items-center">
+                                                        <div className="flex-shrink-0 h-10 w-10">
+                                                            <img
+                                                                className="h-10 w-10 rounded-full"
+                                                                src={`${config.domain}/talent/images/${data.tale_photo}`}
+                                                                alt={`${data.tale_id}`}
+                                                            />
+                                                        </div>
+                                                        <div className="ml-4">
+                                                            <div className="text-sm font-medium text-gray-900">
+                                                                {
+                                                                    data.tale_fullname
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                      <td className="px-6 py-2 text-start font-medium whitespace-nowrap text-sm text-gray-900">{data.tale_bootcamp}
 
                     </td>
 
-                      <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-2 text-start font-medium whitespace-nowrap text-sm text-gray-900">
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_name}</p>
                         ))}
                       </td>
 
-                      <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                      <td className="px-6 py-2 font-medium text-start whitespace-nowrap text-xs text-gray-900">
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_start_date}</p>
-                        ))},
+                        ))}
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_end_date}</p>
                         ))}
-
                       </td>
-                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
+                      <td className="px-6 py-2 font-medium whitespace-nowrap text-sm text-gray-900 text-start">
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_inst.inst_name}</p>
                         ))}
                       </td>
-                      <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">
+                      <td className="px-6 py-2 font-medium whitespace-nowrap text-sm text-gray-900 text-start capitalize">
                         <div>{data.tale_status_timeline}</div>
                         {data.talent_placements.map((talent, i) => {
                           if (i === 0) {
@@ -178,7 +187,7 @@ export default function Talent() {
                             <>
                               <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-600 rounded-full hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 ">
                                 <span className="sr-only">Open options</span>
-                                <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
+                                <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
                               </Menu.Button>
                               <Transition
                                 show={open}
@@ -197,7 +206,7 @@ export default function Talent() {
                                         {({ active }) => (
                                           <Link to={"/app/batch/edit/" + data.place_id} className={classNames(active ? "bg-gray-300 text-gray-700" : "text-gray-900", "group flex items-center px-4 py-2 text-sm")}>
                                             <PencilAltIcon className="mr-3 h-5 w-5 text-gray-700 group-hover:text-gray-500" aria-hidden="true" />
-                                            Edit
+                                            Talent detail
                                           </Link>
                                         )}
                                       </Menu.Item>
@@ -215,8 +224,14 @@ export default function Talent() {
             </table>
             {listTalents.length === 0 && <div className="px-6 py-3 text-center whitespace-nowrap text-sm font-medium text-gray-900"> Data Not Found...</div>}
 
-            <div className="bg-white px-4 py-3 flex items-center justify-center border-t border-gray-200 sm:px-6">
-              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center">
+            <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm text-gray-700">
+                    Showing <span className="font-medium">{(currentPage - 1) * 10 + 1}</span> to <span className="font-medium">{currentPage * 10 < listTalents.length ? currentPage * 10 : listTalents.length}</span> of{" "}
+                    <span className="font-medium">{listTalents.length}</span> results
+                  </p>
+                </div>
                 <div>
                   <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                     <button
