@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, useField } from "formik";
+import * as Yup from "yup";
 import {
   Transition,
   Listbox,
@@ -36,7 +37,7 @@ const attachment = ["Video", "Image", "Script", "Link"];
 
 // component
 const MyInput = ({ label, ...props }) => {
-  const [field] = useField(props);
+  const [field, meta] = useField(props);
 
   return (
     <div className="mb-3">
@@ -52,11 +53,14 @@ const MyInput = ({ label, ...props }) => {
         {...props}
         value={field.value || ""}
       />
+      {meta.touched && meta.error ? (
+        <div className="py-2 text-sm text-red-500">{meta.error}</div>
+      ) : null}
     </div>
   );
 };
 const MyTextarea = ({ label, ...props }) => {
-  const [field] = useField(props);
+  const [field, meta] = useField(props);
 
   return (
     <div className="mb-3">
@@ -72,12 +76,15 @@ const MyTextarea = ({ label, ...props }) => {
         {...props}
         value={field.value || ""}
       />
+      {meta.touched && meta.error ? (
+        <div className="py-2 text-sm text-red-500">{meta.error}</div>
+      ) : null}
     </div>
   );
 };
 const MyListbox = ({ label, ...props }) => {
   const { data } = props.data;
-  const [field, , helpers] = useField(props);
+  const [field, meta, helpers] = useField(props);
   const [selected, setSelected] = useState();
 
   useEffect(() => {
@@ -149,6 +156,9 @@ const MyListbox = ({ label, ...props }) => {
           </Transition>
         </div>
       </Listbox>
+      {meta.touched && meta.error ? (
+        <div className="py-2 text-sm text-red-500">{meta.error}</div>
+      ) : null}
     </div>
   );
 };
@@ -209,6 +219,9 @@ const SectionModal = ({ isOpen, setIsOpen, initialValues, handleSubmit }) => {
         <Dialog.Description as="div" className="border rounded-lg py-2 text-sm">
           <Formik
             initialValues={initialValues}
+            validationSchema={Yup.object({
+              cuma_section: Yup.string().max(155, "Too long!").nullable(),
+            })}
             onSubmit={(values) => handleSubmit(values)}
             enableReinitialize={true}
           >
@@ -267,6 +280,9 @@ const SubSectionModal = ({
         <Dialog.Description as="div" className="border rounded-lg py-2 text-sm">
           <Formik
             initialValues={initialValues}
+            validationSchema={Yup.object({
+              cuma_subsection: Yup.string().max(155, "Too long!").nullable(),
+            })}
             onSubmit={(values) => handleSubmit(values)}
             enableReinitialize={true}
           >
@@ -515,6 +531,16 @@ export default function EditCurriculum({ match }) {
     >
       <Formik
         initialValues={curriculumValues}
+        validationSchema={Yup.object({
+          curr_headline: Yup.string().max(155, "Too long!").nullable(),
+          curr_title: Yup.string().max(55, "Too long!").nullable(),
+          curr_duration: Yup.number().min(1, "Must be gt 1!").nullable(),
+          curr_category: Yup.string().max(15, "Too long!").nullable(),
+          curr_price: Yup.number().min(1, "Must be gt 1!").nullable(),
+          curr_min_score: Yup.number().min(1, "Must be gt 1!").nullable(),
+          curr_tag_skill: Yup.string().max(255, "Too long!").nullable(),
+          curr_description: Yup.string().max(255, "Too long!").nullable(),
+        })}
         onSubmit={handleSubmitCurriculum}
         enableReinitialize={true}
       >
@@ -591,7 +617,7 @@ export default function EditCurriculum({ match }) {
                     </div>
                   </div>
 
-                  <div className="md:flex md:items-center md:justify-between md:space-x-5">
+                  <div className="md:flex md:justify-between md:space-x-5">
                     <MyInput
                       label="Tags Skill"
                       name="curr_tag_skill"
