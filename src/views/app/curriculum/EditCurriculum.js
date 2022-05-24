@@ -301,7 +301,7 @@ const SubSectionModal = ({
                 </div>
                 <div className="flex items-end space-x-5">
                   <MyListbox
-                    label="Attachment Type"
+                    label="Attachment"
                     name="cuma_attachment_type"
                     data={{
                       data: attachment,
