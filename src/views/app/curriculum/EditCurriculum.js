@@ -724,19 +724,20 @@ export default function EditCurriculum({ match }) {
                         );
                       }}
                     </Instructor>
-
-                    <InstructorPhoto
-                      name="curr_inst_id"
-                      data={instructor.length && instructor}
-                    >
-                      {({ url }) => (
-                        <img
-                          className="mx-auto h-28 w-28 rounded-full object-cover"
-                          src={url}
-                          alt="Instructor avatar"
-                        />
-                      )}
-                    </InstructorPhoto>
+                    <div className="md:flex-none">
+                      <InstructorPhoto
+                        name="curr_inst_id"
+                        data={instructor.length && instructor}
+                      >
+                        {({ url }) => (
+                          <img
+                            className="mx-auto h-28 w-28 rounded-full object-cover"
+                            src={url}
+                            alt="Instructor avatar"
+                          />
+                        )}
+                      </InstructorPhoto>
+                    </div>
                   </div>
 
                   <MyTextarea
