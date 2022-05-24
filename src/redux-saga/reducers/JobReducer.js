@@ -9,10 +9,13 @@ const INIT_STATE = {
 
 const JobReducer = (state = INIT_STATE, action) => {
   switch (action.type) {
+
     case ActionType.GET_JOB_REQUEST:
       return {
         ...state,
         status: "",
+        isLoading: true,
+
       };
 
     case ActionType.GET_JOB_SUCCEED: {
@@ -68,6 +71,8 @@ const GetJobSucceed = (state, action) => {
   return {
     ...state,
     jobs: action.payload,
+    isLoading: false,
+    isRefresh: false
   };
 };
 
@@ -77,6 +82,8 @@ const GetAddJobSucceed = (state, action) => {
     ...state,
     jobs: hasil,
     status: hasil,
+    isLoading: false,
+    isRefresh: false
   };
 };
 
@@ -86,6 +93,8 @@ const applyGetJobIdSucceed = (state, action) => {
     ...state,
     jobs: hasil,
     status: hasil,
+    isLoading: false,
+    isRefresh: false
   };
 };
 

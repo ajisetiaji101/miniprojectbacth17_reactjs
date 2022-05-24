@@ -70,7 +70,10 @@ export default function Job() {
             (data.jobs_title
               .toLowerCase()
               .includes(filter.input.toLowerCase()) ||
-              data.jobs_industry_type
+              data.jobs_title
+              .toLowerCase()
+              .includes(filter.input.toLowerCase()) ||
+              data.jobs_specification
                 .toLowerCase()
                 .includes(filter.input.toLowerCase())) &&
             (filter.select === "Status" ||
@@ -102,6 +105,9 @@ export default function Job() {
         jobs.filter(
           (data) =>
             (data.jobs_title
+              .toLowerCase()
+              .includes(filter.input.toLowerCase()) ||
+              data.jobs_specification
               .toLowerCase()
               .includes(filter.input.toLowerCase()) ||
               data.jobs_industry_type

@@ -32,9 +32,7 @@ export default function EditJob() {
     setPreviewImg(null);
   };
   const [tgl, setTgl] = useState("close");
-  const chkChange = () => {
-    setTgl("open");
-  };
+ 
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -81,6 +79,8 @@ export default function EditJob() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
+      
+
       jobs_post_no: jobs.jobs_post_no,
       jobs_title: jobs.jobs_title,
       jobs_start_date: jobs.jobs_start_date,
@@ -466,7 +466,7 @@ export default function EditJob() {
                       name="jobs_status"
                       type="checkbox"
                       value={tgl}
-                      onChange={chkChange}
+                      onChange={(e)=>formik.values.jobs_status.values.checked}
                       id="jobs_status"
                       class="sr-only peer"
                     />
