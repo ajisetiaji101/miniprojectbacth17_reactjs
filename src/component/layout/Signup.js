@@ -1,12 +1,15 @@
 import React from 'react'
 import { useFormik } from "formik";
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { doSignupRequest } from '../../redux-saga/actions/User'
 import * as Yup from 'yup';
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   
   const dispatch = useDispatch();
+  let navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -39,6 +42,10 @@ export default function Signup() {
         handphone : values.handphone
       };
       dispatch(doSignupRequest(payload));
+      
+      setTimeout(() => {
+          navigate("/auth/signup/success");
+        }, 7000);
     }
   });
 
@@ -68,7 +75,7 @@ export default function Signup() {
                   onBlur={formik.handleBlur}
                   autoComplete="username"
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                   placeholder="Username"
                 />
                 {formik.touched.username && formik.errors.username ? (
@@ -88,7 +95,7 @@ export default function Signup() {
                   onBlur={formik.handleBlur}
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                 />
                 {formik.touched.email && formik.errors.email ? (
@@ -108,7 +115,7 @@ export default function Signup() {
                   onBlur={formik.handleBlur}
                   autoComplete="password"
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
                 {formik.touched.password && formik.errors.password ? (
@@ -129,22 +136,29 @@ export default function Signup() {
                   onBlur={formik.handleBlur}
                   autoComplete="handphone"
                   required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                   placeholder="Handphone"
                 />
                 {formik.touched.handphone && formik.errors.handphone ? (
                   <span className="mt-2 text-sm text-red-600">{formik.errors.handphone}</span>
                 ) : null}
               </div>
-              <div>
-              <button
-                type="button"
-                onClick={formik.handleSubmit}
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Sign Up
-              </button>
-            </div>
+              <div className="flex">
+                <button
+                  type="button"
+                  onClick={() => navigate("/")}
+                  className="group relative w-1/2 flex justify-center py-2 px-4 ml-1 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={formik.handleSubmit}
+                  className="group relative w-1/2 flex justify-center py-2 px-4 ml-1 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  Sign Up
+                </button>
+              </div>
           </form>
       </div>
       {/* <h1>Add Users</h1>

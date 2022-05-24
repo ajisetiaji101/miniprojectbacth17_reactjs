@@ -8,7 +8,7 @@ export const Dataimage = [
     image: "./assets/images/bukalapak.jpg",
   },
   {
-    image: "./assets/images/jago.jpg",
+    image: "./assets/images/Jago.jpg",
   },
   {
     image: "./assets/images/Grab.jpg",

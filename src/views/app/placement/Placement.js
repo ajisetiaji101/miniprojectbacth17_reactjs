@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Page from "../../../component/commons/Page";
 import { TrashIcon } from "@heroicons/react/solid";
 import config from "../../../config/config";
+import * as moment from "moment";
 
 const columns = [{ name: "CONTRACT NO." }, { name: "CLIENT" }, { name: "TALENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
 const placementStatus = ["trial", "placement", "closed"];
@@ -137,9 +138,6 @@ export default function Placement() {
               <tbody className="bg-white divide-y divide-gray-100">
                 {Array.isArray(listPlacements) &&
                   listPlacements.slice((currentPage - 1) * 10, currentPage * 10).map((data) => {
-                    const [yearstart, monthstart, daystart] = data.place_start_date.split("-");
-                    const [yearend, monthend, dayend] = data.place_end_date.split("-");
-
                     return (
                       <tr key={data.place_id}>
                         <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.place_contract_no}</td>
@@ -155,16 +153,15 @@ export default function Placement() {
                         </td>
                         <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">{data.place_client.client_name}</td>
                         <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
-                          <div>{`${daystart} ${listBulan[monthstart[1]]} ${yearstart}`}</div>
-                          <div>{`${dayend} ${listBulan[monthend[1]]} ${yearend}`}</div>
+                          <div>{moment(data.place_start_date).format("DD MMMM YYYY")}</div>
+                          <div>{moment(data.place_end_date).format("DD MMMM YYYY")}</div>
                         </td>
                         <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900">Novelina</td>
                         <td className="px-6 py-2 whitespace-nowrap text-left text-sm text-gray-900 capitalize mr-6">
                           <div>{data.place_status}</div>
                           {data.talent_placements.map((talent, i) => {
                             if (i == 0) {
-                              const [year, month, day] = talent.tapl_drop_date.split("-");
-                              return <p>{`${day} ${listBulan[month[1]]} ${year}`}</p>;
+                              return <p>{moment(talent.tapl_drop_date).format("DD MMMM YYYY")}</p>;
                             }
                           })}
                           <div>{console.log(data)}</div>

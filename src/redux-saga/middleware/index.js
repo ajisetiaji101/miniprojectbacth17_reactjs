@@ -5,12 +5,17 @@ import * as ActionTypePlacement from "../constants/Placement";
 import * as ActionTypeInstructor from "../constants/Instructor";
 import * as ActionTypeSettings from "../constants/Settings";
 import * as ActionTypeTalent from "../constants/Talent";
+import * as ActionTypeHiring from "../constants/Hiring";
+
 import * as ActionTypeAppCurriculum from "../constants/AppCurriculum";
 import * as ActionTypeCurriculum from "../constants/CurriculumConstant";
 import * as ActionTypeBatch from "../constants/BatchConstant";
 import * as ActionTypeAppBatch from "../constants/AppBatch";
 import * as ActionTypeJob from "../constants/Job";
 import * as ActionTypeProcessBootcamp from "../constants/ProcessBootcampConstant";
+import * as ActionTypeTalentTimeline from "../constants/TalentTimelineConstant";
+
+import * as ActionTypeClient from '../constants/Client'
 
 import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
 import { handleGetTestimoniSaga } from "./TestimoniSaga";
@@ -34,6 +39,7 @@ import {
   handleAddCurriculumMateri,
 } from "./CurriculumSaga";
 import { handleGetTalentSaga } from "./TalentSaga";
+import { handleGetHiringSaga } from "./HiringSaga";
 import { handleGetBatch, handleAddBatch } from "./BatchSaga";
 import {
   handleGetAppBatch,
@@ -49,6 +55,10 @@ import {
 } from "./SettingsSaga";
 import { handleGetJob, handleAddJob, handleDeleteJob } from "./JobSaga";
 import { handleAddProcessBootcampSaga } from "./ProcessBootcampSaga";
+import { handleAddTalentTimelineSaga, handleGetTalentTimelineSaga } from "./TalentTimelineSaga";
+
+import { handleGetClient } from './ClientSaga'
+
 
 function* watchAll() {
   yield all([
@@ -80,6 +90,7 @@ function* watchAll() {
     ),
 
     takeEvery(ActionTypeTalent.GET_TALENT_REQUEST, handleGetTalentSaga),
+    takeEvery(ActionTypeHiring.GET_HIRING_REQUEST, handleGetHiringSaga),
 
     takeEvery(
       ActionTypeAppCurriculum.GET_CURRICULUM_REQUEST,
@@ -131,7 +142,14 @@ function* watchAll() {
     takeEvery(ActionTypeJob.GET_JOB_REQUEST, handleGetJob),
     takeEvery(ActionTypeJob.ADD_JOB_REQUEST, handleAddJob),
     takeEvery(ActionTypeJob.DELETE_JOB_REQUEST, handleDeleteJob),
+
     takeEvery(ActionTypeProcessBootcamp.ADD_PROCESS_BOOTCAMP_REQUEST, handleAddProcessBootcampSaga),
+
+    takeEvery(ActionTypeTalentTimeline.GET_TALENTTIMELINE_REQUEST, handleGetTalentTimelineSaga),
+    takeEvery(ActionTypeTalentTimeline.ADD_TALENTTIMELINE_REQUEST, handleAddTalentTimelineSaga),
+
+    takeEvery(ActionTypeClient.GET_CLIENT_REQUEST, handleGetClient),
+
   ]);
 }
 
