@@ -394,10 +394,18 @@ export default function EditCurriculum({ match }) {
 
         section.map((s, i) => {
           section[i].subSection = [];
+          section[i].durrInMinute = 0;
 
           subSection.map((ss) => {
             if (s.cuma_id === ss.cuma_cuma_id) {
               section[i].subSection.push(ss);
+
+              const time = ss.cuma_duration.split(":");
+              if (time.length > 1) {
+                const hour = parseInt(time[0].trim());
+                const min = parseInt(time[1].trim().split(" ")[0]);
+                section[i].durrInMinute += hour * 60 + min;
+              }
             }
             return true;
           });
@@ -830,7 +838,9 @@ export default function EditCurriculum({ match }) {
                     <div className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                       <span>{section.cuma_section}</span>
                       <div className="flex items-center space-x-2 text-xs">
-                        <span>Duration : 0 hours</span>
+                        <span>
+                          Duration : {parseInt(section.durrInMinute / 60)} hours
+                        </span>
                         <button
                           onClick={() => {
                             setCumaId(section.cuma_id);
@@ -874,7 +884,7 @@ export default function EditCurriculum({ match }) {
                             <div className="flex space-x-2">
                               <div>
                                 <span>
-                                  {ss.cuma_duration || "0 : 00 minutes"}
+                                  {ss.cuma_duration || "0 : 0 minutes"}
                                 </span>
                               </div>
                               <div>
