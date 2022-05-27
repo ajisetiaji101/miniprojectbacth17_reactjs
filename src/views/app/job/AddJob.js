@@ -41,10 +41,25 @@ export default function AddJob() {
   const [uploaded, setUploaded] = useState(false);
   const { clients } = useSelector((state) => state.clientState);
   const { userProfile } = useSelector((state) => state.userState);
-  const [addr, setAddr] = useState([]);
+  const [inputValue, setValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
+  };
+  // const [listClient, setListClient] = useState([]);
+  // const [filter, setFilter] = useState({
+  //   input: "",
+  //   select: "",
+  // });
+
+  const handleInputChange = value =>{
+    setValue(value)
+  }
+
+  const handleChangeSelect = (name) => (event) => {
+    setSelectedValue({ ...selectedValue, [name]: event.target.value });
+    console.log(...event.target.value)
   };
 
   const handleSubmitOnClick = () => {
@@ -53,6 +68,8 @@ export default function AddJob() {
       draftToHtml(convertToRaw(editorState.getCurrentContent()))
     );
   };
+
+
 
   useEffect(() => {
     dispatch(doGetJobRequest());
@@ -81,6 +98,20 @@ export default function AddJob() {
       setTgl("close");
     }
   };
+
+  // const onSearch = (event) => {
+  //   event.preventDefault();
+  //   listClient(
+  //     Array.isArray(clients) &&
+  //     clients.filter(
+  //         (data) =>
+  //           (data.client_name
+  //             .toLowerCase()
+  //             .includes(filter.input.toLowerCase()))
+  //             )
+  //       );
+    
+  // };
 
   const validationSchema = Yup.object().shape({
     jobs_title: Yup.string("Enter Job Title").required("Title is required"),
@@ -216,9 +247,6 @@ export default function AddJob() {
                   </div>
 
                   <div class="col-start-6 col-end-8 row-span-2">
-                    <label className="block text-sm font-medium text-gray-700">
-                      Job Photo
-                    </label>
                     <div className="mt-1 flex justify-center px-4 pt-4 pb-4 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         {uploaded === false ? (
@@ -498,7 +526,7 @@ export default function AddJob() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       autoComplete="jobs_industry_type"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"                    >
+                      className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                       <option value="" selected disabled hidden>
                         Select an Option
                       </option>
@@ -527,8 +555,8 @@ export default function AddJob() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       autoComplete="jobs_specification"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    >
+                      className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+
                       <option value="" selected disabled hidden>
                         Select an Option
                       </option>
@@ -554,8 +582,8 @@ export default function AddJob() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       autoComplete="jobs_working_type"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    >
+                      className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    
                       {" "}
                       <option value="" selected disabled hidden>
                         Select an Option
@@ -582,7 +610,7 @@ export default function AddJob() {
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       autoComplete="jobs_spec_education"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     >
                       <option value="" selected disabled hidden>
                         Select an Option
@@ -624,20 +652,23 @@ export default function AddJob() {
                       Client Name
                     </label>
                     <select
-                      class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    isSearchable={true}
+                      className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                       name="jobs_client_id"
                       id="jobs_client_id"
-                      value={formik.values.jobs_client_id}
-                      onChange={formik.handleChange}
+                      // value={clients}
+                      onChange={handleChangeSelect ("select")}
                       onBlur={formik.handleBlur}
                       autoComplete="jobs_client_id"
                     >
                       {clients.map((cli) => (
-                        <option key={cli.client_id} value={cli.client_id}>
-                          {cli.client_name}
+                        <option 
+                        key={cli.client_id} 
+                        value={cli}>
+                          {cli.client_name}- {cli.client_location}
                         </option>
                       ))}
-                    </select>
+                    </select>                 
                   </div>
 
                   <div class="col-start-1 col-end-3">
@@ -650,8 +681,8 @@ export default function AddJob() {
                       name="jobs_location"
                       placeholder="Location"
                       id="jobs_location"
-                      value={formik.values.jobs_location}
-                      onChange={formik.handleChange}
+                      value={selectedValue}
+                      onChange={handleChangeSelect}
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
@@ -666,8 +697,8 @@ export default function AddJob() {
                       name="jobs_city"
                       placeholder="City"
                       id="jobs_city"
-                      value={formik.values.jobs_city}
-                      onChange={formik.handleChange}
+                      value={selectedValue}
+                      onChange={handleInputChange}
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
