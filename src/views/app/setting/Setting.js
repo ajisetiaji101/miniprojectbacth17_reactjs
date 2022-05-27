@@ -115,6 +115,7 @@ export default function Setting() {
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
         payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_email", values.tale_email);
         payload.append("tale_resume", values.tale_resume);
         payload.append("tale_cover_letter", values.tale_cover_letter);
         payload.append("tale_photo", values.tale_photo);
@@ -133,6 +134,7 @@ export default function Setting() {
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
         payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_email", values.tale_email);
         payload.append("tale_resume", values.tale_resume);
         payload.append("tale_user_id", parseInt(userProfile.userId));
         dispatch(doUpdateTalentRequest(payload));
@@ -149,6 +151,7 @@ export default function Setting() {
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
         payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_email", values.tale_email);
         payload.append("tale_cover_letter", values.tale_cover_letter);
         payload.append("tale_user_id", parseInt(userProfile.userId));
         dispatch(doUpdateTalentRequest(payload));
@@ -165,6 +168,7 @@ export default function Setting() {
         payload.append("tale_city", values.tale_city);
         payload.append("tale_province", values.tale_province);
         payload.append("tale_tag_skill", values.tale_tag_skill);
+        payload.append("tale_email", values.tale_email);
         payload.append("tale_photo", values.tale_photo);
         payload.append("tale_user_id", parseInt(userProfile.userId));
         dispatch(doUpdateTalentRequest(payload));
@@ -182,11 +186,12 @@ export default function Setting() {
           tale_city: values.tale_city,
           tale_province: values.tale_province,
           tale_tag_skill: values.tale_tag_skill,
+          tale_email: values.tale_email,
           tale_user_id: parseInt(userProfile.userId),
         };
         dispatch(doUpdateTalentNoFileRequest(payload));
       }
-      navigate("/", { state: { refresh: true } });
+      // navigate("/", { state: { refresh: true } });
     },
   });
 

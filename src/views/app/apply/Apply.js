@@ -150,7 +150,7 @@ export default function Apply() {
         <form method="POST" action="#">
           <div className="justify-self-center relative">
             <div className="">
-              <img src={previewImg ? previewImg : `${config.domain}/settings/images/tes1.jpg`} className="h-32 w-32 rounded-full ring-2 ring-red-600" />
+              <img src={previewImg ? previewImg : `${config.domain}/settings/images/tes1.png`} className="h-32 w-32 rounded-full ring-2 ring-red-600" />
             </div>
             <input type="file" accept="image/*" id="tale_photo" name="tale_photo" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
           </div>
