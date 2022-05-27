@@ -191,7 +191,7 @@ export default function Setting() {
         };
         dispatch(doUpdateTalentNoFileRequest(payload));
       }
-      // navigate("/", { state: { refresh: true } });
+      navigate("/", { state: { refresh: true } });
     },
   });
 
