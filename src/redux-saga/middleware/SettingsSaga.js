@@ -1,7 +1,15 @@
 import { call, put } from "redux-saga/effects";
 
 import apiSettings from "../../api/api-settings";
-import { doGetTalentFailed, doGetTalentSucceed, doUpdateTalentFailed, doUpdateTalentNoFileFailed, doUpdateTalentNoFileSucceed, doUpdateTalentRequest, doUpdateTalentSucceed } from "../actions/Settings";
+import {
+  doGetTalentFailed,
+  doGetTalentSucceed,
+  doUpdateTalentFailed,
+  doUpdateTalentNoFileFailed,
+  doUpdateTalentNoFileSucceed,
+  doUpdateTalentRequest,
+  doUpdateTalentSucceed,
+} from "../actions/Settings";
 
 function* handleGetTalent(action) {
   const { payload } = action;

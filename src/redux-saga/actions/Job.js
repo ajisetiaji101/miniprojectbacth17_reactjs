@@ -73,3 +73,18 @@ export const doGetJobIdFailed = (payload) => ({
   type: ActionType.GET_JOB_ID_FAILED,
   payload,
 });
+
+export const doUpdateJobsNoFileRequest = (payload) => ({
+  type: ActionType.UPDATE_JOBSNOFILE_REQUEST,
+  payload,
+});
+
+export const doUpdateJobsNoFileSucceed = (payload) => ({
+  type: ActionType.UPDATE_JOBSNOFILE_SUCCEED,
+  payload,
+});
+
+export const doUpdateJobsNoFileFailed = (payload) => ({
+  type: ActionType.UPDATE_JOBSNOFILE_FAILED,
+  payload,
+});

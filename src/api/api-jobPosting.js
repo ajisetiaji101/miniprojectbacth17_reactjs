@@ -39,15 +39,46 @@ const deleteRow = async (id) => {
 };
 
 const editRow = async (payload) => {
-  const jobid = parseInt(payload.get("jobs_id"));
-  console.log(jobid);
+  const jobs_id = parseInt(payload.get("jobs_id"));
+  // console.log(jobid);
   try {
-    const result = await axios.put(`${config.domain}/jobs/${jobid}`, payload);
+    const result = await axios.put(`${config.domain}/jobs/${jobs_id}`, payload);
     return result;
   } catch (error) {
     return error;
   }
 };
+
+const updateJobsNoFile = async (payload) => {
+  const jobs_id = payload.jobs_id;
+  try {
+    const result = await axios.put(
+      `${config.domain}/jobs/data/${jobs_id}`,
+      payload
+    );
+    return result;
+  } catch (error) {
+    return error;
+  }
+};
+// const editRow = async (data) => {
+//   try {
+//     const payload = new FormData();
+
+//     for (const key in data) {
+//       payload.append(key, data[key]);
+//     }
+
+//     const result = await axios.put(
+//       `${config.domain}/jobs/${data.jobs_id}`,
+//       payload
+//     );
+
+//     return result;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   list,
@@ -55,4 +86,5 @@ export default {
   deleteRow,
   editRow,
   getJob,
+  updateJobsNoFile,
 };

@@ -11,6 +11,8 @@ import {
   doEditJobFailed,
   doGetJobIdSucceed,
   doGetJobIdFailed,
+  doUpdateJobsNoFileSucceed,
+  doUpdateJobsNoFileFailed,
 } from "../actions/Job";
 
 function* handleGetJob() {
@@ -64,10 +66,21 @@ function* handleGetIdJob(action) {
   }
 }
 
+function* handleUpdateJobsNoFile(action) {
+  const { payload } = action;
+  try {
+    const result = yield call(apiJobPosting.updateJobsNoFile, payload);
+    yield put(doUpdateJobsNoFileSucceed(result.data));
+  } catch (error) {
+    yield put(doUpdateJobsNoFileFailed(error));
+  }
+}
+
 export {
   handleGetJob,
   handleAddJob,
   handleDeleteJob,
   handleEditJob,
   handleGetIdJob,
+  handleUpdateJobsNoFile,
 };

@@ -47,10 +47,8 @@ const JobReducer = (state = INIT_STATE, action) => {
         isRefresh: false,
       };
     }
-    case ActionType.EDIT_JOB_SUCCEED: {
+    case ActionType.EDIT_JOB_SUCCEED:
       return applyEditJobSucceed(state, action);
-    }
-
     case ActionType.GET_JOB_ID_REQUEST:
       return {
         ...state,
@@ -59,6 +57,13 @@ const JobReducer = (state = INIT_STATE, action) => {
     case ActionType.GET_JOB_ID_SUCCEED:
       return applyGetJobIdSucceed(state, action);
 
+    case ActionType.UPDATE_JOBSNOFILE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case ActionType.UPDATE_JOBSNOFILE_SUCCEED:
+      return applyUpdateJobsNoFileSucceed(state, action);
     default:
       return state;
   }
@@ -108,6 +113,16 @@ const applyDeleteJobSucceed = (state, action) => {
 // };
 
 const applyEditJobSucceed = (state, action) => {
+  return {
+    ...state,
+    // talent: action.payload,
+    jobs: action.payload,
+    isLoading: false,
+    isRefresh: false,
+  };
+};
+
+const applyUpdateJobsNoFileSucceed = (state, action) => {
   return {
     ...state,
     // talent: action.payload,

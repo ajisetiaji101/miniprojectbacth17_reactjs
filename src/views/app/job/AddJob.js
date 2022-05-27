@@ -11,7 +11,7 @@ import {
   doAddJobRequest,
 } from "../../../redux-saga/actions/Job";
 import { EditorState, convertToRaw } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
+// import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import { doGetClientRequest } from "../../../redux-saga/actions/Client";
 import { ToastContainer, toast } from "react-toastify";
@@ -23,10 +23,10 @@ import Page from "../../../component/commons/Page";
 import Loader from "../../../component/loader/Loaders";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import draftToHtml from "draftjs-to-html";
+// import draftToHtml from "draftjs-to-html";
 // import { RichEditorExample} from './RichEditor';
 //
-import { EditorState } from "draft-js";
+// import { EditorState } from "draft-js";
 import * as Yup from "yup";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
