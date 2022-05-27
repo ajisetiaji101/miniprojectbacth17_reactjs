@@ -285,8 +285,9 @@ const handleChecked5 = (e) => {
 
     </div>
 
-<div className="font-medium  mx-5  font-serif w-full shadow-md">{listHiring.length} Lowongan Kerja Di Indonesia</div> 
-<div className="flex bg-neutral-100">
+    
+<div className="font-medium  mx-5 font-serif">{listHiring.length} Lowongan Kerja Di Indonesia</div>
+<div className="flex ">
 
 {/* sidebar */}
 
@@ -294,13 +295,13 @@ const handleChecked5 = (e) => {
     <div className="overflow-y-auto  px-3 bg-gray-50 rounded">
         <ul className="space-y-2">
           <li>
-              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg bg-orange-400 ">
+              <a href="#" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg bg-gray-300 ">
               <svg className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
       <span className="ml-3">Filter Pencarianmu</span>
               </a>
           </li>
       <li>
-        <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-orange-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+        <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
           <svg className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
           <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Tampilkan Berdasarkan</span>
           <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -322,7 +323,7 @@ const handleChecked5 = (e) => {
         ))}           
       </li>
       <li>
-      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-orange-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example1">
+      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example1">
           <svg className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
       <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Tipe Pekerjaan</span>
           <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -348,7 +349,7 @@ const handleChecked5 = (e) => {
         
       </li>
       <li>
-      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-orange-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example2">
+      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example2">
           <svg className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
       <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Pengalaman</span>
           <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -379,7 +380,7 @@ const handleChecked5 = (e) => {
       </li>
 
       <li>
-      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-orange-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example4">
+      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example4">
           <svg className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
       <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Remotely</span>
           <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -397,7 +398,7 @@ const handleChecked5 = (e) => {
                   ))}
       </li>
       <li>
-      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-orange-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example5">
+      <button type="button" className="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-400 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example5">
           <svg className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
       <span className="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item="">Terupdate</span>
           <svg sidebar-toggle-item="" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -439,13 +440,13 @@ const handleChecked5 = (e) => {
                     
         <div className=" flex justify-end col-2 ml-10 mr-10 mb-8 " >
     <button className="" onClick={() => navigate('/hiring/new')}>     
-  <div className="rounded-lg flex flex-wrap bg-purple-400 shadow-lg font-medium text-black bg-gradient-to-r from-orange-400 to-red-500 hover:from-orange-700 hover:to-red-700 hover:text-white">
+  <div className="rounded-lg flex flex-wrap  shadow-lg font-normal text-black bg-gradient-to-r from-gray-200 to-white-500 hover:from-gray-200 hover:to-gray-200 hover:text-black">
   <div className="grid grid-cols-2">
   <div className="ml-4 mt-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} alt={`${data.jobs_id}`} style={{width:"150px", height:"150px"}}/></div>
-  <div className="w-40 mb-5 ml-3 mr-5 mt-2 text-start">{data.jobs_title}</div>
-  <div className="col-span-2 mb-2 ml-1 mr-72"><FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {data.jobs_city}</div>
-  <div className="col-span-2 mb-2 ml-1 mr-72"><FontAwesomeIcon className="mr-1"icon={faSuitcase} /> {data.job_upto_experience} tahun</div>
-  <div className="mb-2 mr-10"><FontAwesomeIcon className="mr-1"icon={faCalendarCheck} /> Actively Hiring</div>
+  <div className="w-40 mb-5 ml-3 mr-5 mt-5 text-start">{data.jobs_title}</div>
+  <div className="col-span-2 mb-2 ml-3 mr-72"><FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {data.jobs_city}</div>
+  <div className="col-span-2 mb-2 ml-3 mr-72"><FontAwesomeIcon className="mr-1"icon={faSuitcase} /> {data.job_upto_experience} tahun</div>
+  <div className="mb-2 mr-8"><FontAwesomeIcon className="mr-1"icon={faCalendarCheck} /> Actively Hiring</div>
   <div className="mb-5 ml-5 "><FontAwesomeIcon className="mr-1.5" icon={faClock}/><Moment fromNow>{data.jobs_start_date}</Moment></div>
   </div>  
   
@@ -481,7 +482,7 @@ const handleChecked5 = (e) => {
                         setPageNumbers([...pageNumbers].map((val) => (val.number === 1 ? { ...val, active: true } : { ...val, active: false })));
                         setPageRange();
                       }}
-                      className="relative inline-flex items-center px-3 py-2 font-medium text-gray-600 hover:text-orange-600"
+                      className="relative inline-flex items-center px-3 py-2 font-medium text-gray-600 hover:text-orange-600 "
                     >
                       <span className="underline">First</span>
                     </button>
@@ -492,10 +493,9 @@ const handleChecked5 = (e) => {
                           setPageRange(pageRange - 1);
                         }
                       }}
-                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                     >
                       <span className="sr-only">Previous</span>
-                      <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                      
                     </button>
                     {pageNumbers.slice(pageRange * 4, pageRange * 4 + 4).map((el) => (
                       <button
@@ -504,7 +504,7 @@ const handleChecked5 = (e) => {
                           setPageNumbers([...pageNumbers].map((val) => (val.number === el.number ? { ...val, active: true } : { ...val, active: false })));
                         }}
                         aria-current="page"
-                        className={classNames(el.active ? "z-20 bg-orange-100 border-orange-600 text-orange-900" : "z-10 bg-white border-gray-300 text-gray-600", "relative inline-flex items-center px-4 py-2 border text-sm font-medium")}
+                        className={classNames(el.active ? "z-20 bg-orange-100 border-orange-600 text-orange-900" : "z-10 bg-white border-gray-300 text-gray-600", "relative inline-flex items-center px-4 py-2 border text-sm font-medium rounded ")}
                       >
                         {el.number}
                       </button>
@@ -516,10 +516,9 @@ const handleChecked5 = (e) => {
                           setPageRange(pageRange + 1);
                         }
                       }}
-                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                     >
                       <span className="sr-only">Next</span>
-                      <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                      
                     </button>
                     <button
                       onClick={() => {
