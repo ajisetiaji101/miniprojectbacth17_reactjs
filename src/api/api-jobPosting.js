@@ -52,10 +52,7 @@ const editRow = async (payload) => {
 const updateJobsNoFile = async (payload) => {
   const jobs_id = payload.jobs_id;
   try {
-    const result = await axios.put(
-      `${config.domain}/jobs/data/${jobs_id}`,
-      payload
-    );
+    const result = await axios.put(`${config.domain}/jobs/data/${jobs_id}`, payload);
     return result;
   } catch (error) {
     return error;
