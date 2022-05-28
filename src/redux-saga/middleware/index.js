@@ -39,7 +39,7 @@ import {
   handleAddCurriculumMateri,
 } from "./CurriculumSaga";
 import { handleGetTalentSaga } from "./TalentSaga";
-import { handleGetHiringSaga } from "./HiringSaga";
+import { handleGetHiringSaga, handleGetHiringIdSaga, handleGetHiringCitySaga } from "./HiringSaga";
 import { handleGetBatch, handleAddBatch } from "./BatchSaga";
 import {
   handleGetAppBatch,
@@ -91,6 +91,8 @@ function* watchAll() {
 
     takeEvery(ActionTypeTalent.GET_TALENT_REQUEST, handleGetTalentSaga),
     takeEvery(ActionTypeHiring.GET_HIRING_REQUEST, handleGetHiringSaga),
+    takeEvery(ActionTypeHiring.GET_HIRING_ID_REQUEST, handleGetHiringIdSaga),
+    takeEvery(ActionTypeHiring.GET_HIRING_CITY_REQUEST, handleGetHiringCitySaga),
 
     takeEvery(
       ActionTypeAppCurriculum.GET_CURRICULUM_REQUEST,

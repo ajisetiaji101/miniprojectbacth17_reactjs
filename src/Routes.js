@@ -13,6 +13,8 @@ import AddBatch from "./views/app/batch/AddBatch";
 import Curriculum from "./views/app/curriculum/Curriculum";
 import Hiringg from './views/app/hiring/Hiringg'
 import Hiring from './views/hiring/Hiring';
+import HiringDetail from './views/hiring/HiringDetail';
+import HiringDetail2 from './views/hiring/HiringDetail2';
 import Setting from "./views/app/setting/Setting";
 import Talent from "./views/app/talent/Talent";
 import BlankLayout from "./component/layout/BlankLayout";
@@ -37,6 +39,8 @@ export default function Routes(isLoggedIn) {
         { path: "apply/sukses", element: isLoggedIn ? <Applysukses /> : <Navigate to="/auth/signin" /> },
         { path: "404", element: <Page404 /> },
         { path: 'hiring', element: <Hiring/> },
+        { path: 'hiring/:id', element: <HiringDetail/> },
+        { path: 'hiringg/:id', element: <HiringDetail2/> },
       ],
     },
     {
