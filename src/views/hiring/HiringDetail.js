@@ -50,7 +50,7 @@ return (
     
     <div className=" flex justify-end mr-12">
     <Link to={"/hiringg/" + data.jobs_id}> 
-    <div className="flex flex-wrap bg-slate-50 shadow-xl mb-6">
+    <div className="flex flex-wrap bg-slate-50 shadow-xl mb-6 rounded-lg hover:bg-gray-200">
     <div className="grid grid-cols-2">
     <div className="ml-4 mt-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} style={{width:"150px", height:"150px"}}/></div>
     <div className="w-40 mb-5 ml-3 mr-5 mt-12 text-lg"><b> {data.jobs_title} </b></div>
