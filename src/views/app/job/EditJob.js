@@ -11,12 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreateSuccess from "../../../component/Job/CreateSuccess";
 import { Switch } from "@headlessui/react";
-import {
-  doGetJobRequest,
-  doEditJobRequest,
-  doGetJobIdRequest,
-  doUpdateJobsNoFileRequest,
-} from "../../../redux-saga/actions/Job";
+import { doGetJobRequest, doEditJobRequest, doGetJobIdRequest, doUpdateJobsNoFileRequest } from "../../../redux-saga/actions/Job";
 
 import { doGetClientRequest } from "../../../redux-saga/actions/Client";
 import config from "../../../config/config";
@@ -38,6 +33,9 @@ export default function EditJob() {
   const dispatch = useDispatch();
   const [Loading, setLoading] = useState(true);
   let [isOpen, setIsOpen] = useState(false);
+  const [enabled, setEnabled] = useState(false);
+
+  const [ck, setCk] = useState(false);
 
   const { id } = useParams();
 
@@ -159,25 +157,19 @@ export default function EditJob() {
         console.log(payload);
         dispatch(doUpdateJobsNoFileRequest(payload));
       }
-      navigate("/app/job", { state: { refresh: true } });
+      // navigate("/app/job", { state: { refresh: true } });
     },
   });
 
   return (
-    <Page
-      title="Edit Jobs"
-      titleButton="Back"
-      onClick={() => navigate("/app/job")}
-    >
+    <Page title="Edit Jobs" titleButton="Back" onClick={() => navigate("/app/job")}>
       <div className="mt-5 md:mt-0 md:col-span-2">
         <form action="#" method="POST">
           <div class="shadow overflow-hidden sm:rounded-md">
             <div class="px-4 py-5 bg-white sm:p-6">
               <div class="grid grid-cols-4 gap-6">
                 <div class="col-start-1 col-end-4">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Title
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Title</label>
                   <input
                     type="text"
                     placeholder="Title"
@@ -191,31 +183,17 @@ export default function EditJob() {
                   />
                 </div>
                 <div class="col-start-6 col-end-8 row-span-2">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Job Photo
-                  </label>
+                  <label className="block text-sm font-medium text-gray-700">Job Photo</label>
                   <div className="col-span-6 sm:col-span-2 row-span-3 justify-self-center py-4 relative">
                     <div className="">
-                      <img
-                        src={previewImg}
-                        className="h-44 w-44 rounded-full ring-2 ring-red-600"
-                      />
+                      <img src={previewImg} className="h-44 w-44 rounded-full ring-2 ring-red-600" />
                     </div>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      id="jobs_photo"
-                      name="jobs_photo"
-                      className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 "
-                      onChange={uploadOnChangeImage("file")}
-                    />
+                    <input type="file" accept="image/*" id="jobs_photo" name="jobs_photo" className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 " onChange={uploadOnChangeImage("file")} />
                   </div>
                 </div>
                 <div class="col-start-1 col-end-3">
                   <div>
-                    <label class="block text-sm font-medium text-gray-700">
-                      Periode Posting
-                    </label>
+                    <label class="block text-sm font-medium text-gray-700">Periode Posting</label>
 
                     <div className="relative flex  items-end">
                       <DatePicker
@@ -227,16 +205,11 @@ export default function EditJob() {
                         autoComplete="jobs_start_date"
                       />
                       <div className="bg-blue-100  border border-gray-400 shadow-lg rounded-lg w-14 h-11 flex items-center justify-center text-gray-600 text-xs font-medium ">
-                        <FontAwesomeIcon
-                          icon={faCalendarDays}
-                          className="w-6 h-6 shadow-2xl"
-                        />
+                        <FontAwesomeIcon icon={faCalendarDays} className="w-6 h-6 shadow-2xl" />
                       </div>
                     </div>
                   </div>
-                  <label class="block text-sm font-medium text-gray-700">
-                    To
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">To</label>
                   <div className="relative flex  items-end">
                     <DatePicker
                       className="mt-1 w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
@@ -248,19 +221,13 @@ export default function EditJob() {
                       autoComplete="jobs_end_date"
                     />
                     <div className="bg-blue-100 border border-gray-400 shadow-lg rounded-lg w-14 h-11 flex items-center justify-center text-gray-600 text-xs font-medium ">
-                      <FontAwesomeIcon
-                        icon={faCalendarDays}
-                        className="w-6 h-6 shadow-2xl"
-                      />
+                      <FontAwesomeIcon icon={faCalendarDays} className="w-6 h-6 shadow-2xl" />
                     </div>
                   </div>
                 </div>
 
                 <div class="col-start-1 col-end-3">
-                  <label
-                    for="jobs_upto_salary"
-                    class="block text-sm font-medium text-gray-700"
-                  >
+                  <label for="jobs_upto_salary" class="block text-sm font-medium text-gray-700">
                     Up To Salary
                   </label>
                   <input
@@ -276,10 +243,7 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-3 col-end-4">
-                  <label
-                    for="job_upto_experience"
-                    class="block text-sm font-medium text-gray-700"
-                  >
+                  <label for="job_upto_experience" class="block text-sm font-medium text-gray-700">
                     Max Experience
                   </label>
                   <input
@@ -295,31 +259,24 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-6 col-end-7">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Publish ?
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Publish ?</label>
                 </div>
 
                 <div class="col-start-7 col-end-7">
-                  <label
-                    for="jobs_publish"
-                    class="inline-flex relative items-center cursor-pointer"
-                  >
-                    <input
-                      name="jobs_publish"
-                      type="checkbox"
-                      value={formik.values.jobs_publish}
-                      onChange={formik.handleChange}
-                      id="jobs_publish"
-                      class="sr-only peer"
-                    />
-                    <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                  <label for="jobs_publish" class="inline-flex relative items-center cursor-pointer">
+                    {console.log(formik.values.jobs_publish)}
+                    <input name="jobs_publish" type="checkbox" value={formik.values.jobs_publish === !ck} onChange={formik.handleChange} id="jobs_publish" class="sr-only peer" />
+                    <div
+                      class={`${
+                        formik.values.jobs_publish === true
+                          ? `w-12 h-6 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all bg-green-600`
+                          : `w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600`
+                      }`}
+                    ></div>
                   </label>
                 </div>
                 <div class="col-start-1 col-end-4">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Primary Skill
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Primary Skill</label>
                   <input
                     type="text"
                     placeholder="Java, springboot, oracle, pl/sql"
@@ -330,39 +287,20 @@ export default function EditJob() {
                     autocomplete="jobs_primary_skill"
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                  {formik.touched.jobs_primary_skill &&
-                  formik.errors.jobs_primary_skill ? (
-                    <span className="mt-2 text-sm text-red-600">
-                      {formik.errors.jobs_primary_skill}
-                    </span>
-                  ) : null}
+                  {formik.touched.jobs_primary_skill && formik.errors.jobs_primary_skill ? <span className="mt-2 text-sm text-red-600">{formik.errors.jobs_primary_skill}</span> : null}
                 </div>
                 <div class="col-start-6 col-end-7">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Remotely ?
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Remotely ?</label>
                 </div>
 
                 <div class="col-start-7 col-end-7">
-                  <label
-                    for="jobs_remotely"
-                    class="inline-flex relative items-center cursor-pointer"
-                  >
-                    <input
-                      name="jobs_remotely"
-                      type="checkbox"
-                      value={formik.values.jobs_remotely}
-                      onChange={formik.handleChange}
-                      id="jobs_remotely"
-                      class="sr-only peer"
-                    />
+                  <label for="jobs_remotely" class="inline-flex relative items-center cursor-pointer">
+                    <input name="jobs_remotely" type="checkbox" value={formik.values.jobs_remotely} onChange={formik.handleChange} id="jobs_remotely" class="sr-only peer" />
                     <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                   </label>
                 </div>
                 <div class="col-start-1 col-end-4">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Secondary Skill
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Secondary Skill</label>
                   <input
                     type="text"
                     placeholder="SDLC, HTML/CSS, Javascript"
@@ -372,24 +310,14 @@ export default function EditJob() {
                     onChange={formik.handleChange}
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                  {formik.touched.jobs_secondary_skill &&
-                  formik.errors.jobs_secondary_skill ? (
-                    <span className="mt-2 text-sm text-red-600">
-                      {formik.errors.jobs_secondary_skill}
-                    </span>
-                  ) : null}
+                  {formik.touched.jobs_secondary_skill && formik.errors.jobs_secondary_skill ? <span className="mt-2 text-sm text-red-600">{formik.errors.jobs_secondary_skill}</span> : null}
                 </div>
                 <div class="col-start-6 col-end-7">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Close Hiring ?
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Close Hiring ?</label>
                 </div>
 
                 <div class="col-start-7 col-end-7">
-                  <label
-                    for="jobs_status"
-                    class="inline-flex relative items-center cursor-pointer"
-                  >
+                  <label for="jobs_status" class="inline-flex relative items-center cursor-pointer">
                     <input
                       // defaultChecked={chkChange}
                       name="jobs_status"
@@ -404,10 +332,7 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-1 col-end-3">
-                  <label
-                    for="jobs_industry_type"
-                    class="block text-sm font-medium text-gray-700"
-                  >
+                  <label for="jobs_industry_type" class="block text-sm font-medium text-gray-700">
                     Industry Type
                   </label>
                   <select
@@ -432,10 +357,7 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-3 col-end-5">
-                  <label
-                    for="jobs_industry_type"
-                    class="block text-sm font-medium text-gray-700"
-                  >
+                  <label for="jobs_industry_type" class="block text-sm font-medium text-gray-700">
                     Specification Role
                   </label>
                   <select
@@ -450,19 +372,14 @@ export default function EditJob() {
                     <option value="" selected disabled hidden>
                       Select an Option
                     </option>
-                    <option value="Software Engineering">
-                      Software Engineering
-                    </option>
+                    <option value="Software Engineering">Software Engineering</option>
                     <option value="Marketing">Marketing</option>
                     <option value="Sales">Sales</option>
                   </select>
                 </div>
 
                 <div class="col-start-1 col-end-3">
-                  <label
-                    for="jobs_working_type"
-                    class="block text-sm font-medium text-gray-700"
-                  >
+                  <label for="jobs_working_type" class="block text-sm font-medium text-gray-700">
                     Working Type
                   </label>
                   <select
@@ -487,10 +404,7 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-3 col-end-5">
-                  <label
-                    for="jobs_spec_education"
-                    class="block text-sm font-medium text-gray-700"
-                  >
+                  <label for="jobs_spec_education" class="block text-sm font-medium text-gray-700">
                     Education
                   </label>
                   <select
@@ -516,9 +430,7 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-1 col-end-3">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Benefit
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Benefit</label>
                   <input
                     type="text"
                     placeholder="THR, BPJS, Bonus"
@@ -528,17 +440,11 @@ export default function EditJob() {
                     onChange={formik.handleChange}
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
-                  {formik.touched.jobs_benefit && formik.errors.jobs_benefit ? (
-                    <span className="mt-2 text-sm text-red-600">
-                      {formik.errors.jobs_benefit}
-                    </span>
-                  ) : null}
+                  {formik.touched.jobs_benefit && formik.errors.jobs_benefit ? <span className="mt-2 text-sm text-red-600">{formik.errors.jobs_benefit}</span> : null}
                 </div>
 
                 <div class="col-start-1 col-end-3">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Client Name
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Client Name</label>
                   <select
                     class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="jobs_client_id"
@@ -557,9 +463,7 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-1 col-end-3">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Location
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Location</label>
 
                   <input
                     type="text"
@@ -573,9 +477,7 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-3 col-end-5">
-                  <label class="block text-sm font-medium text-gray-700">
-                    City
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">City</label>
                   <input
                     type="text"
                     name="jobs_city"
@@ -588,75 +490,29 @@ export default function EditJob() {
                 </div>
 
                 <div class="col-start-1 col-end-5">
-                  <label class="block text-sm font-medium text-gray-700">
-                    Description
-                  </label>
+                  <label class="block text-sm font-medium text-gray-700">Description</label>
 
                   <div class="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
                     <div class="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
                       <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
                         <div class="flex items-center space-x-1 sm:pr-4">
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z"
-                                clip-rule="evenodd"
-                              ></path>
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd"></path>
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                clip-rule="evenodd"
-                              ></path>
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                clip-rule="evenodd"
-                              ></path>
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 fill-rule="evenodd"
                                 d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
@@ -664,16 +520,8 @@ export default function EditJob() {
                               ></path>
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 fill-rule="evenodd"
                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z"
@@ -683,16 +531,8 @@ export default function EditJob() {
                           </button>
                         </div>
                         <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 fill-rule="evenodd"
                                 d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
@@ -700,16 +540,8 @@ export default function EditJob() {
                               ></path>
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 fill-rule="evenodd"
                                 d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
@@ -717,33 +549,13 @@ export default function EditJob() {
                               ></path>
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                clip-rule="evenodd"
-                              ></path>
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                          >
-                            <svg
-                              class="w-5 h-5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
+                          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                               <path
                                 fill-rule="evenodd"
                                 d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
@@ -758,12 +570,7 @@ export default function EditJob() {
                         data-tooltip-target="tooltip-fullscreen"
                         class="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                       >
-                        <svg
-                          class="w-5 h-5"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                           <path
                             fill-rule="evenodd"
                             d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z"
