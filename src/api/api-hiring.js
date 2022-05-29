@@ -10,9 +10,9 @@ const List = async () => {
   }
 };
 
-const city = async () => {
+const city = async (id) => {
   try {
-    const result = await axios.get(`${config.domain}/hiringg/`);
+    const result = await axios.get(`${config.domain}/hiringg/${id}`);
     return result.data;
   } catch (error) {
     return await error;
