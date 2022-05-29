@@ -33,6 +33,18 @@ export default function EditJob() {
   };
   const [tgl, setTgl] = useState("close");
  
+  const uploadOnChangeImage = (name) => (event) => {
+    let reader = new FileReader();
+    let file = event.target.files[0];
+
+    reader.onloadend = () => {
+      formik.setFieldValue("jobs_photo", file);
+      setPreviewImg(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+    setUploaded(true);
+  };
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -81,10 +93,10 @@ export default function EditJob() {
     initialValues: {
       
 
-      jobs_post_no: jobs.jobs_post_no,
+      
       jobs_title: jobs.jobs_title,
       jobs_start_date: jobs.jobs_start_date,
-      jobs_end_time: jobs.jobs_end_date,
+      jobs_end_date: jobs.jobs_end_date,
       jobs_upto_salary: jobs.jobs_upto_salary,
       job_upto_experience: jobs.job_upto_experience,
       jobs_description: jobs.jobs_description,
@@ -103,15 +115,15 @@ export default function EditJob() {
       jobs_user_id: jobs.jobs_user_id,
       jobs_client_id: jobs.jobs_client_id,
       jobs_photo: jobs.jobs_photo,
-      jobs_id: jobs.jobs_id,
+ 
     },
     onSubmit: async (values) => {
       //
       let payload = new FormData();
-      payload.append("jobs_post_no", values.jobs_post_no);
+  
       payload.append("jobs_title", values.jobs_title);
       payload.append("jobs_start_date", values.jobs_start_date);
-      payload.append("jobs_end_date", values.jobs_end_time);
+      payload.append("jobs_end_date", values.jobs_end_date);
       payload.append("jobs_upto_salary", parseInt(values.jobs_upto_salary));
       payload.append("job_upto_experience", values.job_upto_experience);
       payload.append("jobs_description", values.jobs_description);
@@ -130,10 +142,10 @@ export default function EditJob() {
       payload.append("jobs_user_id", parseInt(values.jobs_user_id));
       payload.append("jobs_client_id", parseInt(values.jobs_client_id));
       payload.append("jobs_photo", values.jobs_photo);
-      payload.append("jobs_id", parseInt(values.jobs_id));
+
       // console.log(payload);
       dispatch(doEditJobRequest(payload));
-      navigate("/app/job", { state: { updated: true } });
+      // navigate("/app/job", { state: { updated: true } });
     },
   });
 
@@ -159,7 +171,6 @@ export default function EditJob() {
                     name="jobs_title"
                     value={formik.values.jobs_title}
                     onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
                     autocomplete="jobs_title"
                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   />
@@ -169,68 +180,29 @@ export default function EditJob() {
                     </span>
                   ) : null}
                 </div>
+                
                 <div class="col-start-6 col-end-8 row-span-2">
                   <label className="block text-sm font-medium text-gray-700">
                     Job Photo
                   </label>
-                  <div className="mt-1 flex justify-center px-4 pt-4 pb-4 border-2 border-gray-300 border-dashed rounded-md">
-                    <div className="space-y-1 text-center">
-                      {uploaded === false ? (
-                        <svg
-                          className="h-6 w-6 text-gray-200"
-                          stroke="currentColor"
-                          fill="none"
-                          viewBox="0 0 20 20"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      ) : (
-                        <>
-                          <img
-                            src={previewImg}
-                            center
-                            alt="image"
-                            className="h-20 w-37"
-                          />
-                          <div className="flex text-sm text-gray-600 center">
-                            <label className="relative cursor-pointer bg-white rounded-md font-medium text-orange-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                              <span className="ml-4" onClick={onClearImage}>
-                                Remove
-                              </span>
-                            </label>
-                          </div>
-                        </>
-                      )}
-
-                      <div className="flex text-sm text-gray-600">
-                        <label
-                          htmlFor="jobs_photo"
-                          className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                        >
-                          <span>Upload a file</span>
-                          <input
-                            type="file"
-                            name="jobs_photo"
-                            id="jobs_photo"
-                            accept="image/*"
-                            onChange={uploadOnChange("file")}
-                            className="sr-only"
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                      </div>
-                      <p className="text-xs text-gray-500">
-                        PNG, JPG, GIF up to 10MB
-                      </p>
+                  <div className="col-span-6 sm:col-span-2 row-span-3 justify-self-center py-4 relative">
+                    <div className="">
+                      <img
+                        src={previewImg}
+                        className="h-44 w-44 rounded-full ring-2 ring-red-600"
+                      />
                     </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="jobs_photo"
+                      name="jobs_photo"
+                      className="rounded-full p-5 opacity-0 h-44 w-44 absolute top-4 "
+                      onChange={uploadOnChangeImage("file")}
+                    />
                   </div>
                 </div>
+
                 {/* <div class="col-start-6 col-end-7">
                   <label class="block text-sm font-medium text-gray-700">
                     Posting Number

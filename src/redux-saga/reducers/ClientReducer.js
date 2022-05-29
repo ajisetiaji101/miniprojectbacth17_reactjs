@@ -15,6 +15,10 @@ const ClientReducer = (state = INIT_STATE, action) => {
             return applyGetClientSucceed(state, action)
         }
 
+        case ActionType.GET_CLIENT_ID_SUCCEED:{
+            return applyGetClientIdSucceed(state, action)
+        }
+
 
         default:
             return state;
@@ -27,6 +31,15 @@ const applyGetClientSucceed = (state, action) => {
         ...state,
         clients: action.payload,
 
+    }
+}
+
+const applyGetClientIdSucceed = (state, action) => {
+    return {
+        ...state,
+        clients: action.payload.clients,
+        isLoading: false,
+        isRefresh: false
     }
 }
 export default ClientReducer;

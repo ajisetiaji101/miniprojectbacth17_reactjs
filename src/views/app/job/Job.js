@@ -190,7 +190,7 @@ export default function Job() {
               <thead className="border-y border-gray-200">
                 <tr key="col_names">
                   {(columns || []).map((column) => (
-                    <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-900 uppercase">
                       <span className="">{column.name}</span>
                     </th>
                   ))}

@@ -49,7 +49,7 @@ function* handleEditJob(action) {
   const { payload } = action;
   try {
     const result = yield call(apiJobPosting.editRow, payload);
-    yield put(doEditJobSucceed(result.data));
+    yield put(doEditJobSucceed(result));
   } catch (error) {
     yield put(doEditJobFailed(error));
   }

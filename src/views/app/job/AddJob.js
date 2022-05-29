@@ -33,7 +33,7 @@ export default function AddJob() {
   const [endDate, setEndDate] = useState(new Date());
   let [isOpen, setIsOpen] = useState(false);
   const [tgl, setTgl] = useState("close");
-  const [bool, setBool] = useState(false);
+  const [publish, setPublish] = useState(false);
 
   const status = useSelector((state) => state.jobState);
   const [Loading, setLoading] = useState(true);
@@ -42,35 +42,28 @@ export default function AddJob() {
   const { clients } = useSelector((state) => state.clientState);
   const { userProfile } = useSelector((state) => state.userState);
   const [inputValue, setValue] = useState('');
-  const [selectedValue, setSelectedValue] = useState(null);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
-  // const [listClient, setListClient] = useState([]);
-  // const [filter, setFilter] = useState({
-  //   input: "",
-  //   select: "",
-  // });
+  const [isDataValue, setIsDataValue] = useState();
 
-  const handleInputChange = value =>{
-    setValue(value)
+  const handleDataValue = (text) =>{
+    setIsDataValue(text)
+    console.log(text)
+    
   }
+  const tes=clients.filter((client)=>client.client_id===parseInt(isDataValue))
+  console.log(tes)
 
-  const handleChangeSelect = (name) => (event) => {
-    setSelectedValue({ ...selectedValue, [name]: event.target.value });
-    console.log(...event.target.value)
-  };
+  // const handleInputChange = value =>{
+  //   setValue(value)
+  // }
 
-  const handleSubmitOnClick = () => {
-    console.log(
-      "editor_content ==> ",
-      draftToHtml(convertToRaw(editorState.getCurrentContent()))
-    );
-  };
-
-
-
+  // const handleChangeSelect = (name) => (event) => {
+  //   setSelectedValue({ ...selectedValue, [name]: event.target.value });
+  //   console.log(...event.target.value)
+  // };
   useEffect(() => {
     dispatch(doGetJobRequest());
     setTimeout(() => {
@@ -91,12 +84,19 @@ export default function AddJob() {
     dispatch(doGetClientRequest());
   }, []);
 
+
   const chkChange = (e) => {
     if (e.target.checked) {
       setTgl("open");
     } else {
       setTgl("close");
     }
+
+    // if (e.target.checked) {
+    //   setTgl("open");
+    // } else {
+    //   setTgl("close");
+    // }
   };
 
   // const onSearch = (event) => {
@@ -147,7 +147,7 @@ export default function AddJob() {
       jobs_location: "",
       jobs_city: "",
       jobs_user_id: 0,
-      jobs_client_id: 1,
+      jobs_client_id: 0,
       jobs_photo: undefined,
     },
     validationSchema: validationSchema,
@@ -189,7 +189,7 @@ export default function AddJob() {
       dispatch(doAddJobRequest(payload));
       // navigate("/app/job/success");
       toast.success("Data Berhasil Disimpan");
-      navigate("/app/job", { state: { refresh: true } });
+      // navigate("/app/job", { state: { refresh: true } });
     },
   });
 
@@ -225,7 +225,7 @@ export default function AddJob() {
             <div class="shadow overflow-hidden sm:rounded-md">
               <div class="px-4 py-5 bg-white sm:p-6">
                 <div class="grid grid-cols-4 gap-6">
-                  <div class="col-start-1 col-end-4">
+                  <div class="col-start-1 col-end-3">
                     <label class="block text-sm font-medium text-gray-700">
                       Title
                     </label>
@@ -246,7 +246,7 @@ export default function AddJob() {
                     ) : null}
                   </div>
 
-                  <div class="col-start-6 col-end-8 row-span-2">
+                  <div class="col-start-4 col-end-7 row-span-2">
                     <div className="mt-1 flex justify-center px-4 pt-4 pb-4 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         {uploaded === false ? (
@@ -353,7 +353,7 @@ export default function AddJob() {
                   </div>
 
                   {/* jobs_upto_salary */}
-                  <div class="col-start-1 col-end-3">
+                  <div class="col-start-1 col-end-2">
                     <label
                       for="jobs_upto_salary"
                       class="block text-sm font-medium text-gray-700"
@@ -374,7 +374,7 @@ export default function AddJob() {
 
                   {/* job_upto_experience */}
 
-                  <div class="col-start-3 col-end-4">
+                  <div class="col-start-2 col-end-3">
                     <label
                       for="job_upto_experience"
                       class="block text-sm font-medium text-gray-700"
@@ -393,13 +393,13 @@ export default function AddJob() {
                     />
                   </div>
 
-                  <div class="col-start-6 col-end-7">
+                  <div class="col-start-4 col-end-5">
                     <label class="block text-sm font-medium text-gray-700">
                       Publish ?
                     </label>
                   </div>
 
-                  <div class="col-start-7 col-end-7">
+                  <div class="col-start-5 col-end-5">
                     <label
                       for="jobs_publish"
                       class="inline-flex relative items-center cursor-pointer"
@@ -417,7 +417,7 @@ export default function AddJob() {
                   </div>
 
                   {/* jobs_primary_skill */}
-                  <div class="col-start-1 col-end-4">
+                  <div class="col-start-1 col-end-3">
                     <label class="block text-sm font-medium text-gray-700">
                       Primary Skill
                     </label>
@@ -441,13 +441,13 @@ export default function AddJob() {
 
                   {/* jobs_remotely */}
 
-                  <div class="col-start-6 col-end-7">
+                  <div class="col-start-4 col-end-5">
                     <label class="block text-sm font-medium text-gray-700">
                       Remotely ?
                     </label>
                   </div>
 
-                  <div class="col-start-7 col-end-7">
+                  <div class="col-start-5 col-end-5">
                     <label
                       for="jobs_remotely"
                       class="inline-flex relative items-center cursor-pointer"
@@ -465,7 +465,7 @@ export default function AddJob() {
                   </div>
 
                   {/* jobs_secondary_skill */}
-                  <div class="col-start-1 col-end-4">
+                  <div class="col-start-1 col-end-3">
                     <label class="block text-sm font-medium text-gray-700">
                       Secondary Skill
                     </label>
@@ -488,13 +488,13 @@ export default function AddJob() {
 
                   {/* jobs_status */}
 
-                  <div class="col-start-6 col-end-7">
+                  <div class="col-start-4 col-end-5">
                     <label class="block text-sm font-medium text-gray-700">
-                      Close Hiring ?
+                      Open Hiring ?
                     </label>
                   </div>
 
-                  <div class="col-start-7 col-end-7">
+                  <div class="col-start-5 col-end-5">
                     <label
                       for="jobs_status"
                       class="inline-flex relative items-center cursor-pointer"
@@ -512,7 +512,7 @@ export default function AddJob() {
                     </label>
                   </div>
 
-                  <div class="col-start-1 col-end-3">
+                  <div class="col-start-1 col-end-2">
                     <label
                       for="jobs_industry_type"
                       class="block text-sm font-medium text-gray-700"
@@ -541,7 +541,7 @@ export default function AddJob() {
                     </select>
                   </div>
 
-                  <div class="col-start-3 col-end-5">
+                  <div class="col-start-2 col-end-3">
                     <label
                       for="jobs_industry_type"
                       class="block text-sm font-medium text-gray-700"
@@ -568,7 +568,7 @@ export default function AddJob() {
                     </select>
                   </div>
 
-                  <div class="col-start-1 col-end-3">
+                  <div class="col-start-1 col-end-2">
                     <label
                       for="jobs_working_type"
                       class="block text-sm font-medium text-gray-700"
@@ -596,7 +596,7 @@ export default function AddJob() {
                     </select>
                   </div>
 
-                  <div class="col-start-3 col-end-5">
+                  <div class="col-start-2 col-end-3">
                     <label
                       for="jobs_spec_education"
                       class="block text-sm font-medium text-gray-700"
@@ -652,58 +652,86 @@ export default function AddJob() {
                       Client Name
                     </label>
                     <select
-                    isSearchable={true}
+                    // isSearchable={true}
                       className="relative w-full border border-gray-200 py-2 pl-3 pr-10 text-sm text-left bg-white rounded-lg shadow-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                       name="jobs_client_id"
                       id="jobs_client_id"
-                      // value={clients}
-                      onChange={handleChangeSelect ("select")}
+                      // value={formik.values.jobs_client_id}
+                      onChange={(e)=>handleDataValue(e.target.value)}
                       onBlur={formik.handleBlur}
                       autoComplete="jobs_client_id"
                     >
                       {clients.map((cli) => (
-                        <option 
+                        <option
                         key={cli.client_id} 
-                        value={cli}>
-                          {cli.client_name}- {cli.client_location}
+                        value={cli.client_id}
+                        >
+
+                          {cli.client_name}
                         </option>
                       ))}
                     </select>                 
                   </div>
 
-                  <div class="col-start-1 col-end-3">
+                  <div class="col-start-1 col-end-2">
                     <label class="block text-sm font-medium text-gray-700">
                       Location
                     </label>
-
+                    
+                    {tes && tes.length === 0 ?(
                     <input
+
+                      type="text"
+                      name="jobs_location"
+                      placeholder="Location"
+
+                      id="jobs_location"
+                      onChange={formik.handleChange}
+                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                  
+                    ) : (
+                      <input
                       type="text"
                       name="jobs_location"
                       placeholder="Location"
                       id="jobs_location"
-                      value={selectedValue}
-                      onChange={handleChangeSelect}
+                      value={tes[0].client_location}
+                      onChange={formik.handleChange}
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
+                    )}
                   </div>
                   {/* jobs_city */}
 
-                  <div class="col-start-3 col-end-5">
+                  <div class="col-start-2 col-end-3">
                     <label class="block text-sm font-medium text-gray-700">
                       City
                     </label>
+                    {tes && tes.length ===0 ?(
                     <input
                       type="text"
                       name="jobs_city"
                       placeholder="City"
                       id="jobs_city"
-                      value={selectedValue}
-                      onChange={handleInputChange}
+                     
+                      onChange={formik.handleChange}
                       class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
+                    ) : (
+                      <input
+                      type="text"
+                      name="jobs_city"
+                      placeholder="City"
+                      id="jobs_city"
+                      value={tes[0].client_city}
+                      onChange={formik.handleChange}
+                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                    )}
                   </div>
 
-                  <div class="col-start-1 col-end-5">
+                  <div class="col-start-1 col-end-4">
                     <label class="block text-sm font-medium text-gray-700">
                       Description
                     </label>

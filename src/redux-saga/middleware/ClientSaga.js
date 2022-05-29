@@ -2,7 +2,9 @@ import { call, put} from 'redux-saga/effects';
 import apiClient from '../../api/api-client'
 import {
     doGetClientSucceed, 
-    doGetClientFailed
+    doGetClientFailed,
+    doGetClientIdSucceed,
+    doGetClientIdFailed,
 } from '../actions/Client'
 
 function* handleGetClient() {
@@ -16,8 +18,21 @@ function* handleGetClient() {
     }
 }
 
+function* handleGetClientId(action){
+    let {payload} = action;
+    try {
+        const result = yield call(apiClient.jobs,payload);
+        payload = {
+            clients: result[0]
+        }
+        yield put(doGetClientIdSucceed(payload))        
+    } catch (error) {
+        yield put(doGetClientIdFailed(error));
+    }
+}
 
 
 export {
-    handleGetClient
+    handleGetClient,
+    handleGetClientId
 }
