@@ -434,7 +434,7 @@ const handleChecked5 = (e) => {
       </aside>
 {/* card */}
 
-<div className="grid grid-cols-2 ml-80 gap-4 sm:grid-cols-2 mt-5 ">
+<div className="grid grid-cols-2 ml-80 gap-4 sm:grid-cols-2 mt-5  ">
   
 {Array.isArray(listHiring)&&listHiring.slice((currentPage-1)*4,currentPage*4).map((data) => (
                     
@@ -444,7 +444,7 @@ const handleChecked5 = (e) => {
   <div className="grid grid-cols-2">
   <div className="ml-4 mt-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} alt={`${data.jobs_id}`} style={{width:"150px", height:"150px"}}/></div>
   <div className="w-40 mb-5 ml-3 mr-5 mt-5 text-start">{data.jobs_title}</div>
-  <div className="col-span-2 mb-2 ml-3 mr-72"><FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {data.jobs_city}</div>
+  <div className=" col-end-2 mb-2  mr-20  "><FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {data.jobs_city}</div>
   <div className="col-span-2 mb-2 ml-3 mr-72"><FontAwesomeIcon className="mr-1"icon={faSuitcase} /> {data.job_upto_experience} tahun</div>
   <div className="mb-2 mr-8"><FontAwesomeIcon className="mr-1"icon={faCalendarCheck} /> Actively Hiring</div>
   <div className="mb-5 ml-5 "><FontAwesomeIcon className="mr-1.5" icon={faClock}/><Moment fromNow>{data.jobs_start_date}</Moment></div>
@@ -497,7 +497,7 @@ const handleChecked5 = (e) => {
                       <span className="sr-only">Previous</span>
                       
                     </button>
-                    {pageNumbers.slice(pageRange * 4, pageRange * 4 + 4).map((el) => (
+                    {pageNumbers.slice(pageRange * 10, pageRange * 4 + 10).map((el) => (
                       <button
                         onClick={() => {
                           setCurrentPage(el.number);
@@ -511,7 +511,7 @@ const handleChecked5 = (e) => {
                     ))}
                     <button
                       onClick={() => {
-                        const max = Math.ceil(pageNumbers.length / 4) - 1;
+                        const max = Math.ceil(pageNumbers.length / 10) - 1;
                         if (pageRange < max) {
                           setPageRange(pageRange + 1);
                         }
@@ -522,7 +522,7 @@ const handleChecked5 = (e) => {
                     </button>
                     <button
                       onClick={() => {
-                        const max = Math.ceil(pageNumbers.length / 4) - 1;
+                        const max = Math.ceil(pageNumbers.length / 10) - 1;
                         setCurrentPage(pageNumbers.length);
                         setPageNumbers([...pageNumbers].map((val) => (val.number === pageNumbers.length ? { ...val, active: true } : { ...val, active: false })));
                         setPageRange(max);
