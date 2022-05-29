@@ -10,7 +10,7 @@ import { TrashIcon } from "@heroicons/react/solid";
 import config from "../../../config/config";
 import * as moment from "moment";
 
-const columns = [{ name: "CONTRACT NO." }, { name: "CLIENT" }, { name: "TALENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
+const columns = [{ name: "CONTRACT NO." }, { name: "TALENTS" }, { name: "CLIENTS" }, { name: "PERIODE" }, { name: "CREATED BY" }, { name: "STATUS" }];
 const placementStatus = ["trial", "placement", "closed"];
 const listBulan = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
