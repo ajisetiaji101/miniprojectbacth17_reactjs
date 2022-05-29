@@ -13,9 +13,11 @@ import CurriculumReducer1 from "./CurriculumReducer1";
 import BatchReducer from "./BatchReducer";
 import AppBatchReducer from "./AppBatchReducer";
 import SettingReducer from "./SettingsReducer";
-import JobReducer from "./JobReducer";
 import ProcessBootcampReducer from "./ProcessBootcampReducer";
 import TalentTimelineReducer from "./TalentTimelineReducer";
+
+import JobReducer from './JobReducer';
+import ClientReducer from './ClientReducer';
 
 const rootReducer = combineReducers({
   userState: userReducer,
@@ -31,8 +33,12 @@ const rootReducer = combineReducers({
   batchAppState: AppBatchReducer,
   settingState: SettingReducer,
   jobState: JobReducer,
+
   processState: ProcessBootcampReducer,
   talenttimelineState: TalentTimelineReducer,
+
+  clientState: ClientReducer,
+
 });
 
 export default rootReducer;

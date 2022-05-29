@@ -22,10 +22,9 @@ import Job from "./views/app/job/Job";
 import AddJob from "./views/app/job/AddJob";
 import Apply from "./views/app/apply/Apply";
 import Landing from "./views/components/Landing";
+import SignupSuccess from "./component/layout/SignupSuccess";
 import EditCurriculum from "./views/app/curriculum/EditCurriculum";
 import Applysukses from "./views/app/apply/Applysukses";
-
-
 export default function Routes(isLoggedIn) {
   return useRoutes([
     {
@@ -33,8 +32,6 @@ export default function Routes(isLoggedIn) {
       element: <LandingPage />,
       children: [
         { path: "", element: <Landing /> },
-        { path: "signin", element: <Navigate to="/auth/signin" /> },
-        { path: "signup", element: <Navigate to="/auth/signup" /> },
         { path: "bootcamp", element: <Bootcamp /> },
         { path: "apply", element: isLoggedIn ? <Apply /> : <Navigate to="/auth/signin" /> },
         { path: "apply/sukses", element: isLoggedIn ? <Applysukses /> : <Navigate to="/auth/signin" /> },
@@ -44,12 +41,14 @@ export default function Routes(isLoggedIn) {
     },
     {
       path: "/auth",
-      element: <BlankLayout />,
+      element: <BlankLayout/>,
       children: [
-        { path: "signin", element: <Signin /> },
-        { path: "signup", element: <Signup /> },
+      { path: "signin", element: <Signin /> },
+      { path: "signup", element: <Signup /> },
+      { path: "signup/success", element: <SignupSuccess /> },
       ],
     },
+
     {
       path: "/app",
       element: <AppLayout />,
