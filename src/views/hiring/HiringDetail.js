@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useHis } from "react-redux";
 import { doGetHiringCityRequest, doGetHiringIdRequest } from "../../redux-saga/actions/Hiring";
 import { Link } from "react-router-dom";
 import config from "../../config/config";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faSuitcase, faClock, faCalendarCheck, faDollarSign, faBuilding, faHourglassStart, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from "react-router-dom";
+import { faWindows } from "@fortawesome/free-brands-svg-icons";
 
 
 export default function HiringDetail() {
@@ -39,6 +40,10 @@ useEffect(() => {
     setPageRange(0);
   }, [city]);
 
+useEffect(() => {
+    window.scrollTo(0,0)
+}, []);
+
 return ( 
     <div style={{height:"1400px"}}>
   
@@ -71,7 +76,7 @@ return (
     <div className="ml-4 mt-3 "><img className="mb-5 h-10 w-10" src={`${config.domain}/hiring/images/${hirings.jobs_photo}`} style={{width:"250px", height:"200px"}}/></div>
     <div className=" ml-2 mt-4 text-2xl"><b> {hirings.jobs_title} </b> <br/> 
     <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faDollarSign}/> IDR {hirings.jobs_upto_salary} / month <br/> </div>
-    <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faBuilding}/> {hirings.jobs_status} <br/> </div>
+    <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faBuilding}/> {hirings.jobs_specification} <br/> </div>
     <div className=" mt-3 text-base"> <FontAwesomeIcon className="mr-1" icon={faHourglassStart}/> {hirings.jobs_working_type} <FontAwesomeIcon className="ml-4 mr-1" icon={faSuitcase}/> {hirings.job_upto_experience} tahun pengalaman<br/> </div> 
     <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {hirings.jobs_city} <FontAwesomeIcon className="ml-8 mr-1" icon={faClock}/> Dibuat 1 hari lalu <br/> </div> 
     <div className=" mt-7 text-base font-semibold"> Apply <FontAwesomeIcon className="mr-1" style={{marginLeft:"90px"}} icon={faClock}/> Share <FontAwesomeIcon className="ml-4 mr-1" icon={faAngleRight}/> </div> </div> 
