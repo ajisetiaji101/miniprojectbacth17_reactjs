@@ -736,7 +736,7 @@ export default function AddJob() {
                     )}
                   </div>
 
-                  <div className="col-start-1 col-end-3">
+                  <div className="col-start-1 col-end-4">
                     <label className="block text-sm font-medium text-gray-700">
                       Description
                     </label>
