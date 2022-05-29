@@ -32,8 +32,8 @@ const columns = [
   { name: "PUBLISH" },
 ];
 const jobs_status = ["open", "close"];
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+function classNames(...classNamees) {
+  return classNamees.filter(Boolean).join(" ");
 }
 export default function Job() {
   let navigate = useNavigate();
@@ -204,11 +204,11 @@ export default function Job() {
                     .slice((currentPage - 1) * 10, currentPage * 10)
                     .map((data) => (
                       <tr key={data.jobs_id.toString()}>
-                        <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">
                           {data.jobs_title}
                         </td>
 
-                        <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
                           {/* <div>{moment(data.jobs_start_date).format("DD/MM/YYYY")}</div> */}
                           {/* <Moment format='MMMM Do YYYY, h:mm:ss a'>{data.jobs_start_date}</Moment> */}
                           <div>
@@ -221,32 +221,32 @@ export default function Job() {
                           </div>
                         </td>
 
-                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">
                           {" "}
                           IDR {data.jobs_upto_salary}
                         </td>
-                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">
                           {data.job_upto_experience} Tahun
                         </td>
-                        <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
                           <div>{data.jobs_industry_type}</div>
                           <div>{data.jobs_specification}</div>
                         </td>
 
-                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">
                           <label
                             for="default-toggle"
-                            class="inline-flex relative items-center cursor-pointer"
+                            className="inline-flex relative items-center cursor-pointer"
                           >
                             <input
-                              checked={data.jobs_publish === !ck}
-                              name={data.jobs_publish}
+                              checked={data.jobs_status === 'open'}
+                              name={data.jobs_status}
                               type="checkbox"
                               value=""
                               id="default-toggle"
-                              class="sr-only peer"
+                              className="sr-only peer"
                             />
-                            <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                            <div className="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                           </label>
                         </td>
 

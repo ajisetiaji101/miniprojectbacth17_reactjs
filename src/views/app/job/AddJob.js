@@ -124,6 +124,9 @@ export default function AddJob() {
     jobs_benefit: Yup.string("Please enter Expected Benefit").required(
       "Benefit is required"
     ),
+    jobs_description: Yup.string("Please enter Job Description").required(
+      "Job Description is required"
+    ),
   });
 
   const formik = useFormik({
@@ -180,10 +183,10 @@ export default function AddJob() {
       payload.append("jobs_benefit", values.jobs_benefit);
       payload.append("jobs_specification", values.jobs_specification);
       payload.append("jobs_status", values.jobs_status);
-      payload.append("jobs_location", values.jobs_location);
-      payload.append("jobs_city", values.jobs_city);
+      payload.append("jobs_location", tes[0].client_city);
+      payload.append("jobs_city", tes[0].client_city);
       payload.append("jobs_user_id", parseInt(values.jobs_user_id));
-      payload.append("jobs_client_id", parseInt(values.jobs_client_id));
+      payload.append("jobs_client_id", parseInt(isDataValue ));
       payload.append("jobs_photo", values.jobs_photo);
 
       dispatch(doAddJobRequest(payload));
@@ -220,13 +223,13 @@ export default function AddJob() {
       {Loading === true ? (
         <Loader />
       ) : (
-        <div class="mt-5 md:mt-0 md:col-span-2">
+        <div className="mt-5 md:mt-0 md:col-span-2">
           <form action="#" method="POST">
-            <div class="shadow overflow-hidden sm:rounded-md">
-              <div class="px-4 py-5 bg-white sm:p-6">
-                <div class="grid grid-cols-4 gap-6">
-                  <div class="col-start-1 col-end-3">
-                    <label class="block text-sm font-medium text-gray-700">
+            <div className="shadow overflow-hidden sm:rounded-md">
+              <div className="px-4 py-5 bg-white sm:p-6">
+                <div className="grid grid-cols-4 gap-6">
+                  <div className="col-start-1 col-end-3">
+                    <label className="block text-sm font-medium text-gray-700">
                       Title
                     </label>
                     <input
@@ -237,7 +240,7 @@ export default function AddJob() {
                       value={formik.values.jobs_title}
                       onChange={formik.handleChange}
                       autocomplete="jobs_title"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     {formik.touched.jobs_title && formik.errors.jobs_title ? (
                       <span className="mt-2 text-sm text-red-600">
@@ -246,7 +249,7 @@ export default function AddJob() {
                     ) : null}
                   </div>
 
-                  <div class="col-start-4 col-end-7 row-span-2">
+                  <div className="col-start-4 col-end-7 row-span-2">
                     <div className="mt-1 flex justify-center px-4 pt-4 pb-4 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         {uploaded === false ? (
@@ -305,9 +308,9 @@ export default function AddJob() {
                     </div>
                   </div>
 
-                  <div class="rows-start-1 col-start-1 col-end-3">
+                  <div className="rows-start-1 col-start-1 col-end-3">
                     <div>
-                      <label class="block text-sm font-medium text-gray-700">
+                      <label className="block text-sm font-medium text-gray-700">
                         Periode Posting
                       </label>
 
@@ -329,7 +332,7 @@ export default function AddJob() {
                       </div>
                     </div>
 
-                    <label class="block text-sm font-medium text-gray-700">
+                    <label className="block text-sm font-medium text-gray-700">
                       To
                     </label>
 
@@ -353,10 +356,10 @@ export default function AddJob() {
                   </div>
 
                   {/* jobs_upto_salary */}
-                  <div class="col-start-1 col-end-2">
+                  <div className="col-start-1 col-end-2">
                     <label
                       for="jobs_upto_salary"
-                      class="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Up To Salary
                     </label>
@@ -368,16 +371,16 @@ export default function AddJob() {
                       value={formik.values.jobs_upto_salary}
                       onChange={formik.handleChange}
                       autocomplete="jobs_upto_salary"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
 
                   {/* job_upto_experience */}
 
-                  <div class="col-start-2 col-end-3">
+                  <div className="col-start-2 col-end-3">
                     <label
                       for="job_upto_experience"
-                      class="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Max Experience
                     </label>
@@ -389,20 +392,20 @@ export default function AddJob() {
                       value={formik.values.job_upto_experience}
                       onChange={formik.handleChange}
                       autocomplete="job_upto_experience"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
 
-                  <div class="col-start-4 col-end-5">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-4 col-end-5">
+                    <label className="block text-sm font-medium text-gray-700">
                       Publish ?
                     </label>
                   </div>
 
-                  <div class="col-start-5 col-end-5">
+                  <div className="col-start-5 col-end-5">
                     <label
                       for="jobs_publish"
-                      class="inline-flex relative items-center cursor-pointer"
+                      className="inline-flex relative items-center cursor-pointer"
                     >
                       <input
                         name="jobs_publish"
@@ -410,15 +413,15 @@ export default function AddJob() {
                         value={formik.values.jobs_publish}
                         onChange={formik.handleChange}
                         id="jobs_publish"
-                        class="sr-only peer"
+                        className="sr-only peer"
                       />
-                      <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                      <div className="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                     </label>
                   </div>
 
                   {/* jobs_primary_skill */}
-                  <div class="col-start-1 col-end-3">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-1 col-end-3">
+                    <label className="block text-sm font-medium text-gray-700">
                       Primary Skill
                     </label>
                     <input
@@ -429,7 +432,7 @@ export default function AddJob() {
                       value={formik.values.jobs_primary_skill}
                       onChange={formik.handleChange}
                       autocomplete="jobs_primary_skill"
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     {formik.touched.jobs_primary_skill &&
                     formik.errors.jobs_primary_skill ? (
@@ -441,16 +444,16 @@ export default function AddJob() {
 
                   {/* jobs_remotely */}
 
-                  <div class="col-start-4 col-end-5">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-4 col-end-5">
+                    <label className="block text-sm font-medium text-gray-700">
                       Remotely ?
                     </label>
                   </div>
 
-                  <div class="col-start-5 col-end-5">
+                  <div className="col-start-5 col-end-5">
                     <label
                       for="jobs_remotely"
-                      class="inline-flex relative items-center cursor-pointer"
+                      className="inline-flex relative items-center cursor-pointer"
                     >
                       <input
                         name="jobs_remotely"
@@ -458,15 +461,15 @@ export default function AddJob() {
                         value={formik.values.jobs_remotely}
                         onChange={formik.handleChange}
                         id="jobs_remotely"
-                        class="sr-only peer"
+                        className="sr-only peer"
                       />
-                      <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                      <div className="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                     </label>
                   </div>
 
                   {/* jobs_secondary_skill */}
-                  <div class="col-start-1 col-end-3">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-1 col-end-3">
+                    <label className="block text-sm font-medium text-gray-700">
                       Secondary Skill
                     </label>
                     <input
@@ -476,7 +479,7 @@ export default function AddJob() {
                       name="jobs_secondary_skill"
                       value={formik.values.jobs_secondary_skill}
                       onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     {formik.touched.jobs_secondary_skill &&
                     formik.errors.jobs_secondary_skill ? (
@@ -488,16 +491,16 @@ export default function AddJob() {
 
                   {/* jobs_status */}
 
-                  <div class="col-start-4 col-end-5">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-4 col-end-5">
+                    <label className="block text-sm font-medium text-gray-700">
                       Open Hiring ?
                     </label>
                   </div>
 
-                  <div class="col-start-5 col-end-5">
+                  <div className="col-start-5 col-end-5">
                     <label
                       for="jobs_status"
-                      class="inline-flex relative items-center cursor-pointer"
+                      className="inline-flex relative items-center cursor-pointer"
                     >
                       <input
                         // defaultChecked={setTgl}
@@ -506,16 +509,16 @@ export default function AddJob() {
                         value={tgl}
                         onChange={chkChange}
                         id="jobs_status"
-                        class="sr-only peer"
+                        className="sr-only peer"
                       />
-                      <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                      <div className="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                     </label>
                   </div>
 
-                  <div class="col-start-1 col-end-2">
+                  <div className="col-start-1 col-end-2">
                     <label
                       for="jobs_industry_type"
-                      class="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Industry Type
                     </label>
@@ -541,10 +544,10 @@ export default function AddJob() {
                     </select>
                   </div>
 
-                  <div class="col-start-2 col-end-3">
+                  <div className="col-start-2 col-end-3">
                     <label
                       for="jobs_industry_type"
-                      class="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Specification Role
                     </label>
@@ -568,10 +571,10 @@ export default function AddJob() {
                     </select>
                   </div>
 
-                  <div class="col-start-1 col-end-2">
+                  <div className="col-start-1 col-end-2">
                     <label
                       for="jobs_working_type"
-                      class="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Working Type
                     </label>
@@ -596,10 +599,10 @@ export default function AddJob() {
                     </select>
                   </div>
 
-                  <div class="col-start-2 col-end-3">
+                  <div className="col-start-2 col-end-3">
                     <label
                       for="jobs_spec_education"
-                      class="block text-sm font-medium text-gray-700"
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Education
                     </label>
@@ -625,8 +628,8 @@ export default function AddJob() {
                     </select>
                   </div>
 
-                  <div class="col-start-1 col-end-3">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-1 col-end-3">
+                    <label className="block text-sm font-medium text-gray-700">
                       Benefit
                     </label>
                     <input
@@ -636,7 +639,7 @@ export default function AddJob() {
                       name="jobs_benefit"
                       value={formik.values.jobs_benefit}
                       onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     {formik.touched.jobs_benefit &&
                     formik.errors.jobs_benefit ? (
@@ -647,8 +650,8 @@ export default function AddJob() {
                   </div>
 
                   {/* jobs_client_id */}
-                  <div class="col-start-1 col-end-3">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-1 col-end-3">
+                    <label className="block text-sm font-medium text-gray-700">
                       Client Name
                     </label>
                     <select
@@ -673,8 +676,8 @@ export default function AddJob() {
                     </select>                 
                   </div>
 
-                  <div class="col-start-1 col-end-2">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-1 col-end-2">
+                    <label className="block text-sm font-medium text-gray-700">
                       Location
                     </label>
                     
@@ -684,28 +687,29 @@ export default function AddJob() {
                       type="text"
                       name="jobs_location"
                       placeholder="Location"
-
+                      disabled
                       id="jobs_location"
                       onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   
                     ) : (
                       <input
+                      disabled
                       type="text"
                       name="jobs_location"
                       placeholder="Location"
                       id="jobs_location"
                       value={tes[0].client_location}
                       onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     )}
                   </div>
                   {/* jobs_city */}
 
-                  <div class="col-start-2 col-end-3">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-2 col-end-3">
+                    <label className="block text-sm font-medium text-gray-700">
                       City
                     </label>
                     {tes && tes.length ===0 ?(
@@ -714,38 +718,39 @@ export default function AddJob() {
                       name="jobs_city"
                       placeholder="City"
                       id="jobs_city"
-                     
+                      disabled
                       onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     ) : (
                       <input
+                      disabled
                       type="text"
                       name="jobs_city"
                       placeholder="City"
                       id="jobs_city"
                       value={tes[0].client_city}
                       onChange={formik.handleChange}
-                      class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     )}
                   </div>
 
-                  <div class="col-start-1 col-end-4">
-                    <label class="block text-sm font-medium text-gray-700">
+                  <div className="col-start-1 col-end-3">
+                    <label className="block text-sm font-medium text-gray-700">
                       Description
                     </label>
 
-                    <div class="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-                      <div class="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
-                        <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
-                          <div class="flex items-center space-x-1 sm:pr-4">
+                    <div className="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+                      <div className="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
+                        <div className="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
+                          <div className="flex items-center space-x-1 sm:pr-4">
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -759,10 +764,10 @@ export default function AddJob() {
                             </button>
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -776,10 +781,10 @@ export default function AddJob() {
                             </button>
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -793,10 +798,10 @@ export default function AddJob() {
                             </button>
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -810,10 +815,10 @@ export default function AddJob() {
                             </button>
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -826,13 +831,13 @@ export default function AddJob() {
                               </svg>
                             </button>
                           </div>
-                          <div class="flex flex-wrap items-center space-x-1 sm:pl-4">
+                          <div className="flex flex-wrap items-center space-x-1 sm:pl-4">
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -846,10 +851,10 @@ export default function AddJob() {
                             </button>
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -863,10 +868,10 @@ export default function AddJob() {
                             </button>
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -880,10 +885,10 @@ export default function AddJob() {
                             </button>
                             <button
                               type="button"
-                              class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                              className="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                             >
                               <svg
-                                class="w-5 h-5"
+                                className="w-5 h-5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -900,10 +905,10 @@ export default function AddJob() {
                         <button
                           type="button"
                           data-tooltip-target="tooltip-fullscreen"
-                          class="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+                          className="p-2 text-gray-500 rounded cursor-pointer sm:ml-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
                         >
                           <svg
-                            class="w-5 h-5"
+                            className="w-5 h-5"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
@@ -918,20 +923,20 @@ export default function AddJob() {
                         <div
                           id="tooltip-fullscreen"
                           role="tooltip"
-                          class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700"
+                          className="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 transition-opacity duration-300 tooltip dark:bg-gray-700"
                         >
                           Show full screen
-                          <div class="tooltip-arrow" data-popper-arrow></div>
+                          <div className="tooltip-arrow" data-popper-arrow></div>
                         </div>
                       </div>
-                      <div class="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">
-                        <label for="editor" class="sr-only">
+                      <div className="py-2 px-4 bg-white rounded-b-lg dark:bg-gray-800">
+                        <label for="editor" className="sr-only">
                           Publish post
                         </label>
                         <textarea
                           id="editor"
                           rows="8"
-                          class="block px-0 w-full text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
+                          className="block px-0 w-full text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
                           placeholder="Write an article..."
                           required
                           name="jobs_description"
@@ -940,6 +945,12 @@ export default function AddJob() {
                         ></textarea>
                       </div>
                     </div>
+                    {formik.touched.jobs_description &&
+                    formik.errors.jobs_description ? (
+                      <span className="mt-2 text-sm text-red-600">
+                        {formik.errors.jobs_description}
+                      </span>
+                    ) : null}
                   </div>
 
                   {/* jobs_user_id */}
