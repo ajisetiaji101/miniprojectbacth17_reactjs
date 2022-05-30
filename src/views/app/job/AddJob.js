@@ -537,11 +537,16 @@ export default function AddJob() {
                         Telecomunication
                       </option>
                       <option value="Retail">Retail</option>
-                      <option value="Bank">Bank</option>
+                      <option value="Perbankan">Perbankan</option>
                       <option value="Oil & Gas">Oil & Gas</option>
                       <option value="E-Commerce">E-Commerce</option>
                       <option value="Manufacture">Manufacture</option>
-                    </select>
+                      <option value="Jasa Pembayaran Digital">Jasa Pembayaran Digital</option>
+                      <option value="Asuransi">Asuransi</option>
+                      <option value="Jasa Peminjaman Dana">Jasa Peminjaman Dana</option>
+                      <option value="Produksi Tembakau">Produksi Tembakau</option>
+                      <option value="Provider">Provider</option>
+                 </select>
                   </div>
 
                   <div className="col-start-2 col-end-3">
@@ -568,6 +573,7 @@ export default function AddJob() {
                       </option>
                       <option value="Marketing">Marketing</option>
                       <option value="Sales">Sales</option>
+                      <option value="It Programmer">It Programmer</option>
                     </select>
                   </div>
 
@@ -591,11 +597,12 @@ export default function AddJob() {
                       <option value="" selected disabled hidden>
                         Select an Option
                       </option>
-                      <option value="Full-Time">Full-Time</option>
+                      <option value="Full-time">Full-Time</option>
                       <option value="Contract">Contract</option>
                       <option value="Permanent">Permanent</option>
-                      <option value="Part-Time">Part-Time</option>
+                      <option value="Part-time">Part-Time</option>
                       <option value="Freelance">Freelance</option>
+                      <option value="Magang">Magang</option>
                     </select>
                   </div>
 
