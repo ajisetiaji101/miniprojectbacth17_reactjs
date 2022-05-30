@@ -27,6 +27,9 @@ import Landing from "./views/components/Landing";
 import SignupSuccess from "./component/layout/SignupSuccess";
 import EditCurriculum from "./views/app/curriculum/EditCurriculum";
 import Applysukses from "./views/app/apply/Applysukses";
+
+import AddPlacement from './views/app/placement/AddPlacement';
+import Dashboard from "./views/app/dashboard/Dasboard";
 export default function Routes(isLoggedIn) {
   return useRoutes([
     {
@@ -76,6 +79,10 @@ export default function Routes(isLoggedIn) {
         {
           path: "placement",
           element: isLoggedIn ? <Placement /> : <Navigate to="/auth/signin" />,
+        },
+        {
+          path: "placement/new",
+          element: isLoggedIn ? <AddPlacement /> : <Navigate to="/auth/signin" />,
         },
         {
           path: "talent",
