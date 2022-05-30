@@ -12,11 +12,8 @@ import { faSuitcase } from '@fortawesome/free-solid-svg-icons'
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons';
 import Carousel from './Carousel'
-import NoWorkResult from "postcss/lib/no-work-result";
 import Moment from "react-moment";
-import { useDisclosure } from "react-use-disclosure";
-import Test from "./test";
-import moment from 'moment'
+
 
 
 
@@ -439,11 +436,11 @@ const handleChecked5 = (e) => {
 {Array.isArray(listHiring)&&listHiring.slice((currentPage-1)*4,currentPage*4).map((data) => (
                     
         <div className=" flex justify-end col-2 ml-10 mr-10 mb-8 " >
-    <button className="" onClick={() => navigate('/hiring/new')}>     
+    <button className="" onClick={() => navigate('/hiring/' + data.jobs_id)}>     
   <div className="rounded-lg flex flex-wrap  shadow-lg font-normal text-black bg-gradient-to-r from-gray-200 to-white-500 hover:from-gray-200 hover:to-gray-200 hover:text-black">
   <div className="grid grid-cols-2">
   <div className="ml-4 mt-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} alt={`${data.jobs_id}`} style={{width:"150px", height:"150px"}}/></div>
-  <div className="w-40 mb-5 ml-3 mr-5 mt-5 text-start">{data.jobs_title}</div>
+  <div className="w-40 mb-5 ml-3 mr-5 mt-12 text-base"><b> {data.jobs_title} </b></div>
   <div className=" col-end-2 mb-2  mr-20  "><FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {data.jobs_city}</div>
   <div className="col-span-2 mb-2 ml-3 mr-72"><FontAwesomeIcon className="mr-1"icon={faSuitcase} /> {data.job_upto_experience} tahun</div>
   <div className="mb-2 mr-8"><FontAwesomeIcon className="mr-1"icon={faCalendarCheck} /> Actively Hiring</div>

@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useHis } from "react-redux";
 import { doGetHiringCityRequest, doGetHiringIdRequest } from "../../redux-saga/actions/Hiring";
 import { Link } from "react-router-dom";
 import config from "../../config/config";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot, faSuitcase, faClock, faCalendarCheck, faDollarSign, faBuilding, faHourglassStart, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from "react-router-dom";
+import Moment from "react-moment";
 
 
 export default function HiringDetail() {
@@ -33,15 +34,15 @@ clearTimeout(now)
 }
 
 useEffect(() => {
-  window.scrollTo(0,0)
-}, []);
-
-useEffect(() => {
     setPageNumbers(Array.from({ length: Math.ceil(city.length / 4) }, (v, i) => (i + 1 === 1 ? { number: i + 1, active: true } : { number: i + 1, active: false })));
     setCurrentPage(1);
     console.log (city)
     setPageRange(0);
   }, [city]);
+
+useEffect(() => {
+    window.scrollTo(0,0)
+}, []);
 
 return ( 
     <div style={{height:"1400px"}}>
@@ -54,14 +55,14 @@ return (
     
     <div className=" flex justify-end mr-12">
     <Link to={"/hiring/" + data.jobs_id}> 
-    <div className="flex flex-wrap bg-slate-50 shadow-xl mb-6 rounded-lg hover:bg-gray-200">
+    <div className="rounded-lg flex flex-wrap  shadow-lg font-normal text-black bg-gradient-to-r from-gray-200 to-white-500 hover:from-gray-200 hover:to-gray-200 hover:text-black mb-8">
     <div className="grid grid-cols-2">
     <div className="ml-4 mt-3 "><img className="w-20 mb-5 h-10 w-10 rounded-full" src={`${config.domain}/hiring/images/${data.jobs_photo}`} style={{width:"150px", height:"150px"}}/></div>
-    <div className="w-40 mb-5 ml-3 mr-5 mt-12 text-lg"><b> {data.jobs_title} </b></div>
+    <div className="w-40 mb-5 ml-3 mr-5 mt-12 text-base text-center"><b> {data.jobs_title} </b></div>
     <div className="col-span-2 mb-2 ml-3"><FontAwesomeIcon className="mr-2" icon={faLocationDot}/> {data.jobs_city} </div>
     <div className="col-span-2 mb-2 ml-3"><FontAwesomeIcon className="mr-1"icon={faSuitcase} /> {data.job_upto_experience} tahun</div>
     <div className="mb-2 ml-3"><FontAwesomeIcon className="mr-1"icon={faCalendarCheck} /> Actively Hiring</div>
-    <div className="mb-5 ml-5 "><FontAwesomeIcon icon={faClock} /> Dibuat 1 hari lalu</div>
+    <div className="mb-5 ml-16 "><FontAwesomeIcon className="mr-1.5" icon={faClock}/><Moment fromNow>{data.jobs_start_date}</Moment></div>
     </div>  
     </div>
     </Link>
