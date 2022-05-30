@@ -77,7 +77,9 @@ export default function Batch() {
                 data.batch_inst && data.batch_inst.inst_name.toLowerCase().includes(filter.input.toLowerCase()))&&
                 (filter.select === "Status" || data.batch_status.includes(filter.select))
             )
-        );
+        )
+        listBatch[0] && listBatch[0].batch_inst[0] && listBatch[0].curriculums[0] &&
+        console.info(`test ${JSON.stringify(listBatch[0].batch_inst[0].curriculums[0])}`)
       }, [batches]);
 
     useEffect(()=>{
@@ -184,7 +186,12 @@ export default function Batch() {
                                 { Array.isArray(listBatch) && listBatch.slice((currentPage-1)*10,currentPage*10).map((data) => (
                                         <tr key={data.batch_id}>
                                             <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.batch_name}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.batch_technology}</td>
+                                            
+                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">
+                                              <p>{data.batch_inst.curriculums[0].curr_title}</p>
+                                              
+                                              </td>
+                                              
                                             <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
                                                 <div className="flex justify-between items-center overflow-hidden w-[8rem]">
                                                     <div className='flex justify-left -space-x-1'>
