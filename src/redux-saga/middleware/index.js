@@ -59,6 +59,24 @@ import { handleAddTalentTimelineSaga, handleGetTalentTimelineSaga } from "./Tale
 
 import { handleGetClient } from './ClientSaga'
 
+import {
+  handleAddPlacements,
+  handlePlacements,
+  handleClient,
+} from "./AddPlacementsSaga";
+import {
+  handleTalent,
+  handleTalent2,
+  handleTalent3,
+  handleTalent4,
+  handleTalent5,
+  handleTalent6,
+  handleTalent7,
+  handleTalent8,
+  handleTalent9,
+  handleTalent10,
+} from "../middleware/DasboardSaga";
+
 
 function* watchAll() {
   yield all([
@@ -151,6 +169,20 @@ function* watchAll() {
     takeEvery(ActionTypeTalentTimeline.ADD_TALENTTIMELINE_REQUEST, handleAddTalentTimelineSaga),
 
     takeEvery(ActionTypeClient.GET_CLIENT_REQUEST, handleGetClient),
+
+    takeEvery(ActionTypeAddPlacements.ADD_PLACEMENTS_REQUEST, handleAddPlacements),
+    takeEvery(ActionTypeAddPlacements.GET_PLACEMENTS_REQUEST, handlePlacements),
+    takeEvery(ActionTypeAddPlacements.GET_CLIENT_REQUEST, handleClient),
+    takeEvery(ActionTypeDasboard.GET_TALENT_REQUEST, handleTalent),
+    takeEvery(ActionTypeDasboard.GET_TRAINING_REQUEST, handleTalent2),
+    takeEvery(ActionTypeDasboard.GET_BOARDING_REQUEST, handleTalent3),
+    takeEvery(ActionTypeDasboard.GET_IDLE_REQUEST, handleTalent4),
+    takeEvery(ActionTypeDasboard.GET_MONTH_REQUEST, handleTalent5),
+    takeEvery(ActionTypeDasboard.GET_BOOTCAMP_REQUEST, handleTalent6),
+    takeEvery(ActionTypeDasboard.GET_VERSUS_REQUEST, handleTalent7),
+    takeEvery(ActionTypeDasboard.GET_PENDIDIKAN_REQUEST, handleTalent8),
+    takeEvery(ActionTypeDasboard.GET_UNIVERSITAS_REQUEST, handleTalent9),
+    takeEvery(ActionTypeDasboard.GET_JURUSAN_REQUEST, handleTalent10),
 
   ]);
 }

@@ -19,6 +19,9 @@ import TalentTimelineReducer from "./TalentTimelineReducer";
 import JobReducer from './JobReducer';
 import ClientReducer from './ClientReducer';
 
+import AddPlacementsReduce from "./AddPlacementsReduce";
+import DasboardReduce from "./DasboardReduce";
+
 const rootReducer = combineReducers({
   userState: userReducer,
   testimoniState: testimoniReducer,
@@ -38,6 +41,9 @@ const rootReducer = combineReducers({
   talenttimelineState: TalentTimelineReducer,
 
   clientState: ClientReducer,
+
+  addplacementsStated  : AddPlacementsReduce,
+  dasboardStated : DasboardReduce
 
 });
 
