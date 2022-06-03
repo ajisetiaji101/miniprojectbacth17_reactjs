@@ -11,6 +11,7 @@ import { Menu, Transition } from '@headlessui/react'
 //theming toast
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
 
 import {
     DotsVerticalIcon,
@@ -167,8 +168,8 @@ export default function Batch() {
                             <tbody className="bg-white divide-y divide-gray-100">
                                 { Array.isArray(listBatches) && listBatches.slice((currentPage-1)*10,currentPage*10).map((data) => (
                                         <tr key={data.batch_id}>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.batch_name}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.batch_technology}</td>
+                                            <td className="px-6 py-2 text-end whitespace-nowrap text-sm text-gray-900">{data.batch_name}</td>
+                                            <td className="px-6 py-2 text-end whitespace-nowrap text-sm text-gray-900">{data.batch_technology}</td>
                                             <td className="px-6 py-2 flex justify-center whitespace-nowrap text-sm text-gray-900">
                                                 <div className="flex justify-between items-center overflow-hidden w-[8rem]">
                                                     <div className='flex justify-left -space-x-1'>
@@ -179,12 +180,12 @@ export default function Batch() {
                                                     {data.talent_batches.length > 4 && <div className='pl-2'>{"+" + (data.talent_batches.length-4)}</div>}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
-                                            <div>{data.batch_start_date}</div>
-                                            <div>{data.batch_end_date}</div>
+                                            <td className="px-6 py-2 text-end whitespace-nowrap text-xs text-gray-900">
+                                            <div>{moment(data.batch_start_date).format("DD MMMM YYYY")}</div>
+                                            <div>{moment(data.batch_end_date).format("DD MMMM YYYY")}</div>
                                             </td>
-                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">{data.batch_inst.inst_name}</td>
-                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize">{data.batch_status}</td>
+                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-end">{data.batch_inst.inst_name}</td>
+                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-end capitalize">{data.batch_status}</td>
                                             <td className="pr-6">
                         <Menu as="div" className="relative flex justify-end items-center">
                           {({ open }) => (

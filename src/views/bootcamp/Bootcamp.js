@@ -3,10 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, NavLink, Link, useLocation } from 'react-router-dom';
 // import Testimonial from "./Testimonial";
 import { doGetBootcampIdRequest, doGetBootcampTypeRequest } from '../../redux-saga/actions/Bootcamp'
-import Carousel from './Carousel';
+import Slider from './Slider';
 import config from '../../config/config';
 import PrettyRating from "pretty-rating-react";
 import { doGetCurriculumReviewsRequest } from "../../redux-saga/actions/CurriculumReviews";
+import { Carousel } from "react-responsive-carousel";
+import styles from "react-responsive-carousel/lib/styles/carousel.min.css";
+import Sliderr from "react-slick";
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 const curr_type_payment =['Regular','Berbayar']
 
@@ -92,11 +98,48 @@ export default function Regular() {
     );
   };
 
+  const settings = {
+    infinite: true,
+    lazyLoad: true,
+    dots: true,
+    speed: 300,
+    slidesToShow: 5,
+    centerMode: true,
+    centerPadding: "5px",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+    // nextArrow: <NextArrow />,
+    // prevArrow: <PrevArrow />
+  };
   
   return( 
 <div>
 
-<Carousel/>
+<Slider/>
 <div class="flex justify-center mt-3">
 <form class="flex items-center">
 <div class="relative w-full">
@@ -143,10 +186,10 @@ style={{width:"180px", backgroundColor:"red", color:"white"}}>
 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Durasi : {data.curr_duration}</p>
 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Pembelajaran : {data.curr_learning_type}</p>
 <div style={{textAlign: "right"}}>
-<a href="#" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+<Link to={"/auth/signin"} class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
 Curriculum
 <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-</a>
+</Link>
 </div>
 </div>
 </div>
@@ -178,10 +221,10 @@ Curriculum
 </table>
 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><b>Rp. {data.curr_price}</b></p>
 <div style={{textAlign: "right"}}>
-<a href="#" class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+<Link to={"/auth/signin"} class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
 Add To Card
 <svg class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-</a>
+</Link>
 </div>
 </div>
 </div>
@@ -191,31 +234,35 @@ Add To Card
 
 <h1 style={{marginLeft:"15px", fontWeight:'bold', marginTop:"50px",fontSize:"18px"}} >Top Bootcamp Student</h1>
 <h1 style={{marginLeft:"90px", fontWeight:'bold', marginTop:"50px"}}>Testimonial</h1>
-  <div className="mb-20 text-gray-700 mt-7">
-    <div className="grid md:grid-cols-5 gap-6 lg:gap-12 text-center">
-    {curriculum_reviews && curriculum_reviews.map((data) => (
-      <div className="mb-12 md:mb-0">
-          <div className="flex justify-center mb-6">
-            {data.curr_user.talents && data.curr_user.talents.map((cure)=>(
-              <img className="block h-20 w-20 rounded-full ring-2 ring-white" src={`${config.urlImageCure}/${cure.tale_photo}`}  />
-            ))} 
-        </div>
-        {data.curr_user.talents && data.curr_user.talents.map((cure)=>(
-        <h5 className="text-xl font-bold mb-4">{cure.tale_fullname}</h5>
-        ))}
-        <h5 className="text-md font-semibold mb-4">{data.cure_review}</h5>
-        <p className="mb-4">
-        <PrettyRating value={data.cure_rating} colors={colors.star} />
-        </p>
-      </div>
-    ))}
-    </div>
+<Sliderr {...settings}>
+            {curriculum_reviews && curriculum_reviews.map((data) => (
+                    <div>
+                      <div className="w-64 h-80 bg-slate-100 rounded-2xl border-slate-100 border-2 pt-5 mx-auto">
+                      {data.curr_user.talents && data.curr_user.talents.map((cure)=>(
+                        <img src={`${config.urlImageCure}/${cure.tale_photo}`}  className="h-24 w-24 mx-auto overflow-hidden rounded-full"/>
+                      ))}
+                        <div className=" py-1">
+                        {data.curr_user.talents && data.curr_user.talents.map((cure)=>(
+                        <h5 className="text-xl font-bold mb-4 text-center">{cure.tale_fullname}</h5>
+                        ))}
+                        </div>
+                        <h5 className="text-md font-semibold mb-4 text-center">{data.cure_review}</h5>
+                        <p className="mb-4 text-center">
+                        <PrettyRating value={data.cure_rating} colors={colors.star} />
+                        </p>
+                      </div>
+                    </div>
+                ))
+                
+            }
+            </Sliderr>
     <div className='flex justify-end mr-10 mt-4'>
     <Link to={"/testi"} class="inline-flex items-end py-2 px-3 text-sm font-medium text-end text-black" style={{fontSize:"15px"}}>
       View All
     </Link>
     </div>
-  </div>
+
+
 </div>
   )
 }

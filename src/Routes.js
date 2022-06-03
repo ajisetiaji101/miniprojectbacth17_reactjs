@@ -27,7 +27,7 @@ export default function Routes(isLoggedIn) {
         { path: 'signin', element: <Navigate to="/auth/signin"  />  },
         { path: 'signup', element: <Navigate to="/auth/signup"  />  },
         { path: 'bootcamp', element: <Bootcamp/> },
-        { path: 'testi', element: <Testimonial/> },
+        { path: 'testi', element: <Testimonial/> }
       ]
     },
     {
