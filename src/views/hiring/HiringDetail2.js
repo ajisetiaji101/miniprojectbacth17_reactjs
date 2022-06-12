@@ -78,7 +78,7 @@ return (
     <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faDollarSign}/> IDR {hirings.jobs_upto_salary} / month <br/> </div>
     <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faBuilding}/> {hirings.jobs_specification} <br/> </div>
     <div className=" mt-3 text-base"> <FontAwesomeIcon className="mr-1" icon={faHourglassStart}/> {hirings.jobs_working_type} <FontAwesomeIcon className="ml-4 mr-1" icon={faSuitcase}/> {hirings.job_upto_experience} tahun pengalaman<br/> </div> 
-    <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {hirings.jobs_city} <FontAwesomeIcon className="ml-8 mr-1" icon={faClock}/> Dibuat 1 hari lalu <br/> </div> 
+    <div className=" mt-2 text-base"> <FontAwesomeIcon className="mr-1" icon={faLocationDot}/> {hirings.jobs_city} <FontAwesomeIcon className="ml-8 mr-1" icon={faClock}/><Moment fromNow>{hirings.jobs_start_date}</Moment><br/> </div> 
     <div className=" mt-7 text-base font-semibold"> Apply <FontAwesomeIcon className="mr-1" style={{marginLeft:"90px"}} icon={faClock}/> Share <FontAwesomeIcon className="ml-4 mr-1" icon={faAngleRight}/> </div> </div> 
     </div>
     </div>

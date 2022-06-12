@@ -85,7 +85,7 @@ export default function Talent() {
                 type="search"
                 onChange={handleOnChange("input")}
                 className="form-control relative w-56 block px-4 py-0.5 text-sm font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-full transition ease-in-out m-0 focus:border-transparent focus:text-gray-700 focus:ring-1 focus:ring-offset-1 focus:ring-purple-500 focus:outline-none"
-                placeholder="talent name, technology, trainer"
+                placeholder="talent name, technology"
                 aria-label="Search"
                 aria-describedby="button-addon2"
               />
@@ -174,11 +174,11 @@ export default function Talent() {
                       </td>
                       <td className="px-6 py-2 font-normal whitespace-nowrap text-left text-gray-900 text-start capitalize">
                         <div>{data.tale_status_timeline}</div>
-                        {data.talent_placements.map((talent, i) => {
+                        {/* {data.talent_placements.map((talent, i) => {
                           if (i === 0) {
                             return <p>{talent.tapl_drop_date}</p>;
                           }
-                        })}
+                        })} */}
                         <div>{console.log(data)}</div>
                       </td>
                       <td className="pr-6">
@@ -251,10 +251,9 @@ export default function Talent() {
                           setPageRange(pageRange - 1);
                         }
                       }}
-                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                    >
+                      >
                       <span className="sr-only">Previous</span>
-                      <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                      {/* <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" /> */}
                     </button>
                     {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
 
@@ -265,7 +264,7 @@ export default function Talent() {
                           setPageNumbers([...pageNumbers].map((val) => (val.number === el.number ? { ...val, active: true } : { ...val, active: false })));
                         }}
                         aria-current="page"
-                        className={classNames(el.active ? "z-20 bg-orange-100 border-orange-600 text-orange-900" : "z-10 bg-white border-gray-300 text-gray-600", "relative inline-flex items-center px-4 py-2 border text-sm font-medium")}
+                        className={classNames(el.active ? "z-20 bg-orange-100 border-orange-600 rounded text-orange-900" : "z-10 bg-white border-gray-300 text-gray-600 rounded", "relative inline-flex items-center px-4 py-2 border text-sm font-medium")}
                       >
                         {el.number}
                       </button>
@@ -277,10 +276,9 @@ export default function Talent() {
                           setPageRange(pageRange + 1);
                         }
                       }}
-                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                    >
+                      >
                       <span className="sr-only">Next</span>
-                      <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                      {/* <ChevronRightIcon className="h-5 w-5" aria-hidden="true" /> */}
                     </button>
                     <button
                       onClick={() => {

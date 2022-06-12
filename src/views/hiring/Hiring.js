@@ -54,6 +54,10 @@ export default function Hiring() {
     }
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0,0)
+}, []);
+
 
   useEffect(() => {
     setListHiring(
@@ -497,6 +501,7 @@ const handleChecked5 = (e) => {
                     {pageNumbers.slice(pageRange * 10, pageRange * 4 + 10).map((el) => (
                       <button
                         onClick={() => {
+                          window.scrollTo(0,200)
                           setCurrentPage(el.number);
                           setPageNumbers([...pageNumbers].map((val) => (val.number === el.number ? { ...val, active: true } : { ...val, active: false })));
                         }}

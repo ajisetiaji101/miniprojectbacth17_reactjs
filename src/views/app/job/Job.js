@@ -32,8 +32,8 @@ const columns = [
   { name: "PUBLISH" },
 ];
 const jobs_status = ["open", "close"];
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
+function classNames(...classNamees) {
+  return classNamees.filter(Boolean).join(" ");
 }
 export default function Job() {
   let navigate = useNavigate();
@@ -46,7 +46,6 @@ export default function Job() {
   });
   const [ck, setCk] = useState(false);
 
-
   const { jobs } = useSelector((state) => state.jobState);
   const { userProfile } = useSelector((state) => state.userState);
 
@@ -54,8 +53,6 @@ export default function Job() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(0);
   const [tgl, setTgl] = useState(false);
-  const  jobs_publish=tgl
-
 
 
   useEffect(() => {
@@ -73,7 +70,10 @@ export default function Job() {
             (data.jobs_title
               .toLowerCase()
               .includes(filter.input.toLowerCase()) ||
-              data.jobs_industry_type
+              data.jobs_title
+              .toLowerCase()
+              .includes(filter.input.toLowerCase()) ||
+              data.jobs_specification
                 .toLowerCase()
                 .includes(filter.input.toLowerCase())) &&
             (filter.select === "Status" ||
@@ -105,6 +105,9 @@ export default function Job() {
         jobs.filter(
           (data) =>
             (data.jobs_title
+              .toLowerCase()
+              .includes(filter.input.toLowerCase()) ||
+              data.jobs_specification
               .toLowerCase()
               .includes(filter.input.toLowerCase()) ||
               data.jobs_industry_type
@@ -187,7 +190,7 @@ export default function Job() {
               <thead className="border-y border-gray-200">
                 <tr key="col_names">
                   {(columns || []).map((column) => (
-                    <th className="px-6 py-3 bg-gray-50 text-center text-xs font-medium text-gray-900 uppercase">
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-900 uppercase">
                       <span className="">{column.name}</span>
                     </th>
                   ))}
@@ -200,40 +203,53 @@ export default function Job() {
                   listJobs
                     .slice((currentPage - 1) * 10, currentPage * 10)
                     .map((data) => (
-                      <tr key={data.jobs_id}>
-                        <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">
+                      <tr key={data.jobs_id.toString()}>
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">
                           {data.jobs_title}
                         </td>
 
-                        <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
                           {/* <div>{moment(data.jobs_start_date).format("DD/MM/YYYY")}</div> */}
                           {/* <Moment format='MMMM Do YYYY, h:mm:ss a'>{data.jobs_start_date}</Moment> */}
-                          <div>{moment(data.jobs_start_date).format("DD MMMM YYYY")}</div>
-                          <div>{moment(data.jobs_end_date).format("DD MMMM YYYY")}</div>
+                          <div>
+                            {moment(data.jobs_start_date).format(
+                              "DD MMMM YYYY"
+                            )}
+                          </div>
+                          <div>
+                            {moment(data.jobs_end_date).format("DD MMMM YYYY")}
+                          </div>
                         </td>
 
-                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">
                           {" "}
                           IDR {data.jobs_upto_salary}
                         </td>
-                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
+                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">
                           {data.job_upto_experience} Tahun
                         </td>
-                        <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                        <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
                           <div>{data.jobs_industry_type}</div>
                           <div>{data.jobs_specification}</div>
                         </td>
 
-                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">
-                      
-                     
-  
-<label for="default-toggle" class="inline-flex relative items-center cursor-pointer">
-  <input  checked={data.jobs_publish===!ck} name={data.jobs_publish} type="checkbox" value="" id="default-toggle" class="sr-only peer"/>
-  <div class="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-</label>
-
+                        <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">
+                          <label
+                            for="default-toggle"
+                            className="inline-flex relative items-center cursor-pointer"
+                          >
+                            <input
+                              checked={data.jobs_status === 'open'}
+                              name={data.jobs_status}
+                              type="checkbox"
+                              value=""
+                              id="default-toggle"
+                              className="sr-only peer"
+                            />
+                            <div className="w-12 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                          </label>
                         </td>
+
 
                         <td className="pr-6">
                           <Menu
