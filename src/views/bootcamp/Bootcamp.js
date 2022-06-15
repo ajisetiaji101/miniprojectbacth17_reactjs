@@ -265,7 +265,4 @@ Add To Card
 
 </div>
   )
-export default function bootcamp() {
-  return <div>
-  </div>;
 }
