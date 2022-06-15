@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Outlet, Link, useNavigate, useLocation } from "react-router-dom";
 
 import { Popover, Dialog, Menu, Transition } from "@headlessui/react";
@@ -24,7 +24,14 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
 import { doSignoutRequest } from "../../redux-saga/actions/User";
+<<<<<<< HEAD
 // import Carousel from "../molekul/Carousel";
+=======
+import { doGetTalentRequest } from "../../redux-saga/actions/Settings";
+import Footer from "../../views/components/Footer";
+import config from "../../config/config";
+
+>>>>>>> master
 
 const solutions = [
   {
@@ -59,6 +66,23 @@ export default function LandingPage() {
 
   const dispatch = useDispatch();
   const { isLoggedIn, userProfile } = useSelector((state) => state.userState);
+  const { settings } = useSelector((state) => state.settingState);
+
+  // const [previewImg, setPreviewImg] = useState();
+
+
+  useEffect(() => {
+    if (isLoggedIn === true) {
+      dispatch(doGetTalentRequest(userProfile.userId));
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (isLoggedIn === true) {
+  //     let img = `${config.domain}/settings/images/${settings.tale_photo}`;
+  //     setPreviewImg(img);
+  //   }
+  // }, [settings]);
 
   const onSignout = () => {
     dispatch(doSignoutRequest());
@@ -73,9 +97,9 @@ export default function LandingPage() {
             <>
               <div className="flex justify-between items-center max-w-7xl mx-auto px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
                 <div className="flex justify-start lg:w-0 lg:flex-1">
-                  <Link to="#">
+                  <Link to="/">
                     <span className="sr-only">codeid</span>
-                    <img className="h-14 w-auto sm:h-14" src="./assets/images/codeid.png" alt="codeid" />
+                    <img className="h-14 w-auto sm:h-14" src={`${config.domain}/settings/images/codeid.png`} alt="codeid" />
                   </Link>
                 </div>
                 <div className="-mr-2 -my-2 md:hidden">
@@ -120,7 +144,7 @@ export default function LandingPage() {
                                       <p className="text-base font-medium text-gray-900">{item.name}</p>
                                       <p className="mt-1 text-sm text-gray-500">{item.description}</p>
                                     </div>
-                                  </Link>
+                                 </Link>
                                 ))}
                               </div>
                             </div>
@@ -130,7 +154,7 @@ export default function LandingPage() {
                     )}
                   </Popover> */}
 
-                  <Link to="talent" className="text-base font-medium text-gray-500 hover:text-red-600">
+                  <Link to="why" className="text-base font-medium text-gray-500 hover:text-red-600">
                     Why
                   </Link>
                   <Link to="bootcamp" className="text-base font-medium text-gray-500 hover:text-red-600">
@@ -144,9 +168,9 @@ export default function LandingPage() {
                   {isLoggedIn ? (
                     <Menu as="div" className="ml-3 relative">
                       <div>
-                        <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                        <Menu.Button className="ring-red-500 ring-2 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img className="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                          <img className=" h-10 w-10 rounded-full" src={(settings && settings !== null ? `${config.domain}/settings/images/${settings.tale_photo}` : "https://thispersondoesnotexist.com/image")} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -184,6 +208,13 @@ export default function LandingPage() {
                                 </Link>
                               )}
                             </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <Link to="/apply" className={classNames(active ? "bg-gray-100" : "", "block px-4 py-2 text-sm text-gray-700")}>
+                                  My Apply
+                                </Link>
+                              )}
+                            </Menu.Item>
                           </div>
 
                           <Menu.Item>
@@ -199,13 +230,13 @@ export default function LandingPage() {
                   ) : (
                     <>
                       <Link
-                        to="signin"
+                        to="/auth/signup"
                         className="whitespace-nowrap text-base font-medium shadow-md text-red-600 hover:text-white border-solid border hover:bg-gradient-to-r hover:from-orange-600 hover:to-red-600 hover:border-none border-red-600 px-4 py-2 rounded-md"
                       >
                         Signin
                       </Link>
                       <Link
-                        to="signup"
+                        to="/auth/signin"
                         className="ml-3 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-md text-base font-medium text-white bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700"
                       >
                         Signup
@@ -221,7 +252,7 @@ export default function LandingPage() {
                     <div className="pt-5 pb-6 px-5">
                       <div className="flex items-center justify-between">
                         <div>
-                          <img className="h-8 w-auto" src="./assets/images/codeid.png" alt="Workflow" />
+                          <img className="h-8 w-auto" src={`${config.domain}/settings/images/codeid.png`} alt="Workflow" />
                         </div>
                         <div className="-mr-2">
                           <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
@@ -277,17 +308,24 @@ export default function LandingPage() {
           )}
         </Popover>
       </header>
+<<<<<<< HEAD
       <body>
         <div className="flex justify-center">
           {/* <Carousel /> */}
         </div>
       </body>
+=======
+
+>>>>>>> master
       <main>
         {/* display contain page like bootcamp, hiring, talent in <Outlet/>*/}
         <div>
           <Outlet />
         </div>
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }

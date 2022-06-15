@@ -1,7 +1,12 @@
 import {
     all, call, fork, put, takeEvery, takeLatest,
   } from 'redux-saga/effects';
+<<<<<<< HEAD
 import apiAppBatch from '../../api/api-app-batch'
+=======
+
+import apiAppBatch from '../../api/api-app-batch';
+>>>>>>> master
 import {
     doGetBatchSucceed,
     doGetBatchFailed,
@@ -15,7 +20,11 @@ import {
     doEditBatchStatusFailed
 } from '../actions/AppBatch'
 
+<<<<<<< HEAD
 function* handleGetBatch(){
+=======
+function* handleGetAppBatch(){
+>>>>>>> master
     try {
         const result = yield call(apiAppBatch.batchList);
         yield put(doGetBatchSucceed(result))        
@@ -75,7 +84,11 @@ function* handleEditBatch(action) {
 
 
 export {
+<<<<<<< HEAD
     handleGetBatch,
+=======
+    handleGetAppBatch,
+>>>>>>> master
     handleEditBatchStatus,
     handleDeleteBatch,
     handleGetBatchId,

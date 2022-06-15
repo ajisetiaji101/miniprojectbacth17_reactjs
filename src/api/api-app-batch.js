@@ -63,6 +63,7 @@ const instructorList = async(id)=>{
 const talentList = async(id)=>{
     try {
         const result = await axios.get(`${config.domain}/talent`)
+
         return result.data;
     } catch (error) {
         return await error
