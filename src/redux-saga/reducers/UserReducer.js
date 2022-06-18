@@ -1,7 +1,7 @@
 import * as ActionType from '../constants/User';
 
 const INIT_STATE = {
-    
+     
     userProfile:JSON.parse(sessionStorage.getItem('@profile')),
     isLogout : false,
     isLoading : JSON.parse(sessionStorage.getItem('@status')) === true ? false : true,

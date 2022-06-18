@@ -141,7 +141,7 @@ export default function Talent() {
                                                             />
                                                         </div>
                                                         <div className="ml-4">
-                                                            <div className="text-sm font-medium text-gray-900">
+                                                            <div className="text-sm font-normal text-gray-900">
                                                                 {
                                                                     data.tale_fullname
                                                                 }
@@ -149,17 +149,17 @@ export default function Talent() {
                                                         </div>
                                                     </div>
                                                 </td>
-                      <td className="px-6 py-2 text-start font-medium whitespace-nowrap text-sm text-gray-900">{data.tale_bootcamp}
+                      <td className="px-6 py-2 text-start font-normal whitespace-nowrap text-left text-gray-900">{data.tale_bootcamp}
 
                     </td>
 
-                      <td className="px-6 py-2 text-start font-medium whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-2 text-start font-normal whitespace-nowrap text-left text-gray-900">
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_name}</p>
                         ))}
                       </td>
 
-                      <td className="px-6 py-2 font-medium text-start whitespace-nowrap text-xs text-gray-900">
+                      <td className="px-6 py-2 font-normal text-start whitespace-nowrap text-left text-gray-900">
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_start_date}</p>
                         ))}
@@ -167,12 +167,12 @@ export default function Talent() {
                           <p>{talent.taba_batch.batch_end_date}</p>
                         ))}
                       </td>
-                      <td className="px-6 py-2 font-medium whitespace-nowrap text-sm text-gray-900 text-start">
+                      <td className="px-6 py-2 font-normal whitespace-nowrap text-left text-gray-900 text-start">
                         {data.talent_batches.map((talent) => (
                           <p>{talent.taba_batch.batch_inst.inst_name}</p>
                         ))}
                       </td>
-                      <td className="px-6 py-2 font-medium whitespace-nowrap text-sm text-gray-900 text-start capitalize">
+                      <td className="px-6 py-2 font-normal whitespace-nowrap text-left text-gray-900 text-start capitalize">
                         <div>{data.tale_status_timeline}</div>
                         {data.talent_placements.map((talent, i) => {
                           if (i === 0) {

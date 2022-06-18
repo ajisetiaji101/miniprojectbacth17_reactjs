@@ -1,4 +1,4 @@
-import * as ActionType from '../constants/User'
+import * as ActionType from '../constants/User' 
 
 export const doSignupRequest = (payload) => ({
     type: ActionType.ADD_SIGNUP_REQUEST,
