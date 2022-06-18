@@ -163,14 +163,14 @@ export default function Curiculum() {
                             <tbody className="bg-white divide-y divide-gray-100">
                                 { Array.isArray(listCurriculums) && listCurriculums.slice((currentPage-1)*10,currentPage*10).map((data) => (
                                         <tr key={data.curr_id}>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_name}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_title}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-sm text-gray-900">{data.curr_duration}</td>
-                                            <td className="px-6 py-2 text-center whitespace-nowrap text-xs text-gray-900">
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.curr_name}</td>
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.curr_title}</td>
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-sm text-gray-900">{data.curr_duration}</td>
+                                            <td className="px-6 py-2 text-left whitespace-nowrap text-xs text-gray-900">
                                             <div>{data.curr_total_talents} members</div>
                                             <div>{data.curr_total_batch} batchs</div>
                                             </td>
-                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center">{data.curr_learning_type}</td>
+                                            <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-left">{data.curr_learning_type}</td>
                                             <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-900 text-center capitalize"><Rating name="read-only" value={data.curr_rating} readOnly /></td>
                                             <td className="pr-6">
                                                 <Menu as="div" className="relative flex justify-end items-center">
@@ -280,10 +280,10 @@ export default function Curiculum() {
                                                 setPageRange(pageRange-1)
                                             }
                                         }}
-                                        className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                                        // className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                                         >
                                         <span className="sr-only">Previous</span>
-                                            <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
+                                            {/* <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" /> */}
                                         </button>
                                         {/* Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" */}
 
@@ -307,10 +307,10 @@ export default function Curiculum() {
                                                 setPageRange(pageRange+1)
                                             }
                                         }}
-                                        className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                                        // className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                                         >
                                         <span className="sr-only">Next</span>
-                                        <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
+                                        {/* <ChevronRightIcon className="h-5 w-5" aria-hidden="true" /> */}
                                         </button>
                                         <button
                                             onClick={()=>{
