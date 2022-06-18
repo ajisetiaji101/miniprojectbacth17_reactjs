@@ -7,7 +7,7 @@ const signup = async(data)=>{
         return result;    
     } catch (error) {
         return error;
-    }
+    } 
 }
 
 const signin = async(data)=>{
