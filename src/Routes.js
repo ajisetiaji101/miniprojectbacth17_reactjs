@@ -10,7 +10,7 @@ import Dashboard from "./views/app/dashboard/Dashboard";
 import Candidat from "./views/app/candidat/Candidat";
 import Batch from "./views/app/batch/Batch";
 import AddBatch from "./views/app/batch/AddBatch";
-import EditBatch from './views/app/batch/EditBatch';
+import EditBatch from "./views/app/batch/EditBatch";
 import Curriculum from "./views/app/curriculum/Curriculum";
 import Hiringg from './views/app/hiring/Hiringg'
 import Hiring from './views/hiring/Hiring';

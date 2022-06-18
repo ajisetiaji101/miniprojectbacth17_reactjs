@@ -1,19 +1,8 @@
-<<<<<<< HEAD
 import { takeEvery, all } from 'redux-saga/effects';
 import * as ActionTypeUser from '../constants/User';
 import * as ActionTypeBootcamp from '../constants/Bootcamp';
 import * as ActionTypeCurriculumReviews from '../constants/CurriculumReviews';
 import * as ActionTypeBatch from '../constants/AppBatch'
-
-import {handleSignup,handleSignin,handleSignout} from './UserSaga';
-import { handleGetBootcamp,handleGetBootcampId,handleGetBootcampType } from './BootcampSaga';
-import { handleGetCurriculumReviews } from './CurriculumReviewsSaga';
-import {handleGetBatch, handleEditBatchStatus, handleDeleteBatch, handleGetBatchId, handleEditBatch} from './AppBatchSaga'
-
-function * watchAll() {
-=======
-import { takeEvery, all } from "redux-saga/effects";
-import * as ActionTypeUser from "../constants/User";
 import * as ActionTypeTestimoni from "../constants/Testimoni";
 import * as ActionTypePlacement from "../constants/Placement";
 import * as ActionTypeInstructor from "../constants/Instructor";
@@ -23,7 +12,6 @@ import * as ActionTypeHiring from "../constants/Hiring";
 
 import * as ActionTypeAppCurriculum from "../constants/AppCurriculum";
 import * as ActionTypeCurriculum from "../constants/CurriculumConstant";
-import * as ActionTypeBatch from "../constants/BatchConstant";
 import * as ActionTypeAppBatch from "../constants/AppBatch";
 import * as ActionTypeJob from "../constants/Job";
 import * as ActionTypeProcessBootcamp from "../constants/ProcessBootcampConstant";
@@ -31,7 +19,11 @@ import * as ActionTypeTalentTimeline from "../constants/TalentTimelineConstant";
 
 import * as ActionTypeClient from '../constants/Client'
 
-import { handleSignup, handleSignin, handleSignout } from "./UserSaga";
+import {handleSignup,handleSignin,handleSignout} from './UserSaga';
+import { handleGetBootcamp,handleGetBootcampId,handleGetBootcampType } from './BootcampSaga';
+import { handleGetCurriculumReviews } from './CurriculumReviewsSaga';
+import {handleGetBatch, handleEditBatchStatus, handleDeleteBatch, handleGetBatchId, handleEditBatch} from './AppBatchSaga'
+
 import { handleGetTestimoniSaga } from "./TestimoniSaga";
 import { handleGetInstructorSaga } from "./InstructorSaga";
 import {
@@ -54,13 +46,9 @@ import {
 } from "./CurriculumSaga";
 import { handleGetTalentSaga } from "./TalentSaga";
 import { handleGetHiringSaga, handleGetHiringIdSaga, handleGetHiringCitySaga } from "./HiringSaga";
-import { handleGetBatch, handleAddBatch } from "./BatchSaga";
+import { handleAddBatch } from "./BatchSaga";
 import {
-  handleGetAppBatch,
-  handleEditBatchStatus,
-  handleDeleteBatch,
-  handleGetBatchId,
-  handleEditBatch,
+  handleGetAppBatch
 } from "./AppBatchSaga";
 import {
   handleGetTalent,
@@ -75,13 +63,11 @@ import { handleGetClient } from './ClientSaga'
 
 
 function* watchAll() {
->>>>>>> master
   yield all([
     // User
     takeEvery(ActionTypeUser.ADD_SIGNUP_REQUEST, handleSignup),
     takeEvery(ActionTypeUser.GET_SIGNIN_REQUEST, handleSignin),
     takeEvery(ActionTypeUser.GET_SIGNOUT_REQUEST, handleSignout),
-<<<<<<< HEAD
 
     // Bootcamp
     takeEvery(ActionTypeBootcamp.GET_BOOTCAMP_REQUEST, handleGetBootcamp),
@@ -102,8 +88,6 @@ function* watchAll() {
     takeEvery(ActionTypeUser.GET_SIGNIN_REQUEST, handleSignin),
     takeEvery(ActionTypeUser.GET_SIGNOUT_REQUEST, handleSignout),
 
-  ])
-=======
     takeEvery(
       ActionTypeTestimoni.GET_TESTIMONI_REQUEST,
       handleGetTestimoniSaga
@@ -191,8 +175,7 @@ function* watchAll() {
 
     takeEvery(ActionTypeClient.GET_CLIENT_REQUEST, handleGetClient),
 
-  ]);
->>>>>>> master
+  ])
 }
 
 export default watchAll;
