@@ -1,14 +1,14 @@
 import {
     all, call, fork, put, takeEvery, takeLatest,
-  } from 'redux-saga/effects';
+  } from 'redux-saga/effects'; 
 
 import apiUser from '../../api/api-user'
 import {  
     doSignupSucceed,doSignupFailed,
     doSigninSucceed,doSignoutSucceed,
-    doShowAuthMessage
+    doShowAuthMessage 
     
-} from '../actions/User';
+} from '../actions/User'; 
 
 function* handleSignup(action) {
     const {payload} = action;

@@ -16,7 +16,7 @@ import {
     doEditBatchStatusFailed
 } from '../actions/AppBatch'
 
-function* handleGetAppBatch(){
+function* handleGetBatch(){
     try {
         const result = yield call(apiAppBatch.batchList);
         yield put(doGetBatchSucceed(result))        
@@ -76,7 +76,7 @@ function* handleEditBatch(action) {
 
 
 export {
-    handleGetAppBatch,
+    handleGetBatch,
     handleEditBatchStatus,
     handleDeleteBatch,
     handleGetBatchId,

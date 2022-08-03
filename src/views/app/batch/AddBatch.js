@@ -16,6 +16,7 @@ import * as Yup from "yup";
 import apiBatch from "../../../api/ApiBatch";
 import CreateSuccess from "../../../component/batch/CreateSuccess";
 import Page from "../../../component/commons/Page";
+import config from "../../../config/config";
 
 export default function Batch() {
   let navigate = useNavigate();
@@ -130,7 +131,7 @@ export default function Batch() {
     >
         <form action="#" method="POST">
           <div
-            className=" bg-white px-5 border rounded-xl border-gray-400"
+            className=" bg-white shadow-md px-5 border rounded-xl border-gray-300"
             data-aos="fade-up"
             data-aos-duration="3000"
           >
@@ -147,7 +148,7 @@ export default function Batch() {
                       </label>
 
                       <input
-                        class="block w-full text-gray-800 rounded-lg bg-white appearance-none border border-gray-500 hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none focus:shadow-outline"
+                        class="block w-full text-gray-800 rounded-lg bg-white shadow appearance-none border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2 shadow-sm focus:bg-blue-100 focus:outline-none focus:shadow-outline"
                         placeholder="Batch Name"
                         id="batch_name"
                         name="batch_name"
@@ -164,7 +165,7 @@ export default function Batch() {
                   </div>
                 </div>
                 <div className="flex flex-1 justify-between space-x-20 mb-8">
-                  <div className="flex-1">
+                  <div className="flex-1 bg-white">
                     <div class="w-full md:mb-0">
                       <label
                         class="block tracking-wide text-gray-800 font-semibold mb-2"
@@ -174,7 +175,7 @@ export default function Batch() {
                       </label>
                       <div class="relative">
                         <select
-                          class="block w-full rounded-lg text-gray-800 bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                          class="block w-full rounded-lg text-gray-800 bg-white shadow appearance-none border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2 shadow-sm focus:bg-blue-100 focus:outline-none"
                           name="batch_type"
                           id="batch_type"
                           value={formik.values.batch_type}
@@ -198,7 +199,7 @@ export default function Batch() {
                       </label>
                       <div class="relative">
                         <select
-                          class="block w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                          class="block w-full text-gray-800 rounded-lg bg-white shadow appearance-none border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2 shadow-sm focus:bg-blue-100 focus:outline-none"
                           name="batch_technology"
                           id="batch_technology"
                           value={formik.values.batch_technology}
@@ -208,8 +209,8 @@ export default function Batch() {
                         >
                           {batch.curriculum &&
                             batch.curriculum.map((items) => (
-                              <option value={items.curr_name}>
-                                {items.curr_name}
+                              <option value={items.curr_title}>
+                                {items.curr_title}
                               </option>
                             ))}
                         </select>
@@ -230,7 +231,7 @@ export default function Batch() {
                         </label>
                         <div class="relative">
                           <select
-                            class="block w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                            class="block w-full text-gray-800 rounded-lg bg-white shadow appearance-none border border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2 shadow-sm focus:bg-blue-100 focus:outline-none"
                             name="batch_inst_id"
                             id="batch_inst_id"
                             value={formik.values.prod_cate_id}
@@ -262,14 +263,14 @@ export default function Batch() {
                       </label>
                       <div className="relative flex  items-end">
                         <DatePicker
-                          className=" mt-1 w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                          className=" mt-1 w-full text-gray-800 rounded-lg bg-white shadow appearance-none border border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2 shadow-sm focus:bg-blue-100 focus:outline-none"
                           selected={startDate}
                           name="batch_start_date"
                           id="batch_start_date"
                           onChange={(date) => setStartDate(date)}
                           autoComplete="batch_start_date"
                         />
-                        <div className="bg-blue-100  border border-gray-400 shadow-lg rounded-lg w-14 h-11 flex items-center justify-center text-gray-600 text-xs font-medium ">
+                        <div className="bg-blue-100  border border-gray-300 shadow-lg rounded-lg ml-px w-14 h-11 flex items-center justify-center text-gray-500 text-xs font-medium ">
                           <FontAwesomeIcon
                             icon={faCalendarDays}
                             className="w-6 h-6 shadow-2xl"
@@ -284,7 +285,7 @@ export default function Batch() {
                     <div className="flex-1 flex m-auto mt-7 ">
                       <div className="relative flex  items-end">
                         <DatePicker
-                          className="mt-1 w-full text-gray-800 rounded-lg bg-white appearance-none border hover:border-gray-500 px-4 py-2 focus:bg-blue-100 focus:outline-none"
+                          className="mt-1 w-full text-gray-800 rounded-lg bg-white shadow appearance-none border border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 px-4 py-2 shadow-sm focus:bg-blue-100 focus:outline-none"
                           selected={endDate}
                           onChange={(date) => setEndDate(date)}
                           name="batch_end_date"
@@ -292,7 +293,7 @@ export default function Batch() {
                           value={endDate}
                           autoComplete="batch_end_date"
                         />
-                        <div className="bg-blue-100  border border-gray-400 shadow-lg rounded-lg w-14 h-11 flex items-center justify-center text-gray-600 text-xs font-medium ">
+                        <div className="bg-blue-100  border border-gray-300 shadow-lg rounded-lg ml-px w-14 h-11 flex items-center justify-center text-gray-500 text-xs font-medium ">
                           <FontAwesomeIcon
                             icon={faCalendarDays}
                             className="w-6 h-6 shadow-2xl"
@@ -320,7 +321,7 @@ export default function Batch() {
               Recommeded Bootcamp Members
             </h1>
 
-            <div className="flex flex-wrap justify-between  py-2 ">
+            <div className="flex flex-wrap justify-between py-2 mr-20">
               {batch.talent &&
                 batch.talent.map((items) => (
                   <label class="relative flex w-72 mt-12 mb-10 bg-none items-center py-5 hover:scale-105">
@@ -368,8 +369,8 @@ export default function Batch() {
                     <div className="absolute ml-8 mr-2 w-20 h-20 border border-gray-400 rounded-full duration-300 ease-in-out bg-orange-300 flex items-center justify-center peer-checked:bg-emerald-400">
                       <img
                         className=" w-16 h-16 border border-gray-400 rounded-full"
-                        src={`/assets/images/yuri.jpg`}
-                        alt=""
+                        src={`${config.domain}/batch/images/${items.tale_photo}`}
+                        alt=" "
                       />
                     </div>
                   </label>
@@ -379,14 +380,14 @@ export default function Batch() {
               <button
                 type="button"
                 onClick={formik.handleSubmit}
-                className="flex mr-4 w-28 justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="flex mr-4 w-28 justify-center rounded-md py-2 px-4 border border-transparent shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 Save
               </button>
               <button
                 type="button"
                 onClick={() => navigate("/app/batch")}
-                className="flex justify-center w-28 py-2 px-4 border border-slate-800 shadow-sm text-sm font-medium  text-slate-900 bg-white hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="flex justify-center rounded-md w-28 py-2 px-4 border border-slate-500 shadow-sm text-sm font-medium  text-slate-900 bg-white hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-300"
               >
                 Cancel
               </button>

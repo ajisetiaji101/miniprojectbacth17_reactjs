@@ -10,9 +10,12 @@ import Dashboard from "./views/app/dashboard/Dashboard";
 import Candidat from "./views/app/candidat/Candidat";
 import Batch from "./views/app/batch/Batch";
 import AddBatch from "./views/app/batch/AddBatch";
+import EditBatch from "./views/app/batch/EditBatch";
 import Curriculum from "./views/app/curriculum/Curriculum";
 import Hiringg from './views/app/hiring/Hiringg'
 import Hiring from './views/hiring/Hiring';
+import HiringDetail from './views/hiring/HiringDetail';
+import HiringDetail2 from './views/hiring/HiringDetail2';
 import Setting from "./views/app/setting/Setting";
 import Talent from "./views/app/talent/Talent";
 import BlankLayout from "./component/layout/BlankLayout";
@@ -25,18 +28,25 @@ import Landing from "./views/components/Landing";
 import SignupSuccess from "./component/layout/SignupSuccess";
 import EditCurriculum from "./views/app/curriculum/EditCurriculum";
 import Applysukses from "./views/app/apply/Applysukses";
+import Testimonial from './views/bootcamp/Testimonial';
+
 export default function Routes(isLoggedIn) {
   return useRoutes([
     {
       path: "/",
       element: <LandingPage />,
       children: [
+        { path: 'signin', element: <Navigate to="/auth/signin"  />  },
+        { path: 'signup', element: <Navigate to="/auth/signup"  />  },
+        { path: 'bootcamp', element: <Bootcamp/> },
+        { path: 'testi', element: <Testimonial/> },
         { path: "", element: <Landing /> },
-        { path: "bootcamp", element: <Bootcamp /> },
         { path: "apply", element: isLoggedIn ? <Apply /> : <Navigate to="/auth/signin" /> },
         { path: "apply/sukses", element: isLoggedIn ? <Applysukses /> : <Navigate to="/auth/signin" /> },
         { path: "404", element: <Page404 /> },
         { path: 'hiring', element: <Hiring/> },
+        { path: 'hiring/:id', element: <HiringDetail/> },
+        { path: 'hiringg/:id', element: <HiringDetail2/> },
       ],
     },
     {
@@ -53,6 +63,7 @@ export default function Routes(isLoggedIn) {
       path: "/app",
       element: <AppLayout />,
       children: [
+
         {
           path: "dashboard",
           element: isLoggedIn ? <Dashboard /> : <Navigate to="/auth/signin" />,
@@ -69,6 +80,7 @@ export default function Routes(isLoggedIn) {
           path: "batch/new",
           element: isLoggedIn ? <AddBatch /> : <Navigate to="/auth/signin" />,
         },
+        { path: 'batch/edit/:id', element: isLoggedIn ? <EditBatch /> : <Navigate to="/auth/signin" />},
         {
           path: "placement",
           element: isLoggedIn ? <Placement /> : <Navigate to="/auth/signin" />,

@@ -5,17 +5,16 @@ import PlacementReducer from "./PlacementReducer";
 import instructorReducer from "./InstructorReducer";
 import TalentReducer from "./TalentReducer";
 import HiringReducer from "./HiringReducer";
-
+import bootcampReducer from './BootcampReducer';
+import curriculumreviewsReducer from './CurriculumReviewsReducer';
 import CurriculumReducer from "./CurriculumReducer";
 import AppCurriculumReducer from "./AppCurriculumReducer";
 import CurriculumReducer1 from "./CurriculumReducer1";
-
 import BatchReducer from "./BatchReducer";
 import AppBatchReducer from "./AppBatchReducer";
 import SettingReducer from "./SettingsReducer";
 import ProcessBootcampReducer from "./ProcessBootcampReducer";
 import TalentTimelineReducer from "./TalentTimelineReducer";
-
 import JobReducer from './JobReducer';
 import ClientReducer from './ClientReducer';
 
@@ -33,11 +32,12 @@ const rootReducer = combineReducers({
   batchAppState: AppBatchReducer,
   settingState: SettingReducer,
   jobState: JobReducer,
-
+  bootcampReducer : bootcampReducer,
+  curriculumreviewsState : curriculumreviewsReducer,
   processState: ProcessBootcampReducer,
   talenttimelineState: TalentTimelineReducer,
-
   clientState: ClientReducer,
+
 
 });
 

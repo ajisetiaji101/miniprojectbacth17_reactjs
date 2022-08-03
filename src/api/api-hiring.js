@@ -10,6 +10,26 @@ const List = async () => {
   }
 };
 
+const city = async (id) => {
+  try {
+    const result = await axios.get(`${config.domain}/hiringg/${id}`);
+    return result.data;
+  } catch (error) {
+    return await error;
+  }
+};
+
+const findOne = async (id) => {
+  try {
+    const result = await axios.get(`${config.domain}/hiring/${id}`);
+    return result.data;
+  } catch (error) {
+    return await error;
+  }
+};
+
 export default {
   List,
+  findOne,
+  city
 };
